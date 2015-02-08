@@ -1,22 +1,25 @@
 <html>
 <head>
 <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
- <script>
+<script>
+ 
+var stage;
+var ukkoBitmap;
  
 window.onload = function() {
-  //Create a stage by getting a reference to the canvas
+    //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
 	TestiTausta = new createjs.Shape();
 	TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
     stage.addChild(TestiTausta);
     
-	bitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_PäähahmoLatvaEhkä_iso.png");
-	bitmap.x = 0;
-	bitmap.y = 0;
-	stage.addChild(bitmap);
+	ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_PäähahmoLatvaEhkä_iso.png");
+	ukkoBitmap.x = 0;
+	ukkoBitmap.y = 0;
+	stage.addChild(ukkoBitmap);
 	
-    for(var y=1; y<4; y++) {
+    for(var y=1; y<3; y++) {
         for(var x=0; x<9; x++) {
             BlokkiaLisaa(x,y);
         }
@@ -33,7 +36,7 @@ function liikuta() {
 }
 
 function BlokkiaLisaa(x,y) {
-	bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+	var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
 	bitmap.x = x*150;
 	bitmap.y = y*150;
 	stage.addChild(bitmap);
