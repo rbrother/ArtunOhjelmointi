@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<script>
+function myCheck() {
+	annettuPaiva = prompt("syötä viikonpäivä","esim. maanantai");
+
+	if (annettuPaiva !="") {		
+		myPrint( annettuPaiva );
+	}
+	else {
+		alert('virheellinen arvo');
+		myCheck();
+	}
+}
+
+function myPrint( annettuPaiva ) {
+	var viikonPaivat = ["sunnuntai", "maanantai", "tiistai", "keskiviikko", 
+						"torstai", "perjantai", "lauantai"];
+	var tamaHetki = new Date();
+	var tamaPaivaNumero = tamaHetki.getDay(); // 0..6: 0 = sunnuntai, jne.
+	var tamaPaivaNimi = viikonPaivat[tamaPaivaNumero];
+	if (annettuPaiva == tamaPaivaNimi) {
+		tottako = "Totta";
+	} else {
+		tottako = "Valetta";
+	}
+	var tekstiKentta = document.getElementById('teksti');
+	tekstiKentta.innerHTML = tottako + ", tänään on " + tamaPaivaNimi + ".";
+}
+
+</script>
+
+</head>
+
+<body onload="myCheck();">
+
+<p id="teksti"></p>
+
+</body>
+
+</html>

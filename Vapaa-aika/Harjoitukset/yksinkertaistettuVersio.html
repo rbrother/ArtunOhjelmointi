@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+            var tamaPaiva = new Date();
+            var tamanPaivanNumero = tamaPaiva.getDay();
+
+            function paiva(){
+                var vastaus = "";
+                var mpaiva = ["sunnuntai","maanantai","tiistai","keskiviikko",
+                            "torstai","perjantai","lauantai"];
+                var tpaiva = prompt("Kerro mikä päivä tänään tietääksesi on.","Kirjoita oletuksesi tähän");
+                for (var j = 0; j < mpaiva.length; j++) { // 0,1,2,3,4,5,6
+                    vastaus += "* " + mpaiva[j] + "<br/>";
+                    if (tpaiva == mpaiva[j]) {
+                        // mpaiva[j] == mpaiva[tamanPaivanNumero] yksinkertaistettu
+                        verbi = (j == tamanPaivanNumero) ? "on" : "ei ole";
+                        vastaus += " Tänään " + verbi + " " + tpaiva + ".<br/>";
+                    }
+                }
+                document.getElementById("sattumanTeksti").innerHTML = vastaus;
+            }
+        </script>
+        </head>
+    <body onload="paiva()">
+    <p>
+    Vastaus tähän:<div id="sattumanTeksti"></div>
+    </p>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+<head>
+<script>
+var KaveriniNimiKysymys = "Nimeni";
+function CeissinVaihtajaVastaukseen(){
+	CeissienVaihto("Vastaus");
+}
+function CeissinVaihtajaViimeiseen(){
+	CeissienVaihto("ViimeinenViisastuminen");
+	}
+function CeissinVaihtajaNimeeni(){
+	CeissienVaihto("Nimeni");
+	}
+function CeissienVaihto(KaveriniKysymys){
+	document.body.innerHTML = "";
+	KaveriniNimiKysymys = KaveriniKysymys; 
+	ArtunFunktio();
+	}
+function ArtunFunktio(){
+	switch (KaveriniNimiKysymys) {
+		case "Nimeni":
+			document.write("Nimeni on Mikko <button onclick='CeissinVaihtajaVastaukseen();'>Mikä minun kaverini nimi on?</button>");
+			break;
+		case "Vastaus":
+			document.write("Hänen nimensä on Jussi <button onclick='CeissinVaihtajaViimeiseen();'>Mikä hänen isänsä nimi on?</button>");
+			break;
+		case "ViimeinenViisastuminen":
+			document.write("Hänen nimi on Jaakko <button onclick='CeissinVaihtajaNimeeni();'>Mikä minun nimeni on?</button>");
+			break;
+	}
+}
+window.onload = ArtunFunktio;
+</script>
+</head>
+<body>
+</body>
+</html>

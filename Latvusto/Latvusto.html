@@ -1,0 +1,49 @@
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
+ </script>
+ <script>
+ window.onload = function() {
+  //Create a stage by getting a reference to the canvas
+    stage = new createjs.Stage("Pelialue");
+
+	TestiTausta = new createjs.Shape();
+	TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
+    stage.addChild(TestiTausta);
+    
+	bitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+	bitmap.x = 0;
+	bitmap.y = 0;
+	stage.addChild(bitmap);
+	
+	//BlokkiaLisaa(0,1);
+	//BlokkiaLisaa(0,2);
+	//BlokkiaLisaa(0,3);
+	//BlokkiaLisaa(1,3);
+	//BlokkiaLisaa(2,3);
+	
+    for(var y=1; y<4; y++) {
+        for(var x=0; x<9; x++) {
+            BlokkiaLisaa(x,y);
+        }
+    }
+	
+	//Update stage will render next frame
+    stage.update();
+	
+
+	}
+function BlokkiaLisaa(x,y) {
+bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+	bitmap.x = x*150;
+	bitmap.y = y*150;
+	stage.addChild(bitmap);
+}
+
+ </script>
+</head>
+<body>
+<canvas id="Pelialue" width="1350" height="900">
+</canvas>
+</body>
+</html>

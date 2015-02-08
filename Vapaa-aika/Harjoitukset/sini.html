@@ -1,0 +1,42 @@
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
+ </script>
+ <script>
+ 
+// x-koorindaatti ruudulla:  0, 1, 2, 3, 4, 5, ... 800
+
+// x / 10:                   0, 0.1, 0.2, 0.3, 0.4, 0.5, .... 80
+ 
+// sin(x / 10)              -1 .... 0 ..... 1
+
+// sin(x) * 300             -300 ... 0 ..... 300
+
+// sin(x) * 300 + 400       100 ...   .... 700
+ 
+function Piirto() {
+    var stage = new createjs.Stage("Pelialue");
+	var sini = new createjs.Shape();
+	var g = sini.graphics;
+	var pi2 = 3.1415926 * 2;
+	
+	for (var tiheys = 1; tiheys <= 128; tiheys = tiheys * 2) {
+		g.beginStroke("#FF0").moveTo(0,400);	
+		for( var x = 0; x < 800; x = x + 1 ) {
+			var y = Math.sin(x / 800 * pi2 * tiheys) / tiheys * 300 + 400;
+			g.lineTo(x, y);
+		}
+		stage.addChild(sini);
+	}	
+    stage.update();
+}
+
+
+
+ </script>
+</head>
+<body onload="Piirto();" style='background:black;'>
+<canvas id="Pelialue" width="800" height="800">
+</canvas>
+</body>
+</html>
