@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
+ </script>
+ <script>
+ window.onload = function() {
+  //Create a stage by getting a reference to the canvas
+    stage = new createjs.Stage("Pelialue");
+
+    punainen = "#FF0000";
+    vihrea = "#00FF00";
+    sininen = "#0000FF";
+    
+    vari = punainen;
+    for(var y=0; y<100; y++) {
+        for(var x=0; x<100; x++) {
+            
+            if ( vari == punainen ) {
+              vari = sininen;
+            } else if ( vari == sininen ) { 
+              vari = vihrea;
+            } else {
+              vari = punainen;
+            }
+        
+            BlokkiaLisaa(x,y,vari);
+        }
+    }
+    stage.update();
+
+    }
+
+function BlokkiaLisaa(x,y,vari) {
+    nelio = new createjs.Shape();
+    nelio.graphics.beginFill(vari).drawRect(x*8, y*8, 4, 4);
+    stage.addChild(nelio);
+}
+
+ </script>
+</head>
+<body style='background:black;'>
+<canvas id="Pelialue" width="1350" height="900">
+</canvas>
+</body>
+</html>

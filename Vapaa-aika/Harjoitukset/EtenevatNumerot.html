@@ -1,0 +1,29 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+var Numero = 0;
+var Numero2 = 0;
+var Numero3 = 0;
+function LuvunMuutos(){
+    document.getElementById("Numero").innerHTML = Numero;
+    document.getElementById("Numero2").innerHTML = Numero2;
+     document.getElementById("Numero3").innerHTML = Numero3;
+    Numero = Numero + 1;
+    Numero2 = Numero2 + Numero;
+    Numero3 = Numero3 + Numero2;
+    if(Numero == 11){
+        Numero = 1;      
+    }
+}
+function AloitusFunktio(){
+    window.setInterval(LuvunMuutos, 1000);
+}
+</script>
+</head>
+<body onLoad = "AloitusFunktio();">
+<div id="Numero" style = "font-size: 100;"></div>
+<div id="Numero2" style = "font-size: 100; color: blue;"></div>
+<div id="Numero3" style = "font-size: 100; color: red;"></div>
+</body>
+</html>

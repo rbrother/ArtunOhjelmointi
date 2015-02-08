@@ -1,0 +1,42 @@
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
+ </script>
+ <script>
+ window.onload = function() {
+    stage = new createjs.Stage("Pelialue");
+
+    for(var y=0; y<256; y++) {
+        for(var x=0; x<256; x++) {
+            
+            punainen = x;
+            sininen = y;
+            vihrea = 0;
+            
+            vari = "rgba(" + punainen.toString() + "," + vihrea.toString() + "," +
+                            sininen.toString() + ",1)";
+        
+            BlokkiaLisaa(x,y,vari);
+        }
+    }
+    stage.update();
+    
+}
+
+// Input green-value from input-field
+
+// New idea: Make the green coordinate from mouse-position!
+
+function BlokkiaLisaa(x,y,vari) {
+    nelio = new createjs.Shape();
+    nelio.graphics.beginFill(vari).drawRect(x*3, y*3, 3, 3);
+    stage.addChild(nelio);
+}
+
+ </script>
+</head>
+<body style='background:black;'>
+<canvas id="Pelialue" width="1350" height="900">
+</canvas>
+</body>
+</html>

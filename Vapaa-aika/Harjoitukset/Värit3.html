@@ -1,0 +1,58 @@
+<html>
+<head>
+<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
+ </script>
+ <script>
+ window.onload = function() {
+    stage = new createjs.Stage("Pelialue");
+
+    blokkien_maara = 50;
+    blokin_koko = Math.round( 800.0 / blokkien_maara );
+    
+    for(var y=0; y < blokkien_maara; y++) {
+        for(var x=0; x < blokkien_maara; x++) {
+            
+            etaisyys_x = x - blokkien_maara / 2;
+            etaisyys_y = y - blokkien_maara / 2;
+            etaisyys = Math.sqrt(etaisyys_x*etaisyys_x + etaisyys_y*etaisyys_y);
+            taso = Math.round( VariTaso(etaisyys / (blokkien_maara / 2)) * 255 );
+            sininen = 0;
+            vari = "rgba(" + taso.toString() + "," + taso.toString() + "," +
+                            sininen.toString() + ",1)";
+        
+            BlokkiaLisaa(x,y,vari);
+        }
+    }
+    stage.update();
+    
+}
+
+function VariTaso(etaisyys) {
+    if ( etaisyys < 0.7 || etaisyys > 0.9 ) {
+        return 0.0;
+    } else if ( etaisyys < 0.75 ) {
+        return ( etaisyys - 0.70 ) / 0.05;
+    } else if ( etaisyys < 0.85 ) {
+        return 1.0;
+    } else {
+        return 1.0 - (etaisyys - 0.85 ) / 0.05;
+    }
+}
+
+// Input green-value from input-field
+
+// New idea: Make the green coordinate from mouse-position!
+
+function BlokkiaLisaa(x,y,vari) {
+    nelio = new createjs.Shape();
+    nelio.graphics.beginFill(vari).drawRect(x*blokin_koko, y*blokin_koko, blokin_koko-1, blokin_koko-1);
+    stage.addChild(nelio);
+}
+
+ </script>
+</head>
+<body style='background:black;'>
+<canvas id="Pelialue" width="1350" height="900">
+</canvas>
+</body>
+</html>
