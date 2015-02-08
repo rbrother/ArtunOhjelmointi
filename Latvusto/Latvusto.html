@@ -1,9 +1,9 @@
 <html>
 <head>
-<script src="http://code.createjs.com/easeljs-0.7.1.min.js">
- </script>
+<script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
  <script>
- window.onload = function() {
+ 
+window.onload = function() {
   //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
@@ -16,25 +16,24 @@
 	bitmap.y = 0;
 	stage.addChild(bitmap);
 	
-	//BlokkiaLisaa(0,1);
-	//BlokkiaLisaa(0,2);
-	//BlokkiaLisaa(0,3);
-	//BlokkiaLisaa(1,3);
-	//BlokkiaLisaa(2,3);
-	
     for(var y=1; y<4; y++) {
         for(var x=0; x<9; x++) {
             BlokkiaLisaa(x,y);
         }
     }
-	
-	//Update stage will render next frame
-    stage.update();
-	
 
-	}
+	// state.update() needs to be called continuously.
+	// First update might not show bitmaps if they are not yet loaded.
+	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+
+}
+
+function liikuta() {
+	stage.update();
+}
+
 function BlokkiaLisaa(x,y) {
-bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+	bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
 	bitmap.x = x*150;
 	bitmap.y = y*150;
 	stage.addChild(bitmap);
