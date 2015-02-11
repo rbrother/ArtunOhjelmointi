@@ -2,7 +2,7 @@
 <head>
 <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
 <script>
- 
+var oikealle = true; 
 var stage;
 var ukkoBitmap;
  
@@ -29,6 +29,15 @@ window.onload = function() {
 	// First update might not show bitmaps if they are not yet loaded.
 	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
+    window.onkeydown = function(event) { 
+		if(event.keyCode == 87) { // W
+			ukkoBitmap.x = ukkoBitmap.x + 20;
+		}else if (event.keyCode == 81) { // Q
+			ukkoBitmap.x = ukkoBitmap.x - 20;
+		}	
+	}
+	
+	// Vastaavasti voidaan tehdä: onkeyup
 }
 
 function liikuta() {
@@ -42,6 +51,7 @@ function BlokkiaLisaa(x,y) {
 	stage.addChild(bitmap);
 }
 
+    
  </script>
 </head>
 <body>
