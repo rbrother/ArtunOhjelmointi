@@ -5,6 +5,11 @@
 var oikealle = true; 
 var stage;
 var ukkoBitmap;
+var blokinKoko = 50;
+var skaalaus = blokinKoko/150;
+var yVauhti = -5;
+var xVauhti = 5;
+var painovoima = -0.1;
  
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
@@ -15,12 +20,14 @@ window.onload = function() {
     stage.addChild(TestiTausta);
     
 	ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+	ukkoBitmap.scaleX = skaalaus;
+	ukkoBitmap.scaleY = skaalaus;
 	ukkoBitmap.x = 0;
-	ukkoBitmap.y = 0;
+	ukkoBitmap.y = 10*blokinKoko;
 	stage.addChild(ukkoBitmap);
 	
-    for(var y=1; y<3; y++) {
-        for(var x=0; x<9; x++) {
+    for(var y=11; y<12; y++) {
+        for(var x=0; x<20; x++) {
             BlokkiaLisaa(x,y);
         }
     }
@@ -41,13 +48,18 @@ window.onload = function() {
 }
 
 function liikuta() {
+	ukkoBitmap.x = ukkoBitmap.x + xVauhti;
+	ukkoBitmap.y = ukkoBitmap.y + yVauhti;
+	yVauhti = yVauhti - painovoima; 
 	stage.update();
 }
 
 function BlokkiaLisaa(x,y) {
 	var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
-	bitmap.x = x*150;
-	bitmap.y = y*150;
+	bitmap.scaleX = skaalaus;
+	bitmap.scaleY = skaalaus;
+	bitmap.x = x*blokinKoko;
+	bitmap.y = y*blokinKoko;
 	stage.addChild(bitmap);
 }
 
