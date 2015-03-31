@@ -7,8 +7,8 @@ var stage;
 var ukkoBitmap;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
-var yVauhti = -5;
-var xVauhti = 5;
+var yVauhti = 0;
+var xVauhti = 0;
 var painovoima = -0.1;
  
 window.onload = function() {
@@ -22,7 +22,7 @@ window.onload = function() {
 	ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_PäähahmoLatvaEhkä_iso.png");
 	ukkoBitmap.scaleX = skaalaus;
 	ukkoBitmap.scaleY = skaalaus;
-	ukkoBitmap.x = 0;
+	ukkoBitmap.x = 10*blokinKoko;
 	ukkoBitmap.y = 10*blokinKoko;
 	stage.addChild(ukkoBitmap);
 	
@@ -37,20 +37,35 @@ window.onload = function() {
 	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
-		if(event.keyCode == 87) { // W
-			ukkoBitmap.x = ukkoBitmap.x + 20;
-		}else if (event.keyCode == 81) { // Q
-			ukkoBitmap.x = ukkoBitmap.x - 20;
-		}	
+		
+	}
+	
+	window.onkeyup = function(event) {
+		if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
+			aloitaHyppy(5);
+		}
+		else if(event.keyCode == 65){ // A
+			aloitaHyppy(-5);		
+		}
 	}
 	
 	// Vastaavasti voidaan tehdä: onkeyup
 }
 
+function aloitaHyppy(suunta){
+	yVauhti = -5;
+	xVauhti = suunta;
+}
+
 function liikuta() {
 	ukkoBitmap.x = ukkoBitmap.x + xVauhti;
 	ukkoBitmap.y = ukkoBitmap.y + yVauhti;
-	yVauhti = yVauhti - painovoima; 
+	yVauhti = yVauhti - painovoima;
+	if(ukkoBitmap.y >= 10*blokinKoko){
+		yVauhti = 0;
+		xVauhti = 0;
+		ukkoBitmap.y = 10*blokinKoko;
+	}
 	stage.update();
 }
 
