@@ -9,7 +9,9 @@ var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
 var yVauhti = 0;
 var xVauhti = 0;
-var painovoima = -0.1;
+var painovoima = -0.3;
+var hyppypituus = 0;
+var nappiPohjassa = false;
  
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
@@ -37,27 +39,37 @@ window.onload = function() {
 	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
-		
+			if(event.keyCode == 68 || event.keyCode == 65){
+				nappiPohjassa = true;
+			}
 	}
 	
 	window.onkeyup = function(event) {
 		if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-			aloitaHyppy(5);
+			aloitaHyppy(hyppypituus,+1);
+			nappiPohjassa = false;
+			hyppypituus = 0;
 		}
 		else if(event.keyCode == 65){ // A
-			aloitaHyppy(-5);		
+			aloitaHyppy(hyppypituus,-1);
+			nappiPohjassa = false;			
+			hyppypituus = 0;
 		}
 	}
 	
 	// Vastaavasti voidaan tehdä: onkeyup
 }
 
-function aloitaHyppy(suunta){
-	yVauhti = -5;
-	xVauhti = suunta;
+function aloitaHyppy(pituus,suunta){
+	console.log(suunta);
+	yVauhti = -pituus;
+	xVauhti = pituus * suunta;
 }
 
 function liikuta() {
+	if(nappiPohjassa){
+	hyppypituus = hyppypituus + 0.1;
+	}
 	ukkoBitmap.x = ukkoBitmap.x + xVauhti;
 	ukkoBitmap.y = ukkoBitmap.y + yVauhti;
 	yVauhti = yVauhti - painovoima;
