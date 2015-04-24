@@ -1,9 +1,0 @@
-
-Math.random():        0.0 .... 0.9999999999, esim. 0.34
-
-Math.random()*10.0    0.0 ..... 9.9999999999 esim. 3.4
-
-Math.floor: poistaa luvusta desimaaliosan, jättää vain kokonaisosan
-
-Math.floor(Math.random()*10.0)    0 ... 9
-Math.floor(Math.random()*10.0)+1    1 ... 10

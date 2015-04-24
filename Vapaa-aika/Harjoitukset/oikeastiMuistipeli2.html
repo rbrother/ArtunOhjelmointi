@@ -1,0 +1,152 @@
+<DOCTYPE! html>
+<html>
+	<head>
+		<script>
+		/*
+		IDEA: Hankkiudu eroon indekseistä: oikeitaVastauksia, variSarjanNumero.
+			Tällä hetkellä:
+		          [ vihr, sin, vihr, kelt ], 0 ->
+				  [ vihr, sin, vihr, kelt ], 1 ->
+				  [ vihr, sin, vihr, kelt ], 2 ->
+				  ...
+			Idea ilman indeksiä: kyseltavaSarja
+				  [ vihr, sin, vihr, kelt ] ->
+				  [ vihr, sin, vihr ] ->
+				  [ vihr, sin ] ->
+				  ...
+				  []
+				  
+				  pop -komento(?) ottaa arrayn viimeisen alkion(?) ja tämän takia peli toimii, mutta se kyselee värejä
+				  toisinpäin, kuin tarkoitus
+				  Arttu Brotherus(7.1.2015klo18:16)
+		*/
+		var peliKaynnissa = false;
+		var aikaArvo = 500;
+			
+		var nappulaInfo = [ 
+			{ nimi: 'vihree', vari: 'green' }, 
+			{ nimi: 'punane', vari: 'red' }, 
+			{ nimi: 'sinine', vari: 'blue' }, 
+			{ nimi: 'keltane', vari: 'yellow' } ];
+        
+		var variSarja = []; // Esim. [ {}, {}, ...]
+
+		var kyseltavaSarja;
+		
+		function asetaOikeitaVastauksia() {
+		    var oikeitaVastauksia = variSarja.length - kyseltavaSarja.length; 
+			document.getElementById('oikeatKlikkaukset').innerHTML = "Olet vastannut nykyisessä sarjassa oikein " + oikeitaVastauksia +" kertaa";
+		}
+		
+		function variMuutos(variSarjanNumero){
+		    if ( variSarjanNumero >= variSarja.length ){
+				kyseltavaSarja = variSarja.slice();
+				kyseltavaSarja.reverse();
+				console.log("värisarja:");
+				console.log(variSarja);
+				console.log("kyseltävä sarja:");
+				console.log(kyseltavaSarja);
+				return;
+            }			
+			var nappulaNimi = variSarja[variSarjanNumero].nimi;
+			var nappula = document.getElementById(nappulaNimi);
+			nappula.style.backgroundColor = "white";
+			setTimeout( function() { palautaAlkuperaisetVarit(variSarjanNumero) }, aikaArvo);
+		}
+		
+		function palautaAlkuperaisetVarit(variSarjanNumero) {
+		    nappulaInfo.forEach( function(info) {
+				var nappula = document.getElementById(info.nimi);
+				nappula.style.backgroundColor = info.vari;
+			} );
+			setTimeout( function() { variMuutos(variSarjanNumero + 1) }, 100);
+		}
+
+		function nappiaPainettu(painettuNappi) {
+			if(!peliKaynnissa){
+				alert("Paina ensiksi Aloita -nappia, jotta voit aloittaa pelin!");
+			}else{
+				var kyseltavaNappi = kyseltavaSarja.pop();
+				if(painettuNappi == kyseltavaNappi.nimi){
+					console.log(kyseltavaSarja);
+					if( kyseltavaSarja.length == 0 ){
+					    console.log("uusi kierros");
+						kierros();
+					}else{
+						asetaOikeitaVastauksia( );
+					}
+				}else{
+					alert("Nyt ei mennyt oikein! Aloita alusta!");
+					document.getElementById('sarjanPituus').innerHTML = "";
+					document.getElementById('oikeatKlikkaukset').innerHTML = "";
+					peliKaynnissa = false;
+					document.getElementById('aloitus').style.visibility = "visible";
+					variSarja = [];
+				}
+			}
+		}
+		
+		function aloitus(){
+			if(peliKaynnissa){
+				alert("Peli on jo aloitettu!");
+				
+			} else {				
+				peliKaynnissa = true;
+				document.getElementById('aloitus').style.visibility = "hidden";
+				kierros();
+			}
+		}
+		
+		function kierros(){
+			random = Math.floor(Math.random() * 4);
+			variSarja.push(nappulaInfo[random]);
+			document.getElementById('sarjanPituus').innerHTML = "Värisarjan nykyinen pituus on " + variSarja.length;
+			variMuutos( 0 );
+		}
+		
+		function ladattu() {			
+			nappulaInfo.forEach( function(info) {
+				var btn = document.createElement("BUTTON");
+				document.body.appendChild(btn);
+				btn.id = info.nimi;
+				btn.onclick = function(){
+					nappiaPainettu(info.nimi);
+				}				
+			} );
+			var txt = document.createElement("DIV");
+			document.body.appendChild(txt);
+			txt.id = "sarjanPituus";
+			var text = document.createElement("DIV");
+			document.body.appendChild(text);
+			text.id = "oikeatKlikkaukset";
+			var alotus = document.createElement("BUTTON");
+			alotus.id = "aloitus";
+			document.body.appendChild(alotus);
+			alotus.style.fontSize = 30;
+			alotus.innerHTML = "Aloita";
+			alotus.onclick = function(){
+				aloitus();
+			}
+			palautaAlkuperaisetVarit(999);
+		}
+		
+		</script>
+		<style>
+			body { background:black; }
+			button { height: 100px; width: 100px; margin: 50px; }
+			div {color: white; }
+		</style>
+	</head>
+	<body onload="ladattu();">
+	
+	<!--	<button id="vihree" onclick = "nappiaPainettu('vihree');"></button>
+		<button id="punane" onclick = "nappiaPainettu('punane');"></button>
+		<button id="sinine" onclick = "nappiaPainettu('sinine');"></button>
+		<button id="keltane" onclick = "nappiaPainettu('keltane');"></button>
+		<div style="height:10px; color:white;"><p>Tämänhetkinen sarjan pituus on <span id="sarjanPituusSpan"></span></p></div>
+		<div style="height:50px; color:white;"><p>Tämänhetkinen oikeiden klikkausten sarjan pituus on <span id="oikeitaVastauksiaSpan"></span></p></div>
+		<button onclick = "aloitus();" id = "aloitus">Aloita</button>
+		-->
+	</body>
+</html>
+	
