@@ -6,7 +6,12 @@ var ateriaInfo = [
 			{ nimi: 'salaatti', kesto: 15, liha:false , vaikeus: 2, kalorit: 300 }, 
 			{ nimi: 'uunilohi', kesto: 50, liha:true , vaikeus: 3, kalorit:700 }  ];
 function haeResepti(){
-alert("toimii");
+	var liha = document.getElementById("liha").checked;
+	var maksimikesto = document.getElementById("maksimikesto").value;
+	var vaikeustaso = document.getElementById("vaikeustaso").value;
+	console.log(liha);
+	console.log(maksimikesto);
+	console.log(vaikeustaso);
 }
 </script>
 </head>
