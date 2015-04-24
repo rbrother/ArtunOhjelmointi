@@ -11,8 +11,16 @@ function haeResepti(){
 	var vaikeustaso = document.getElementById("vaikeustaso").value;
 	console.log(liha);
 	console.log(maksimikesto);
-	console.log(vaikeustaso);
+	console.log(vaikeustaso);	
+	var teksti = "";
+	ateriaInfo.forEach(
+		function (ateria){
+			teksti = teksti + ateria.nimi + "<br>";
+		}
+	)
+	document.getElementById('ateriaId').innerHTML = teksti;
 }
+
 </script>
 </head>
 <body>
@@ -22,5 +30,6 @@ function haeResepti(){
 <button onclick="haeResepti();">
 Hae ehdoilla
 </button> 
+<p id="ateriaId"></p>
 </body>
 </html>
