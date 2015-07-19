@@ -12,82 +12,102 @@ var xVauhti = 0;
 var painovoima = -0.3;
 var hyppypituus = 0;
 var nappiPohjassa = false;
+var blokkienTiedot = [];
  
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
-	TestiTausta = new createjs.Shape();
-	TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
+    TestiTausta = new createjs.Shape();
+    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
     stage.addChild(TestiTausta);
     
-	ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
-	ukkoBitmap.scaleX = skaalaus;
-	ukkoBitmap.scaleY = skaalaus;
-	ukkoBitmap.x = 10*blokinKoko;
-	ukkoBitmap.y = 10*blokinKoko;
-	stage.addChild(ukkoBitmap);
-	
-    for(var y=11; y<12; y++) {
-        for(var x=0; x<20; x++) {
-            BlokkiaLisaa(x,y);
-        }
-    }
-
-	// state.update() needs to be called continuously.
-	// First update might not show bitmaps if they are not yet loaded.
-	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+    ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+    ukkoBitmap.scaleX = skaalaus;
+    ukkoBitmap.scaleY = skaalaus;
+    ukkoBitmap.x = 10*blokinKoko;
+    ukkoBitmap.y = 8*blokinKoko;
+    stage.addChild(ukkoBitmap);
+    
+    for(var y=5; y<11; y++) { BlokkiaLisaa( 17, y ); }
+    for(var x=0; x<20; x++) { BlokkiaLisaa( x, 11 ); }
+        
+    // state.update() needs to be called continuously.
+    // First update might not show bitmaps if they are not yet loaded.
+    setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
-			if(event.keyCode == 68 || event.keyCode == 65){
-				nappiPohjassa = true;
-			}
-	}
-	
-	window.onkeyup = function(event) {
-		if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-			aloitaHyppy(hyppypituus,+1);
-			nappiPohjassa = false;
-			hyppypituus = 0;
-		}
-		else if(event.keyCode == 65){ // A
-			aloitaHyppy(hyppypituus,-1);
-			nappiPohjassa = false;			
-			hyppypituus = 0;
-		}
-	}
-	
-	// Vastaavasti voidaan tehd‰: onkeyup
+        if(event.keyCode == 68 || event.keyCode == 65){
+            nappiPohjassa = true;
+        }
+    }
+    
+    window.onkeyup = function(event) {
+        if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
+            aloitaHyppy(hyppypituus,+1);
+            nappiPohjassa = false;
+            hyppypituus = 0;
+        }
+        else if(event.keyCode == 65){ // A
+            aloitaHyppy(hyppypituus,-1);
+            nappiPohjassa = false;            
+            hyppypituus = 0;
+        }
+    }
+    
+    // Vastaavasti voidaan tehd‰: onkeyup
 }
 
 function aloitaHyppy(pituus,suunta){
-	console.log(suunta);
-	yVauhti = -pituus;
-	xVauhti = pituus * suunta;
+    console.log(suunta);
+    yVauhti = -pituus;
+    xVauhti = pituus * suunta;
 }
 
 function liikuta() {
-	if(nappiPohjassa){
-	hyppypituus = hyppypituus + 0.1;
-	}
-	ukkoBitmap.x = ukkoBitmap.x + xVauhti;
-	ukkoBitmap.y = ukkoBitmap.y + yVauhti;
-	yVauhti = yVauhti - painovoima;
-	if(ukkoBitmap.y >= 10*blokinKoko){
-		yVauhti = 0;
-		xVauhti = 0;
-		ukkoBitmap.y = 10*blokinKoko;
-	}
-	stage.update();
+    if ( nappiPohjassa ) hyppypituus = hyppypituus + 0.1;
+    var newX = ukkoBitmap.x + xVauhti;
+    var newY = ukkoBitmap.y + yVauhti;
+    if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
+        yVauhti = 0;
+        xVauhti = 0;
+    } else {
+        ukkoBitmap.x = newX;
+        ukkoBitmap.y = newY;
+        yVauhti = yVauhti - painovoima;
+    }
+    stage.update();
+}
+
+function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
+    result = false;
+    blokkienTiedot.forEach( function(blokki) {
+        if ( KoskettaakoHahmoBlokkia( ukkoX, ukkoY, blokki.x, blokki.y) ) result = true;
+    } );
+    return result;
+}
+
+function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
+    var ux2 = ux1 + blokinKoko;
+    var uy2 = uy1 + blokinKoko;
+    var bx2 = bx1 + blokinKoko;
+    var by2 = by1 + blokinKoko;
+    if ( ux1 > bx2 ) return false; // Ukko on kokonaan blokin oikealla puolella
+    if ( ux2 < bx1 ) return false; // Ukko on kokonaan blokin vasemmalla puolella
+    if ( uy1 > by2 ) return false; // Ukko on kokonaan blokin alapuolella
+    if ( uy2 < by1 ) return false; // Ukko on kokonaan blokin yl‰puolella
+    return true; // Ukko koskettaa blokkia
 }
 
 function BlokkiaLisaa(x,y) {
-	var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
-	bitmap.scaleX = skaalaus;
-	bitmap.scaleY = skaalaus;
-	bitmap.x = x*blokinKoko;
-	bitmap.y = y*blokinKoko;
-	stage.addChild(bitmap);
+    var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+    bitmap.scaleX = skaalaus;
+    bitmap.scaleY = skaalaus;
+    bitmap.x = x*blokinKoko;
+    bitmap.y = y*blokinKoko;
+    stage.addChild(bitmap);
+    blokkienTiedot.push( { x: x*blokinKoko, y: y*blokinKoko } );
+    // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
 
     
