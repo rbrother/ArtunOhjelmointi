@@ -16,6 +16,7 @@ var blokkienTiedot = [];
 
 
 var kentta2 = [
+//Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
    '............X.................',
    '............X.................',
    '............XXXX..............',
@@ -28,12 +29,14 @@ var kentta2 = [
 
 
 
-var kentta1 = [ {x: 1, y:5}, {x: 2, y:5}, {x: 3, y:5}, {x: 4, y:5}, {x: 5, y:5}, {x: 6, y:5}, {x: 6, y:4},
-{x: 6, y:3}, {x: 7, y:5}, {x: 8, y:5}, {x: 9, y:0}, {x: 9, y:1}, {x: 9, y:2}, {x: 9, y:5}, {x: 10, y:2},
-{x: 11, y:2}, {x: 10, y:5}, {x: 11, y:5}, {x: 12, y:5}, {x: 13, y:5}, {x: 14, y:5}, {x: 18, y:3},
-{x: 19, y:3}, {x: 20, y:3}, {x: 21, y:4}, {x: 21, y:5}, {x: 21, y:6}, {x: 21, y:7}, {x: 22, y:5},
-{x: 23, y:5}, {x: 24, y:5}, {x: 22, y:7}, {x: 23, y:7}, {x: 24, y:7}, {x: 25, y:7}, {x: 26, y:7},
-{x: 27, y:7}, {x: 28, y:7},];
+var kentta1 = [ 
+// Alkualusta
+{x: 1, y:5}, {x: 2, y:5}, {x: 3, y:5}, {x: 4, y:4}, {x: 4, y:5}, 
+//Tason seinämä
+{x: 8, y:5}, {x: 8, y:6}, {x: 8, y:7}, {x: 9, y:7}, {x: 10, y:7}, {x: 11, y:7},  {x: 9, y:10}, {x: 10, y:10}, {x: 11, y:10},
+//Oikealla oleva aputasanne
+{x: 16, y:9}, {x: 17, y:9}, {x: 18, y:9},]
+;
  
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
@@ -138,56 +141,36 @@ function BlokkiaLisaa(x,y) {
 Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
 
 Tarina
-	Alkuskenaario
-		Ruutu (R) 1
-			Kuva (K)
-				Laiva lipuu majesteetillisesti laineilla.
-			Teksti (T)
-				It's the most natural thing in the world for any animal to leave their home when everything
-				there starts to break apart.
-		R2
-			K
-				Päähahmolta näyttävät asukkaat purkavat laivansa lastia hiekkasaarelle, millä on
-				valtava mangrovepuu.
-			T
-				The Pilgu Tribe knew that what was in the past should stay there and why shouldn't it? They
-				had a nice island to live on and happiness started to quickly flourish.
+	Yleistettynä
+		Alussa päähenkilön veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heidän esi-isänsä tulivat heidän saarelleen tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren valtavan
+		mangrovepuun mahlaa keräämiensä puunpalasten päälle. Tuolloin palasista muodoistui ilkeännäköinen maski, mikä teki sovinnon kauppiaan kanssa. Kauppias pitäisi maskia koko ajan päällä ja maski voisi vastapalveluksena
+		muuttaa kauppiaan miksi vain hän haluaisi.
+		Kauppiaasta tuli kuuluisa ja hän myi näitä maagisia naamioita lisää saaren asukkaille. Kuitenkin asukkaat alkoivat epäillä koko juttua, kun kului suunnattomasti aikaa eikä kauppias siltikään kuollut. 
+		Eräänä päivänä kuitenkin eräs maskinpitäjistä kuoli onnettomuudessa ja ruumiinavauksessa paljastui, että koko ruumis oli juurien vallassa eikä alkuperäisestä saarelaisesta ollut miltei mitään jäljellä. Tämä sai
+		kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitkä sota ja päähenkilön veli ei koskaan saanut tietää äidiltään miten sota päättyi.
+		Tarinan jälkeen ideana on se, että päähenkilön veli lähtee heidän äitinsä haudalle, mikä on ensimmäisen alueen lopussa. Päähenkilö hakee heidän talosta lahjoja haudalle samalla opettaen pelaajalle perusmekaniikat.
+		Kun hän on saanut tavarat hankittua hän ei kuitenkaan pääse ulos talon pääovesta. Hän menee katon kautta jolloin hän näkee, että ovea pidättelee joukko maskeja. Näin alkaa tutoriaalitason maskitaistelu ja tästä 
+		peli jatkuukin ihan tavallisesti ottaen.
+		Pomotaisteluiden jälkeen päähenkilö ja hänen veljensä puhuvat eri aiheista sillä päähenkilön veli on maskin vallassa ja tämä maski sattuu olemaan se ensimmäinen, minkä kauppias löysi.
+		Kun päähenkilö on viimeisen pomotaistelun ja lisäpomojen jälkeen suorittanut suurpomotaistelun hänelle valkeaa, että vanhassa sodassa maskit voittivat, mutta kaikki maskit eivät olleet loisia, mitkä loivat juuria
+		kantajansa sisään. Jotkut halusivat olla symbioosissa ja päähenkilö on hämmentynyt(?) tästä.
+	Moninpeli(Kyllä, ette lukeneet väärin)
+		Moninpelissä parasiittimaskit kantajineen (vihreitä) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (oransseja) toiselta puolelta planeettaa ovat näitä kahta vastaan. Iskujoukot ovat tulleet paikalle
+		sillä toisen pallonpuoliskon suurkaupungin presidentti on salaa päättänyt, että turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
 Visuaalisuus
 	-
 Pelimekaniikalliset aiheet
 	-
 Alkuperäinen dokumentti
-	Stoori
-	Alussa
-		Ruutu(R)1
-			Kuva(K)
-				Laiva lipuu majesteetillisesti laineilla.
-			Teksti(T)
-				It's just natural for any animal out there to leave even their beloved home when everything falls apart.
-		R2
-			K
-				Uudet vihreät asukkaat purkavat lastiaan laivasta suurelle hiekkasaarelle, jolla on valtava mangrovepuu.
-			T
-				Nobody from the Pilgu tribe wanted to remember the past. But why should they? They had now a nice island to live on, bright future and a 					loving community surroundng them.
-		R3
-			K
-				Pilgut nauttivat elämästään ja rakentavat kauniita puutaloja. Kauppias lähtee vaeltamaan puun luokse.	
-			T
-				But nothing was as valuable for them as the everyday life they experienced. They had their fair share of holidays but the best thing was that 					they didn't complain about doing their jobs as someone else could.
-		R4
-			K
-				-
-			T	
-	Visuaalisuus
-	Alkustoori
-		Esitetään ensin näyttämällä kuvaruutu (tarinaa selittävä), jonka jälkeen mustalla ruudulla on tekstiä, joka selittää tarinaa.
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	Peimekaniikat
 	Pelin sataprosenttinen läpäisy
 		Kun pelaaja on tehnyt kaikki päivitykset, saanut kaikki bonusaseet ja voittanut viidennen lisäpomon hän voi taistella suurpomoa vastaan. Näin hän saa tietää 
 		vielä jotain mielenkiintoista tarinaa. Hän voi myös taistella kaikkia mnipomoja, pomoja, lisäpomoja ja viimeistä pomoa vastaan uudestaan.
 	Pelin kahdeksan maailmaa
 		Mangrovepuun latvusto (Lazy Lions)>Mangrovepuun lehvistö (Ancient Acorns)>Mangrovepuun lehvistöä kannatteleva oksisto (Seriosly Sacred)>Mangovepuun rungonsi-
-		säinen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sisällä oleva mehiläispesä (Emperor's Economy)>Linnoitus mangrovepuun sisällä (Ammo 		Army)>Mangrovepuun maanpäälliset juuret (Massive Mangrove)>Mangrovepuuta ympäröivä hiekkaranta (Sick Sands)
+		säinen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sisällä oleva mehiläispesä (Emperor's Economy)>Linnoitus mangrovepuun sisällä (Ammo Army)>Mangrovepuun maanpäälliset juuret (Massive Mangrove)>
+		Mangrovepuuta ympäröivä hiekkaranta (Sick Sands)
 	Peliobjektit
 	Krediitit
 		Jokaisessa kahdeksassa maailmassa sata.
