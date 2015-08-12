@@ -1,0 +1,21 @@
+<html>
+<head>
+<script>
+function arpominen(){
+	// Check for the various File API support.
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		var reader = new FileReader();
+		var f = new File([""], "reseptit.txt");
+		reader.readAsText("reseptit.txt");
+	} else {
+	alert('The File APIs are not fully supported in this browser.');
+	}
+}
+</script>
+</head>
+<body>
+<button onclick = "arpominen();">
+Ruoka
+</button>
+</body>
+</html>
