@@ -31,11 +31,20 @@ var kentta2 = [
 
 var kentta1 = [ 
 // Alkualusta
-{x: 1, y:5}, {x: 1, y:5}, 
-//Tason sein‰m‰
-{x: 8, y:5}, {x: 8, y:6}, {x: 8, y:7}, {x: 9, y:7}, {x: 10, y:7}, {x: 11, y:7},  {x: 9, y:10}, {x: 10, y:10}, {x: 11, y:10},
-//Oikealla oleva aputasanne
-{x: 16, y:9}, {x: 17, y:9}, {x: 18, y:9},]
+{x: 0, y:2}, {x: 1, y:2}, {x: 2, y:2}, {x: 2, y:3}, {x: 3, y:3}, {x: 4, y:3}, {x: 5, y:3}, {x: 6, y:3}, 
+//OikeaSein‰m‰
+{x: 10, y:2}, {x: 10, y:3}, {x: 10, y:4}, {x: 10, y:5}, {x: 10, y:6}, {x: 10, y:7}, {x: 10, y:1}, 
+{x: 10, y:0}, {x: 9, y:7}, {x: 8, y:7}, {x: 7, y:7}, {x: 6, y:7}, {x: 5, y:7}, {x: 5, y:6}, {x: 4, y:6},
+{x: 3, y:6}, {x: 11, y:7},
+//Yksitt‰isblokit
+{x: 0, y:10},
+//Alatasanne
+{x: 3, y:11}, {x: 3, y:12}, {x: 4, y:12},
+//Ilmaeste
+{x: 8, y:12}, {x: 8, y:11}, {x: 8, y:10}, {x: 9, y:12}, {x: 10, y:12},
+//Kaakko
+{x: 16, y:10}, {x: 16, y:4},
+]
 ;
  
 window.onload = function() {
@@ -49,8 +58,8 @@ window.onload = function() {
     ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
     ukkoBitmap.scaleX = skaalaus;
     ukkoBitmap.scaleY = skaalaus;
-    ukkoBitmap.x = 1*blokinKoko;
-    ukkoBitmap.y = 1*blokinKoko;
+    ukkoBitmap.x = 0*blokinKoko;
+    ukkoBitmap.y = 0*blokinKoko;
     stage.addChild(ukkoBitmap);
 
 	
@@ -161,7 +170,7 @@ Visuaalisuus
 	-
 Pelimekaniikalliset aiheet
 	Kent‰t
-		Testitaso #1
+		Testitaso #1 (Oikeaa versiota muokattu)
 			E
 				Tyhj‰ kohta
 			H
