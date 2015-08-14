@@ -13,6 +13,7 @@ var painovoima = -0.3;
 var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
+var hyppyPalkki;
 
 
 var kentta2 = [
@@ -61,8 +62,6 @@ window.onload = function() {
     ukkoBitmap.x = 0*blokinKoko;
     ukkoBitmap.y = 0*blokinKoko;
     stage.addChild(ukkoBitmap);
-
-	
     
     kentta1.forEach( function(blokki) {
     BlokkiaLisaa(blokki.x,blokki.y);
@@ -73,21 +72,32 @@ window.onload = function() {
     setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
-        if(event.keyCode == 68 || event.keyCode == 65){
-            nappiPohjassa = true;
-        }
+		if(xVauhti == 0 && yVauhti < 0.4){
+			if(event.keyCode == 68 || event.keyCode == 65){
+				if(nappiPohjassa == false){
+					hyppyPalkki = new createjs.Bitmap("Gimp/Tekstuuriset/hyppy-palkki.png");
+					hyppyPalkki.scaleX = 0.33;
+					hyppyPalkki.scaleY = 0.33;
+					hyppyPalkki.y = ukkoBitmap.y + 50;
+					stage.addChild(hyppyPalkki);
+				}
+				nappiPohjassa = true;
+			}
+		}
     }
     
     window.onkeyup = function(event) {
-        if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-            aloitaHyppy(hyppypituus,+1);
-            nappiPohjassa = false;
-            hyppypituus = 0;
-        }
-        else if(event.keyCode == 65){ // A
-            aloitaHyppy(hyppypituus,-1);
-            nappiPohjassa = false;            
-            hyppypituus = 0;
+		if(xVauhti == 0 && yVauhti < 0.4){
+			if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
+				aloitaHyppy(hyppypituus,+1);
+				nappiPohjassa = false;
+				hyppypituus = 0;
+			}
+			else if(event.keyCode == 65){ // A
+				aloitaHyppy(hyppypituus,-1);
+				nappiPohjassa = false;            
+				hyppypituus = 0;
+			}
         }
     }
     
@@ -98,10 +108,18 @@ function aloitaHyppy(pituus,suunta){
     console.log(suunta);
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
+	stage.removeChild(hyppyPalkki);
 }
 
 function liikuta() {
-    if ( nappiPohjassa ) hyppypituus = hyppypituus + 0.1;
+    if ( nappiPohjassa ) {
+		if(hyppypituus < 9){
+			hyppypituus = hyppypituus + 0.1;
+		}
+		hyppyPalkki.scaleX = hyppypituus * 0.14;
+		var hyppyPalkkiLeveys = 39.0 * hyppyPalkki.scaleX;
+		hyppyPalkki.x = ukkoBitmap.x - 0.5 * hyppyPalkkiLeveys + 25.5;
+	}
     var newX = ukkoBitmap.x + xVauhti;
     var newY = ukkoBitmap.y + yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
