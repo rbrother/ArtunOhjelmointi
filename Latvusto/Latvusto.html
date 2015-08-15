@@ -36,15 +36,15 @@ var kentta1 = [
 //OikeaSeinämä
 {x: 10, y:2}, {x: 10, y:3}, {x: 10, y:4}, {x: 10, y:5}, {x: 10, y:6}, {x: 10, y:7}, {x: 10, y:1}, 
 {x: 10, y:0}, {x: 9, y:7}, {x: 8, y:7}, {x: 7, y:7}, {x: 6, y:7}, {x: 5, y:7}, {x: 5, y:6}, {x: 4, y:6},
-{x: 3, y:6}, {x: 11, y:7},
+{x: 3, y:6}, {x: 11, y:7}, {x: 10, y:-1}, {x: 10, y:-2}, 
 //Yksittäisblokit
 {x: 0, y:10},
 //Alatasanne
 {x: 3, y:11}, {x: 3, y:12}, {x: 4, y:12},
 //Ilmaeste
-{x: 8, y:12}, {x: 8, y:11}, {x: 8, y:10}, {x: 9, y:12}, {x: 10, y:12},
+{x: 9, y:12}, {x: 9, y:11}, {x: 9, y:10}, {x: 10, y:12}, {x: 11, y:12},
 //Kaakko
-{x: 16, y:10}, {x: 16, y:4},
+{x: 16, y:10}, {x: 16, y:5},
 ]
 ;
  
@@ -113,7 +113,7 @@ function aloitaHyppy(pituus,suunta){
 
 function liikuta() {
     if ( nappiPohjassa ) {
-		if(hyppypituus < 9){
+		if(hyppypituus < 10){
 			hyppypituus = hyppypituus + 0.1;
 		}
 		hyppyPalkki.scaleX = hyppypituus * 0.14;
@@ -163,6 +163,7 @@ function BlokkiaLisaa(x,y) {
     blokkienTiedot.push( { x: x*blokinKoko, y: y*blokinKoko } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
+
 
 /*
 Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
