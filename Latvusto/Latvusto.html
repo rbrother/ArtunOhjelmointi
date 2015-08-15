@@ -16,38 +16,25 @@ var blokkienTiedot = [];
 var hyppyPalkki;
 
 
-var kentta2 = [
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
-   '............X.................',
-   '............X.................',
-   '............XXXX..............',
-   '....o...X.....................',
-   '........X.....................',
-   '....XXXXXXXXXXXXXXX....====...',
+var kentta2 = [
+   '..........X...................',
+   '..........X...................',
+   '..........X...................',
+   '..........X...................',
+   'XXX.......X...................',
+   '..XXXXX...X...................',
+   '..........X...................',
+   '..........X.....X.............',
+   '...XXX....X...................',
+   '.....XXXXXXX..................',
    '..............................',
-   '..............................'
+   '..............................',
+   'X........X......X.............',
+   '...X.....X....................',
+   '...XX....XXX..................',
 ];
 
-
-
-var kentta1 = [ 
-// Alkualusta
-{x: 0, y:2}, {x: 1, y:2}, {x: 2, y:2}, {x: 2, y:3}, {x: 3, y:3}, {x: 4, y:3}, {x: 5, y:3}, {x: 6, y:3}, 
-//OikeaSeinämä
-{x: 10, y:2}, {x: 10, y:3}, {x: 10, y:4}, {x: 10, y:5}, {x: 10, y:6}, {x: 10, y:7}, {x: 10, y:1}, 
-{x: 10, y:0}, {x: 9, y:7}, {x: 8, y:7}, {x: 7, y:7}, {x: 6, y:7}, {x: 5, y:7}, {x: 5, y:6}, {x: 4, y:6},
-{x: 3, y:6}, {x: 11, y:7}, {x: 10, y:-1}, {x: 10, y:-2}, 
-//Yksittäisblokit
-{x: 0, y:10},
-//Alatasanne
-{x: 3, y:11}, {x: 3, y:12}, {x: 4, y:12},
-//Ilmaeste
-{x: 9, y:12}, {x: 9, y:11}, {x: 9, y:10}, {x: 10, y:12}, {x: 11, y:12},
-//Kaakko
-{x: 16, y:10}, {x: 16, y:5},
-]
-;
- 
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -63,9 +50,21 @@ window.onload = function() {
     ukkoBitmap.y = 0*blokinKoko;
     stage.addChild(ukkoBitmap);
     
-    kentta1.forEach( function(blokki) {
-    BlokkiaLisaa(blokki.x,blokki.y);
-	} );
+    //kentta1.forEach( function(blokki) {
+    //BlokkiaLisaa(blokki.x,blokki.y);
+	//} );
+	
+	var y = 0;
+	kentta2.forEach(function(rivi){
+		y++;
+		for(x = 0;x < rivi.length;x++){
+			merkki = rivi.charAt(x);
+			if(merkki == 'X'){
+			BlokkiaLisaa(x,y);
+			}
+		}
+	});
+	
         
     // state.update() needs to be called continuously.
     // First update might not show bitmaps if they are not yet loaded.
@@ -189,23 +188,7 @@ Visuaalisuus
 	-
 Pelimekaniikalliset aiheet
 	Kentät
-		Testitaso #1 (Oikeaa versiota muokattu)
-			E
-				Tyhjä kohta
-			H
-				Hahmon syntymiskohta
-			P
-				Blokki mikä yksinkertaisesti blokkaa
-			HEEEEEEEEE
-			EEEEEEEEEE
-			PPPEEEEEEP
-			EEPPPPPPPP
-			EEEEEEEEEP
-			EEEEEEEEEP
-			EEEPPEEEEP
-			PEEEPPPPPP
-			EEPEEEEEEE
-			EEPPEEEEEE
+		
 Alkuperäinen dokumentti
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	Peimekaniikat
