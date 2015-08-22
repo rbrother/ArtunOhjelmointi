@@ -115,8 +115,8 @@ function liikuta() {
 		if(hyppypituus < 10){
 			hyppypituus = hyppypituus + 0.1;
 		}
-		hyppyPalkki.scaleX = hyppypituus * 0.14;
-		var hyppyPalkkiLeveys = 39.0 * hyppyPalkki.scaleX;
+		hyppyPalkki.scaleX = hyppypituus * 0.13;
+		var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
 		hyppyPalkki.x = ukkoBitmap.x - 0.5 * hyppyPalkkiLeveys + 25.5;
 	}
     var newX = ukkoBitmap.x + xVauhti;
@@ -167,6 +167,7 @@ function BlokkiaLisaa(x,y) {
 /*
 Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
 
+
 Tarina
 	Yleistettynä
 		Alussa päähenkilön veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heidän esi-isänsä Pilgut tulivat heidän saarelleen tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren 
@@ -187,9 +188,27 @@ Tarina
 Visuaalisuus
 	-
 Pelimekaniikalliset aiheet
+	RoopenKommentit
+		Max 3 pelaajaa yhtä aikaa kentällä moninpelissä, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
+		toisiaan vastaan. Serveri, jolle kaikki koneet lähettävät oman pelaajan liikkeen ja 
+		saavat tiedon muiden pelaajien liikkeistä. Koska ukkojen lentorata hyppyjen aikana on
+		deterministinen (ennustettava), riittänee että serverille lähetetään tieto hypyn
+		alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat 
+		lentoradat (samoin ammuttujen ammusten kohdalla)	
+		
+		Voi myös olla 2 selainta samalla koneella, jolloin.
+		
+		Käytetään AJAX-tekniikkaa: "Asynchronous JAvascript and XML"
+			https://en.wikipedia.org/wiki/Ajax_(programming)
+			AJAX:ssa välitetään JSON-viestejä: https://en.wikipedia.org/wiki/JSON
+			
+		Ehkä käytetään NODE-JS -tekniikkaa? Javascriptiä sekä serverillä että clientillä?
+			https://en.wikipedia.org/wiki/Node.js
+			(toinen mahdollisuus on käyttää Ruby tai C# kieliä)
 	Kentät
 		-
 	Moninpeli
+
 		Aseideat
 			Pistoolikaarijousi nimeltään ...
 				| Aina kun aseen klippi on täynnä se ampuu kolme eri suuntiin menevää nuolta, mitkä tekevät sitä enemmän vahinkoa mitä suurempi määrä nuolista osuu viholliseen.
