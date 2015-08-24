@@ -104,7 +104,26 @@ window.onload = function() {
 }
 
 function aloitaHyppy(pituus,suunta){
-    console.log(suunta);
+
+
+
+	var xmlhttp = new XMLHttpRequest();
+	var url = "http://127.0.0.1:1337/";
+	xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		var vastaus = xmlhttp.responseText;
+		console.log(vastaus);	
+		// var myArr = JSON.parse(xmlhttp.responseText);
+			
+		}
+	}
+	xmlhttp.open("POST", url);
+	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	
+	// { name: "John Rambo", time: "2pm" }
+	xmlhttp.send(JSON.stringify( { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y } ));
+	
+	
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
 	stage.removeChild(hyppyPalkki);
