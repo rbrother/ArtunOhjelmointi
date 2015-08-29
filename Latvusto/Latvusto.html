@@ -118,11 +118,10 @@ function aloitaHyppy(pituus,suunta){
 		}
 	}
 	xmlhttp.open("POST", url);
-	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	
-	// { name: "John Rambo", time: "2pm" }
-	xmlhttp.send(JSON.stringify( { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y } ));
-	
+	//xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");	
+	var viestiTeksti = JSON.stringify( { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y } );
+	console.log(viestiTeksti);
+	xmlhttp.send(viestiTeksti);
 	
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
