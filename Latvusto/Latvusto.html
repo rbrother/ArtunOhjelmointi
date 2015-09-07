@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
+	<script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
+	<script src="jquery.js"></script>
 <script>
 var oikealle = true; 
 var stage;
@@ -14,6 +16,11 @@ var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
+
+// Lue itse:
+// JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
+// NODE.JS tutorial (etsi):
+// laita linkki tähän mitä luit:
 
 
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
@@ -101,27 +108,20 @@ window.onload = function() {
     }
     
     // Vastaavasti voidaan tehdä: onkeyup
+	//ready
 }
 
 function aloitaHyppy(pituus,suunta){
+	$.ajaxSetup({
+	  contentType: "application/json; charset=utf-8"
+	});
 
-
-
-	var xmlhttp = new XMLHttpRequest();
 	var url = "http://127.0.0.1:1337/";
-	xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		var vastaus = xmlhttp.responseText;
-		console.log(vastaus);	
-		// var myArr = JSON.parse(xmlhttp.responseText);
-			
-		}
-	}
-	xmlhttp.open("POST", url);
-	//xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");	
-	var viestiTeksti = JSON.stringify( { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y } );
-	console.log(viestiTeksti);
-	xmlhttp.send(viestiTeksti);
+	var viesti = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
+	console.log("Sending to server: " + viesti);	
+	$.post(url, viesti, function( data, status ) {
+		console.log("data from server: " + data);	
+	} );
 	
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
@@ -184,6 +184,16 @@ function BlokkiaLisaa(x,y) {
 
 /*
 Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
+
+Client (Web Browser)                    Server (Node.js)
+$.POST(...)
+      OPTIONS            ->              
+                         <-             OPTIONS response
+	  POST               ->             Processing the POST DATA.	                                    
+
+
+
+
 
 
 Tarina
@@ -640,6 +650,12 @@ Pyro | Melee | For the Pilgus
 + Alt-fire for 3 second 90% damage resistance bubble wich recharges back in 20 seconds
 - Incoming fire damage bonus of 20%
 - No random crits
+
+
+
+
+
+
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 */
 
