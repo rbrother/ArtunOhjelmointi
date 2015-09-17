@@ -1,5 +1,5 @@
 var http = require('http');
-var qs = require('querystring');
+var querystring = require('querystring');
 
 function processPost(request, response, callback) {
 	var queryData = "";
@@ -10,7 +10,7 @@ function processPost(request, response, callback) {
 
 	request.on('end', function() {
 		console.log('end...');
-		callback( qs.parse(queryData) );
+		callback( querystring.parse(queryData), response );
 	});
 }
 
@@ -27,7 +27,7 @@ function respondToOptions( response ) {
 	response.end();
 }
 
-function respondToPost(data) {
+function respondToPost(data, response) {
 	console.log(data);
 	var headers = {};
 	headers["Access-Control-Allow-Origin"] = "*";
@@ -36,6 +36,10 @@ function respondToPost(data) {
 	response.writeHead(200, headers);
 	response.write("Onnistu");
 	response.end();
+	
+	serverPostToClient();
+}
+function serverPostToClient(){ 
 
 	var postData = querystring.stringify({'msg' : 'Hello World!'});
 	var options = {
