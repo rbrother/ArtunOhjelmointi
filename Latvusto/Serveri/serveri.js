@@ -1,6 +1,8 @@
 var http = require('http');
 var querystring = require('querystring');
 
+var pelaajienKoordinaatit;
+
 function processPost(request, response, callback) {
 	var queryData = "";
 	request.on('data', function(data) {
@@ -36,41 +38,6 @@ function respondToPost(data, response) {
 	response.writeHead(200, headers);
 	response.write("Onnistu");
 	response.end();
-	
-	serverPostToClient();
-}
-function serverPostToClient(){ 
-
-	var postData = querystring.stringify({'msg' : 'Hello World!'});
-	var options = {
-		hostname: '127.0.0.1',
-		port: 1338,
-		path: '',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			'Content-Length': postData.length
-		}
-	};
-
-	var req = http.request(options, function(res) {
-		console.log('STATUS: ' + res.statusCode);
-		console.log('HEADERS: ' + JSON.stringify(res.headers));
-		res.setEncoding('utf8');
-		res.on('data', function (chunk) {
-			console.log('BODY: ' + chunk);   
-		});
-		res.on('end', function() {
-			Console.log('No more data in response.')
-		})
-	});
-	req.on('error', function(e) {
-		console.log('problem with request: ' + e.message);
-	});
-
-	// write data to request body
-	req.write(postData);
-	req.end();
 }
 
 function respondToIncomingMessage(request, response) {
