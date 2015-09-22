@@ -141,7 +141,7 @@ function liikuta() {
 	$.ajaxSetup({
 	  contentType: "application/json; charset=utf-8"
 	});
-
+	
 	if(onkoVastausTullut){
 		onkoVastausTullut = false;
 		var url = "http://127.0.0.1:1337/";
@@ -149,8 +149,7 @@ function liikuta() {
 		console.log("Sending to server: " + viesti);
 		$.post(url, viesti, function( data, status ) {
 			console.log("data from server: " + data);
-			setTimeout( function() { onkoVastausTullut = true; }, 100 );
-			
+			setTimeout( function() { onkoVastausTullut = true; }, 100 );			
 		} );
 	};
 	
@@ -252,6 +251,7 @@ Pelimekaniikalliset aiheet
 			https://en.wikipedia.org/wiki/Node.js
 			(toinen mahdollisuus on k‰ytt‰‰ Ruby tai C# kieli‰)
 	ArtunKommentit
+		Firefoxissa konsoli avataan Ctrl+Shift+K.
 		Linkkej‰
 			https://nodejs.org/api/debugger.html
 			https://nodejs.org/api/repl.html
