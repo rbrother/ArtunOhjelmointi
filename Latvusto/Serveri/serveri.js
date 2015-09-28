@@ -59,13 +59,13 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 
 // Kotitehtävä 2015-09-22:
-// - Clientti lähettää tiheästi viestejä serverille nytkin
+// 1 Muuta niin, että Clientti lähettää edelleen tiheästi viestejä serverille,
 //   mutta viesti sisältää ukon koordinaatit vain jos ukko
 //   on liikkunut edellisen viestin jälkeen.
-// - Serveri tallentaa ukon koorinaatit saamastaan viestistä
+// 2 Serveri tallentaa ukon koorinaatit saamastaan viestistä
 //   vain jos viesti sisältää ukon koordinaatit.
 // Jatkoa:
-// - Clientti parsii serveriltä saamansa ukon koordinaatit
+// 3 Clientti parsii serveriltä saamansa ukon koordinaatit
 //   javascript-objektiksi.
-// - Clientti päivivvää ukon sijannin, jos serveriltä tulee
+// 4 Clientti päivivvää ukon sijannin, jos serveriltä tulee
 //   uudet koordinaatit, jotka ovat erilaiset kuin nykyiset.
