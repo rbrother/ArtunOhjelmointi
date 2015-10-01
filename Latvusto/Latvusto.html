@@ -150,9 +150,9 @@ function liikuta() {
 		var viesti = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
 		&&& if(viesti != ukonEntisetKoordinaatit){
 		ukonEntisetKoordinaatit = viesti;
-		
-		
+		if (ukonEntisetKoordinaatit = viesti){
 		console.log("Sending to server: " + viesti);
+		};
 		$.post(url, viesti, function( data, status ) {			
 			console.log("data from server: " + data);
 			setTimeout( function() { onkoVastausTullut = true; }, 100 );	
