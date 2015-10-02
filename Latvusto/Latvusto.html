@@ -150,9 +150,9 @@ function liikuta() {
 		var viesti = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
 		&&& if(viesti != ukonEntisetKoordinaatit){
 		ukonEntisetKoordinaatit = viesti;
-		if (ukonEntisetKoordinaatit = viesti){
+		//if (ukonEntisetKoordinaatit = viesti){
 		console.log("Sending to server: " + viesti);
-		};
+		//};
 		$.post(url, viesti, function( data, status ) {			
 			console.log("data from server: " + data);
 			setTimeout( function() { onkoVastausTullut = true; }, 100 );	
@@ -208,8 +208,8 @@ CLIENT2 (Maija) -----
 
 
 
-Tarina
-	Yleistettyn‰
+_Tarina_
+	_Yleistettyn‰_
 		Alussa p‰‰henkilˆn veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heid‰n esi-is‰ns‰ Pilgut tulivat heid‰n saarelleen tuntemattomista syist‰. Kaikki oli hyvin, kunnes er‰s kauppias pudotti saaren 
 		valtavan mangrovepuun mahlaa ker‰‰miens‰ puunpalasten p‰‰lle. Tuolloin palasista muodoistui ilke‰nn‰kˆinen maski, mik‰ teki sovinnon kauppiaan kanssa. Kauppias pit‰isi maskia koko ajan p‰‰ll‰ ja maski voisi 
 		vastapalveluksena muuttaa kauppiaan miksi vain h‰n haluaisi. Kauppiaasta tuli kuuluisa ja h‰n myi n‰it‰ maagisia naamioita lis‰‰ saaren asukkaille. Kuitenkin asukkaat alkoivat ep‰ill‰ koko juttua, kun kului suunnattomasti 
@@ -222,23 +222,24 @@ Tarina
 		Pomotaisteluiden j‰lkeen p‰‰henkilˆ ja h‰nen veljens‰ puhuvat eri aiheista sill‰ p‰‰henkilˆn veli on maskin vallassa ja t‰m‰ maski sattuu olemaan se ensimm‰inen, mink‰ kauppias lˆysi.
 		Kun p‰‰henkilˆ on viimeisen pomotaistelun ja lis‰pomojen j‰lkeen suorittanut suurpomotaistelun h‰nelle valkeaa, ett‰ vanhassa sodassa maskit voittivat, mutta kaikki maskit eiv‰t olleet loisia, mitk‰ loivat juuria
 		kantajansa sis‰‰n. Jotkut halusivat olla symbioosissa ja p‰‰henkilˆ on h‰mmentynyt(?) t‰st‰.
-	Moninpeli(Kyll‰, ette lukeneet v‰‰rin)
+	_Moninpeli(Kyll‰, ette lukeneet v‰‰rin)_
 		Moninpeliss‰ parasiittimaskit kantajineen (vihreit‰) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (keltaisia) toiselta puolelta planeettaa ovat n‰it‰ kahta vastaan. Iskujoukot ovat tulleet paikalle
 		sill‰ toisen pallonpuoliskon suurkaupungin presidentti on salaa p‰‰tt‰nyt, ett‰ turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
-			Kouludemo
+			_Kouludemo_
 				Planeetan toisen puolen veteraani on tullut perheens‰ kanssa risteilyll‰ l‰helle pelin p‰‰saarta. H‰n vaimonsa ja kahden lapsensa kanssa l‰hev‰t ˆkyjahdilla turistilaivalta tiet‰m‰tt‰‰n saarta p‰in ja pian he 
 				katuvat p‰‰tˆst‰‰n sill‰ laivan keulasta hyˆkk‰‰ outo maskihumanoidi ja takaa-
 				p‰in taas hullu Pilgu. Veteraani sulkee vaimonsa lapsineen ruumavarastoon ja alkaa puolustamaan ovea kahdelta hyˆkk‰‰jlt‰. 
 				Edell‰ mainittu tarina selitet‰‰n kaikille kolmelle pelaajalle, mutta maskihahmolle esitet‰‰n, ett‰ h‰nen t‰ytyy tuoda perheenj‰senet saarelle, jotta n‰m‰ voitaisiin "k‰‰nnytt‰‰". Hullu-Pilgu taas ainoastaan 
 				tulee sekaisin ajatuksin hyˆk‰ten haluten miehistˆ‰ ˆkyjahdille p‰‰st‰kseen pois
 				saarelta mahdollisimman pian.
-Visuaalisuus
-	Moninpeli
-		Kouludemo
-			Aseet
-				Lemonade-revolveri koostuu keltaisesta k‰densijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja j‰lleen kerran hopeisesta piipunp‰‰st‰.
-Pelimekaniikalliset aiheet
-	RoopenKommentit
+_Visuaalisuus_
+	_Moninpeli_
+		_Kouludemo-
+			_Aseet_
+				Lemonade-revolveri koostuu keltaisesta k‰densijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja j‰lleen kerran hopeisesta 
+				piipunp‰‰st‰.
+_Pelimekaniikalliset aiheet_
+	_RoopenKommentit_
 		Max 3 pelaajaa yht‰ aikaa kent‰ll‰ moninpeliss‰, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
 		toisiaan vastaan. Serveri, jolle kaikki koneet l‰hett‰v‰t oman pelaajan liikkeen ja 
 		saavat tiedon muiden pelaajien liikkeist‰. Koska ukkojen lentorata hyppyjen aikana on
@@ -255,69 +256,94 @@ Pelimekaniikalliset aiheet
 		Ehk‰ k‰ytet‰‰n NODE-JS -tekniikkaa? Javascripti‰ sek‰ serverill‰ ett‰ clientill‰?
 			https://en.wikipedia.org/wiki/Node.js
 			(toinen mahdollisuus on k‰ytt‰‰ Ruby tai C# kieli‰)
-	ArtunKommentit
+	_ArtunKommentit_
 		Firefoxissa konsoli avataan Ctrl+Shift+K.
-		Linkkej‰
+		_Linkkej‰_
 			https://nodejs.org/api/debugger.html
 			https://nodejs.org/api/repl.html
 			http://stackoverflow.com/questions/10600496/sending-messages-client-server-client-on-socket-io-on-node-js
-	Kent‰t
+	_Kent‰t_
 		-
-	Moninpeli
-		Kouludemo
-			Hahmot
-				Veteraani
-					Ase (Lemonade [Revolveri])
-						| Ampuu nopealla tahdilla ammuksia joiden vahinko 15%. Ammukset menev‰t vihollisten ja esteiden l‰pi 20 ruutua sekunnissa.
-
-						| Mit‰ enemm‰n ammus on penetroinnut objekteja, sit‰ v‰hemm‰n se tekee vahinkoa.
-					Toissijainen toiminto (Bio Storm)
-						| Veteraanin aktivoidessa t‰m‰n kyvyn h‰n saa viiden sekunnin ajan vain puolet tulevasta vahingosta ja h‰nen varasto-ovenavausprogressia ei voi jatkaa.
-						
-						| Kyvyn vaikutuksen loppuessa se t‰ytyy uudelleenladata menem‰ll‰ turvahuoneeseen tai odottamalla 25 sekuntia.
-					Objektiivi
-						Kent‰n keskell‰ alhaalla on varasto-ovi, mink‰ takana Veteraanin perhe majailee. Viholliset yritt‰v‰t p‰‰at‰ t‰m‰n oven luokse avatakseen sen. Veteraanin t‰ytyy viiden minuutin ajan est‰‰ t‰t‰ ja jos avaa-
-						misprogressi on kesken ajan loppuessa ei taistelu lopu vaan vasta silloin, kun aika on lopussa ja avaamisprogressi on 0%. Kun Veteraani pysyy yksin varasto-oven edess‰ tehty avaamisprogressi katoaa
-						samalla nopeudella mill‰ sit‰ ansaitaakin.
-					Statit
-						Liikkuu normaalinopeudella. | Liikkuvuusbonuksena kyky hyp‰t‰ ilmassa, mutta vain 50% tavallisesta hyppypituudesta. | Saadun vahingon jakajana 1.
-				Hullu Pilgu
-					Ase (Ancient Champion [Repaleiset nyrkkeilyhanskat])
-						| Ollessaan ilmassa Pilgu voi ottaa vihollisen W-n‰pp‰imell‰ k‰siins‰ ja sitten h‰n voi heitt‰‰ t‰m‰n m‰‰r‰ten suunnan W-n‰pp‰imell‰. Kun vihollinen osuu sein‰‰n h‰n saa 10% vahinkoa, mutta h‰n kimpoaa 
-						yhden kerran jolloin osuttuaan kaksi kertaa sein‰‰n, h‰n on menett‰nyt 20% el‰m‰pisteit‰. Jos heitetty vihollinen osuu toiseen viholliseen he molemmat saavat 20% edest‰ vahinkoa ja heitetty vihollinen
-						lopettaa heitettyn‰ olemisen.
-						
-						| Kun vihollinen on Pilgun k‰dess‰, h‰n voi p‰‰st‰ pois painamalla nelj‰ kertaa ASDW-n‰pp‰imi‰ jossain tietyss‰ j‰rjestyksess‰.
-					Toissijainen toiminto (Gliding)
-						| Ilmassa ollessaan AD-n‰pp‰imi‰ k‰ytt‰m‰ll‰ Pilgu voi joko syˆksy‰ eteenp‰in tai k‰‰nty‰ toisinp‰in. H‰n voi syˆksyess‰‰n myˆs tˆni‰ vihollisia.
-						
-						| Syˆksyess‰‰n Pilgu ottaa jakaa tulevan vahingon 0.9 tehden saadusta vahingosta suuremman.
-					Objektiivi
+	_Moninpeli_
+		Sek‰ Kouludemossa ett‰ lopullisessa versiossa hahmojen el‰m‰pisteet mitataan prosenteissa ja mit‰ v‰hemm‰n n‰it‰ on sit‰ todenn‰kˆisemp‰‰
+		on se, ett‰ seuraava isku kaataa pelihahmon.
+		Aseet YMS voivat tehd‰ desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli n‰ytt‰‰ pelaajalle vain kokonaislukuprosentit.
+		Aseita ja kykyj‰ vaihdellaan Q- ja E-n‰pp‰imill‰.
+		_Kouludemo_
+			_Kentt‰_
+				_Ideat_
+					Kentt‰ n‰ytt‰‰ ˆkyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kentt‰suunnitte-
+					lua hˆystettyn‰ v‰hint‰‰n kolmella eri reitill‰ p‰‰kohteisiin.
+			_Hahmot_
+				_Veteraani_
+					_Ase (Lemonade [Revolveri])_
+						| Ampuu 4 ammusta per sekunti 6 ammuksen klipill‰. Ammukset tekev‰t maksimissaan 7.5% vahinkoa ja menev‰t vihollisten ja
+						seinien l‰pi 75%
+						| Ammus tekee sit‰ v‰hemm‰n vahinkoa, mit‰ enemm‰n ampujan ja uhrin v‰lill‰ on et‰isyytt‰ (Vahinko tasaisesti v‰henee
+						tasaisesti 15 ruudun et‰isyydell‰ maksimistaan vain 10% maksimistaan).
+					_Toissijainen toiminto (Bio Storm)_
+						| Veteraani haltuunottaa 0.5% Boostia per sekunti.
+						| 25% Boostin hinnalla Veteraani voi aktivoida viiden sekunnin ajanjakson jolloin h‰n ottaa 50% v‰hemm‰n vahinkoa ja jolloin
+						h‰nen varastonoviaan ei voi availla.
+					_Objektiivi_
+						Kent‰n keskell‰ alhaalla on varasto-ovi, mink‰ takana Veteraanin perhe majailee. Viholliset yritt‰v‰t p‰‰at‰ t‰m‰n oven 
+						luokse avatakseen sen. Veteraanin t‰ytyy viiden minuutin ajan est‰‰ t‰t‰ ja jos avaamisprogressi on kesken ajan loppuessa 
+						ei taistelu lopu vaan vasta silloin, kun aika on lopussa ja avaamisprogressi on 0%. Kun Veteraani pysyy yksin varasto-oven 
+						edess‰ tehty avaamisprogressi katoaa samalla nopeudella mill‰ sit‰ ansaitaakin.
+					_Statit_
+						| Liikkuu normaalinopeudella. 
+						| Hypyn ja laskeutumisen v‰liss‰ Veteraani voi jompaakumpaa hyppynappia painamalla hyp‰t‰ v‰littˆm‰sti 25% hyppyvoimalla
+						joko vasemmalle tai oikealle.
+						| Kun Veteraani saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
+				_Hullu Pilgu_
+					_Ase (Mad Gloves [Repaleiset nyrkkeilyhanskat])_
+						| Ollessaan ilmassa Pilgu voi W-n‰pp‰int‰ painamalla ottaa itse‰‰n koskettavan vihollisien k‰siins‰ ja t‰m‰n j‰lkeen pit‰-
+						m‰ll‰ W-n‰pp‰int‰ pohjassa m‰‰r‰t‰ heittosuunnan. Kun W-n‰pp‰imest‰ p‰‰stet‰‰n irti vihollinen heitet‰‰n heittosuuntaan
+						t‰ydell‰ hyppynopeudella. Kun vihollinen seuraavan kerran osuu sein‰m‰‰n h‰n saa 10% vahinkoa kimmoten samalla peilim‰i-
+						sesti sein‰st‰ saaden seuraavan kerran sein‰‰n osuessaan j‰lleen kerran 10% vahikoa. T‰m‰n j‰lkeen seinist‰ kimpoilu
+						p‰‰ttyy. Jos vihollinen osuu toiseen viholliseen lent‰ess‰‰n he molemmat ansaitsevat 20% vahinkoa.
+						| Ollessaan Pilgun k‰siss‰ vihollinen p‰‰see pois painamalla nelj‰‰ ruudulla n‰kyv‰‰ ASDW-n‰pp‰int‰ ruudun j‰rjestyksess‰.
+					_Toissijainen toiminto (Gliding)_
+						| Pilgulla on p‰‰ll‰‰n lent‰j‰n puku ja p‰‰ss‰‰n miniriippuliidin. T‰m‰ puku hidastaa h‰nen putoamisnopeutta painovoiman
+						vaikutuksesta 50%.
+						| T‰m‰ asu p‰‰ll‰‰n h‰n voi myˆskin ollessaan ilmassa syˆksy‰ liitosuuntaassa A- ja D-n‰pp‰imill‰. Toisella h‰n voi syˆk-
+						sy‰ eteenp‰in ja toisella h‰n voi muuttaa liitosuuntaansa.
+						| T‰ll‰ syˆksyll‰ Pilgu ei voi tehd‰ vahinkoa, mutta h‰n voi tˆn‰ist‰ sill‰ vihollisia jolloin he hyp‰ht‰v‰t 25% maksimi-
+						voimastaan.
+					_Objektiivi_
 						Pilgu tulee ˆkyjahdin takaosasta ja h‰nen t‰ytyy p‰‰st‰ laivan ruuman varasto-oven luokse. Siell‰ h‰nen t‰ytyy seist‰ oven edess‰ yksin jolloin ovenavausprogressimittari t‰yttyy. Kest‰‰ kolmekymment‰
 						sekuntia avata ovi ja objektiivi suoritetaan, jos ovenavaus on suoritettu ja olet ainoa henkilˆ oven edess‰.
-					Statit
-						Lataa hyppymittarinsa 25% nopeammin. | Likkuvuusbonuksena edell‰ mainittu hyppymittarinopeusboosti. | Saadun vahingon jakajana (kun ei syˆksym‰ss‰) 1.
-				Maskihumanoidi
-					Ase (Olive [Kranaatti])
-						| W-n‰pp‰imell‰ Humanoidi ottaa esiin kranaatin poistaen t‰m‰n sokan jonka j‰lkeen W-n‰pp‰imell‰ h‰n voi hypyn kaltaisesti m‰‰r‰t‰ suunnan mihin kranaatti menee. R‰j‰ht‰ess‰‰n luo valtavan vahingoittavan
-						alueen, miss‰ 20% edest‰ vahinkoa otetaan.
-						
-						| Kranaatteja heitet‰‰n hitaalla tahdilla.
-					Toissijainen toiminto (Materialized Aura)
-						| Humanoidi laittaa maahan maskipatsaan, mink‰ silm‰t toimivat kamerana, mink‰ l‰pi humanoidi voi n‰hd‰ kaukaisiakin asioita, mink‰ suu toimiii automaattiturrettina, jos vihollinen sattuu sen silmien
-						n‰kˆkentt‰‰n ja mik‰ aiheuttaa pienell‰ alueella vihollisten tulevan vahingon jaolle 0.2 nousun.
-						
-						| Humanoidi voi laittaa maahan maksimissaan kolme patsasta, mutta mit‰ enmm‰n patsaita on, sit‰ v‰hemm‰n niill‰ on kykyj‰. Kahdella patsaalla on vain kamerakyky ja vahingonnosto vihollisiin-kyky, kun
-						taas kolmellaon vain kamerakyky. Patasaita ei voi laittaa varasto-oven eteen ja kun kolmen patsaan ollessa kent‰ll‰ nelj‰s laitetaan t‰m‰ nelj‰s tuhoaa kolme alkuper‰ist‰. Humanoidi uudelleenlataa
-						toiminnon kymmenen sekunnin viiveell‰.
-					Obhektiivi
-						Humanoidi tulee ˆkyjahdin keulasta ja h‰nell‰ on sama objektiivi, kuin Pilgulla, mutta humanoidi avaa varasto-ovea 10% hitaammin, kuin Pilgu.
-		Aseideat
-			Pistoolikaarijousi nimelt‰‰n ...
+					_Statit_
+						| Pilgun hyppy latautuu 25% nopeammin, kuin muiden pelihahmojen.  
+						| Likkuvuusbonuksena edell‰ mainittu hyppymittarinopeusboosti. 
+						| Kun Pilgu saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
+				_Maskihumanoidi_
+					_Ase (Olive [Kranaatti])_
+						| W-n‰pp‰imen painalluksella Humanoidi poistaa kranaattinsa sokan ja kun t‰m‰ ollaan suoritettu kranaatti r‰j‰ht‰‰ seuraa-
+						van 3 sekunnin kuluttua luoden 2 ruudun s‰teen kokoisen r‰j‰hdyksen mik‰ voi vahingoittaa myˆs h‰nt‰.
+						| Kun humanoidi on poistanut sokan, W-n‰pp‰int‰ pohjassa pit‰m‰ll‰ pelaaja voi p‰‰tt‰‰ kranaatin heittosuunnan ja kranaatti
+						heitet‰‰n t‰ydell‰ hyppynopeudella.
+						| Humanoidi kantaa aloittaessaan 3 kranaattia mukanaan, uudelleenluoden yhden puuttuvan takaisin tarpeen tullessa kymmeness‰
+						sekunnissa.
+						| Kranaatti aiheuttaa r‰j‰hdysalueellaan 20% vahinkoa.
+					_Toissijainen toiminto (Aura Matter)_
+						| W-n‰pp‰imen painalluksella Humanoidi asettaa seisomispaikalleen puolustusmaskin, mill‰ on alussa kyky toimia turvakamera-
+						na, vihollisherkkyyden nostajana ja vahingoittavan auran tuottajana.
+						| Edell‰ mainitussa vaiheessaan puolustusmaskia ymp‰rˆiv‰‰ aluetta (ei seinien l‰pi n‰kyv‰‰) voi tarkastella menem‰ll‰
+						Q- ja E-n‰pp‰imill‰ maskin asetuskohtaan ja katsomalla ruudun keskell‰ ylh‰‰ll‰ olevaan ruutuun n‰kien maskin n‰kˆkent‰n.
+						| Edell‰ mainitussa vaiheessa puolustusmaski nostaa n‰kemiens‰ vihollisten vahingonhaltuunottoa 20%.
+						| Edell‰ mainitussa vaiheessa puolustusmaski vahingoittaa n‰kemi‰‰n vihollisia 10% / sekunti (12% per sekunti, koska
+						edell‰ mainitussa vaiheessa maskilla aiheuttaa 20% enemm‰n vahinkoa vihollisiin).
+						| Edell‰ mainitussa vaiheessa puolustusmaski ottaa kaiken vahinkonsa 1.2-kertaisena.
+					_Obhektiivi_
+						Humanoidi tulee ˆkyjahdin keulasta ja h‰nell‰ on sama objektiivi, kuin Pilgulla, mutta humanoidi avaa varasto-ovea 
+						10% hitaammin, kuin Pilgu.
+		_Aseideat_
+			_Pistoolikaarijousi nimelt‰‰n ..._
 				| Aina kun aseen klippi on t‰ynn‰ se ampuu kolme eri suuntiin menev‰‰ nuolta, mitk‰ tekev‰t sit‰ enemm‰n vahinkoa mit‰ suurempi m‰‰r‰ nuolista osuu viholliseen.
 				
 				| Lataa hitaasti nuolia ja tekee v‰h‰n vahinkoa pienen nuolim‰‰r‰n osuessa vihollisiin.
-			Haulikko nimelt‰‰n ... ja t‰m‰n aseen visuaalinen idea tulee kuvasta nimelt‰‰n Shotgun2.png
+			_Haulikko nimelt‰‰n ... ja t‰m‰n aseen visuaalinen idea tulee kuvasta nimelt‰‰n Shotgun2.png_
 				| Kun iskujoukkolaisella on kaksi kappaletta t‰t‰ asetyyppi‰ h‰n voi k‰yt‰‰ niit‰ samaan aikaan ottamalla yhden aseen kumpaakin
 				k‰teens‰.
 				| Kun iskujoukkolaisella on n‰it‰ aseita kaksi h‰n lataa ne yhdell‰ liikkeell‰ hankaamalla niiden s‰hkˆnluomissensoreita toisiinsa.
@@ -332,7 +358,7 @@ Pelimekaniikalliset aiheet
 				t‰t‰ haulikkoa ladattaisiin tavallisesti se toimiikin materialla, mit‰ luodaan s‰hkˆll‰ ja t‰t‰ s‰hkˆ‰ luodaan yhdell‰ haulikolla
 				pyˆritt‰m‰ll‰ siin‰ olevan ympyr‰n metallirangasta ja kahdella haulikolla hinkkaamalla pikaisesti aseen kylki‰ toinen toistaan vasten)
 				ovat GPL-boxeja, mitk‰ sis‰lt‰v‰t pienen koonsa takia hyvin v‰h‰n materiahaulikkokapasiteettia ("ammuksia").
-			Ase mik‰ k‰ytt‰‰ klippin‰‰n krokotiilik‰silaukkua.
+			_Ase mik‰ k‰ytt‰‰ klippin‰‰n krokotiilik‰silaukkua._
 Alkuper‰inen dokumentti
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	Peimekaniikat
