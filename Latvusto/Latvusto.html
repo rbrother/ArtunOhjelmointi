@@ -17,7 +17,7 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
-var ukonEntisetKoordinaatit;
+var ukonEntisetKoordinaatit = {Vaaka: 0, Pysty: 0};
 
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
@@ -147,15 +147,23 @@ function liikuta() {
 		onkoVastausTullut = false;
 		var url = "http://127.0.0.1:1337/";
 		
-		var viesti = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
-		&& if(viesti != ukonEntisetKoordinaatit){
-		ukonEntisetKoordinaatit = viesti;
-		//if (ukonEntisetKoordinaatit = viesti){
-		console.log("Sending to server: " + viesti);
-		//};
+		
+		var nykyisetKoordinaatit = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
+
+		
+		
+		if( ukkoBitmap.x == ukonEntisetKoordinaatit.Vaaka && ukkoBitmap.y == ukonEntisetKoordinaatit.Pysty ){
+			viesti = { };
+			console.log('...');
+		} else {
+			viesti = nykyisetKoordinaatit;
+			console.log('ukko liikkunut');
+		}
+		
+		ukonEntisetKoordinaatit = nykyisetKoordinaatit;
 		$.post(url, viesti, function( data, status ) {			
 			console.log("data from server: " + data);
-			setTimeout( function() { onkoVastausTullut = true; }, 100 );	
+			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
 		} );
 	};	
 }
