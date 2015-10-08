@@ -11,7 +11,6 @@ function processPost(request, response, callback) {
 	});
 
 	request.on('end', function() {
-		console.log('end...');
 		callback( querystring.parse(queryData), response );
 	});
 }
@@ -30,9 +29,12 @@ function respondToOptions( response ) {
 }
 
 function respondToPost(data, response) {
-	console.log(data);
-	console.log("Vaaka on " + data.Vaaka);
-	pelaajienKoordinaatit = data;
+	console.log("-----");
+	console.log("Viesti vastaanotettu: ", data);
+	if(data.Vaaka != undefined){
+		pelaajienKoordinaatit = data; // tallennetaan pelaajien koordinaatit
+		console.log("KoordinaatitTallessa");
+	}
 	var headers = {};
 	headers["Access-Control-Allow-Origin"] = "*";
 	headers["Access-Control-Allow-Credentials"] = false;
@@ -43,9 +45,6 @@ function respondToPost(data, response) {
 }
 
 function respondToIncomingMessage(request, response) {
-	console.log('Serveri vastaanotti viestin!');
-	console.log(request.method);
-
 	if ( request.method == 'OPTIONS') {
 		respondToOptions( response );
 	} else if ( request.method == 'POST') {
@@ -59,11 +58,6 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 
 // Kotitehtävä 2015-09-22:
-// 1 Muuta niin, että Clientti lähettää edelleen tiheästi viestejä serverille,
-//   mutta viesti sisältää ukon koordinaatit vain jos ukko
-//   on liikkunut edellisen viestin jälkeen.
-// 2 Serveri tallentaa ukon koorinaatit saamastaan viestistä
-//   vain jos viesti sisältää ukon koordinaatit.
 // Jatkoa:
 // 3 Clientti parsii serveriltä saamansa ukon koordinaatit
 //   javascript-objektiksi.

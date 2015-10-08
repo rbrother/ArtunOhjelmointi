@@ -163,6 +163,9 @@ function liikuta() {
 		ukonEntisetKoordinaatit = nykyisetKoordinaatit;
 		$.post(url, viesti, function( data, status ) {			
 			console.log("data from server: " + data);
+			// todo: parsi vastaus serveriltä (data) javascript-objektiksi
+			// ja aseta ukon koordinateiksi, jos ovat erisuuret kuin 
+			// ukon nykyiset koordinaatit.
 			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
 		} );
 	};	
