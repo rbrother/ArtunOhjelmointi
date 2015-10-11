@@ -63,7 +63,5 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 // Kotitehtävä 2015-09-22:
 // Jatkoa:
-// 3 Clientti parsii serveriltä saamansa ukon koordinaatit
-//   javascript-objektiksi.
 // 4 Clientti päivivvää ukon sijannin, jos serveriltä tulee
 //   uudet koordinaatit, jotka ovat erilaiset kuin nykyiset.
