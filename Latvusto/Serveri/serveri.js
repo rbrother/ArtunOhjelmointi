@@ -1,5 +1,6 @@
 var http = require('http');
 var querystring = require('querystring');
+var aloitus = true;
 
 var pelaajienKoordinaatit;
 
@@ -31,7 +32,8 @@ function respondToOptions( response ) {
 function respondToPost(data, response) {
 	console.log("-----");
 	console.log("Viesti vastaanotettu: ", data);
-	if(data.Vaaka != undefined){
+	if(data.Vaaka != undefined || aloitus == true){
+		aloitus = false;
 		pelaajienKoordinaatit = data; // tallennetaan pelaajien koordinaatit
 		console.log("KoordinaatitTallessa");
 	}
@@ -39,8 +41,10 @@ function respondToPost(data, response) {
 	headers["Access-Control-Allow-Origin"] = "*";
 	headers["Access-Control-Allow-Credentials"] = false;
 	headers["Content-Type"] = 'text/plain';
-	response.writeHead(200, headers);   
-	response.write( querystring.stringify(pelaajienKoordinaatit) );
+	response.writeHead(200, headers); 
+	var json = JSON.stringify(pelaajienKoordinaatit);
+	console.log("JSON = " + json);
+	response.write (json);
 	response.end();
 }
 

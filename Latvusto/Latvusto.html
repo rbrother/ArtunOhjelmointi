@@ -161,11 +161,15 @@ function liikuta() {
 		}
 		
 		ukonEntisetKoordinaatit = nykyisetKoordinaatit;
-		$.post(url, viesti, function( data, status ) {			
+		$.post(url, viesti, function( data, status ) {	
 			console.log("data from server: " + data);
-			// todo: parsi vastaus serveriltä (data) javascript-objektiksi
-			// ja aseta ukon koordinateiksi, jos ovat erisuuret kuin 
-			// ukon nykyiset koordinaatit.
+			if (data != ""){
+				var koordinaatit = jQuery.parseJSON (data);
+				// todo: parsi vastaus serveriltä (data) javascript-objektiksi
+				// ja aseta ukon koordinateiksi, jos ovat erisuuret kuin 
+				// ukon nykyiset koordinaatit.
+				console.log(koordinaatit.Vaaka + " ja " + koordinaatit.Pysty);
+			};
 			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
 		} );
 	};	
