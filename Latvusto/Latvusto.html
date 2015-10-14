@@ -18,6 +18,7 @@ var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
 var ukonEntisetKoordinaatit = {Vaaka: 0, Pysty: 0};
+var gamerid;
 
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
@@ -45,6 +46,7 @@ var kentta2 = [
 ];
 
 window.onload = function() {
+	gamerid = prompt("Please, insert your gamer ID", "");
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
@@ -148,7 +150,7 @@ function liikuta() {
 		var url = "http://127.0.0.1:1337/";
 		
 		
-		var nykyisetKoordinaatit = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y };
+		var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
 
 		
 		
@@ -156,11 +158,11 @@ function liikuta() {
 			viesti = { };
 			console.log('...');
 		} else {
-			viesti = nykyisetKoordinaatit;
+			viesti = pelaajainformaatiota;
 			console.log('ukko liikkunut');
 		}
 		
-		ukonEntisetKoordinaatit = nykyisetKoordinaatit;
+		ukonEntisetKoordinaatit = pelaajainformaatiota;
 		$.post(url, viesti, function( data, status ) {	
 			console.log("data from server: " + data);
 			if (data != "{}" ){

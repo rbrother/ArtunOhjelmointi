@@ -2,7 +2,7 @@ var http = require('http');
 var querystring = require('querystring');
 var aloitus = true;
 
-var pelaajienKoordinaatit;
+var pelaajienKoordinaatit = {"pelaaja":, ""};
 
 function processPost(request, response, callback) {
 	var queryData = "";
@@ -32,7 +32,7 @@ function respondToOptions( response ) {
 function respondToPost(data, response) {
 	console.log("-----");
 	console.log("Viesti vastaanotettu: ", data);
-	if(data.Vaaka != undefined || aloitus == true){
+	if(data.length == 0 || aloitus == true){
 		aloitus = false;
 		pelaajienKoordinaatit = data; // tallennetaan pelaajien koordinaatit
 		console.log("KoordinaatitTallessa");
