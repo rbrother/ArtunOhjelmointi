@@ -2,7 +2,44 @@ var http = require('http');
 var querystring = require('querystring');
 var aloitus = true;
 
-var pelaajienKoordinaatit = {"pelaaja":, ""};
+var pelaajienKoordinaatit = { };
+
+/*
+
+Näin voitaisiin muodostaa javascript-objekti, jos kaikki tiedot heti tiedossa:
+
+pelaajienKoordinaatit:
+	{
+		"Mikko" : { Vaaka: 50, Pysty 80 },
+		"Matti" : { Vaaka: 30, Pysty: 100 }
+	}
+
+	Javascript-objektissa attribuutin asettaminen:
+	
+	var obj = {}
+	
+	obj["zom"] = 666;
+
+	->  obj on nyt { "zom" : 666 }
+
+	obj["nam"] = 555;
+	
+	-> obj on nyt {"zom" : 666, "nam" : 555}
+	
+	obj["zom"] = 111;
+	
+	-> obj on nyt {"zom" : 111, "nam": 555}
+	
+	printataan objektista "nam" attribuutin arvo:
+	
+	console.log(obj["nam"]);    // tai
+	console.log(obj.nam);
+
+	x["moikka"] -> undefined
+	
+	
+*/
+
 
 function processPost(request, response, callback) {
 	var queryData = "";
@@ -32,11 +69,9 @@ function respondToOptions( response ) {
 function respondToPost(data, response) {
 	console.log("-----");
 	console.log("Viesti vastaanotettu: ", data);
-	if(data.length == 0 || aloitus == true){
-		aloitus = false;
-		pelaajienKoordinaatit = data; // tallennetaan pelaajien koordinaatit
-		console.log("KoordinaatitTallessa");
-	}
+	if(data.GAMERID	!= undefined){
+		pelaajienKoordinaatit[data.GAMERID] = { "Y" : data.Pysty, "X" : data.Vaaka };
+	};
 	var headers = {};
 	headers["Access-Control-Allow-Origin"] = "*";
 	headers["Access-Control-Allow-Credentials"] = false;
