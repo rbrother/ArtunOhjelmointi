@@ -164,23 +164,16 @@ function liikuta() {
 		
 		ukonEntisetKoordinaatit = pelaajainformaatiota;
 		$.post(url, viesti, function( data, status ) {	
+			/*  { 	"Mikko" : { Vaaka: 50, Pysty 80 },
+					"Matti" : { Vaaka: 30, Pysty: 100 } 
+				} */
+		
 			console.log("data from server: " + data);
 			if (data != "{}" ){
 				var koordinaatit = jQuery.parseJSON (data);
-				// todo: parsi vastaus serveriltä (data) javascript-objektiksi
-				// ja aseta ukon koordinateiksi, jos ovat erisuuret kuin 
-				// ukon nykyiset koordinaatit.
-				var x = parseFloat (koordinaatit.Vaaka);
-				var y = parseFloat (koordinaatit.Pysty);
-				console.log(koordinaatit.Vaaka + " ja " + koordinaatit.Pysty);
-				if (ukkoBitmap.x != x && ukkoBitmap.y != x){
-					console.log ("x on " + x);
-					console.log ("y on " + y);
-					console.log ("ukkoBitmap.x on " + ukkoBitmap.x);
-					console.log ("ukkoBitmap.y on " + ukkoBitmap.y);
-					//ukkoBitmap.x = x;
-					//ukkoBitmap.y = x;
-				};
+				var pelaajanimet = Object.keys(data);
+
+				// var x = parseFloat (koordinaatit[GAMERID].Vaaka);
 			};
 			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
 		} );

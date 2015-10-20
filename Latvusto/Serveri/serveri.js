@@ -34,9 +34,6 @@ pelaajienKoordinaatit:
 	
 	console.log(obj["nam"]);    // tai
 	console.log(obj.nam);
-
-	x["moikka"] -> undefined
-	
 	
 */
 
