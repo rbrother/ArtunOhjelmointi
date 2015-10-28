@@ -19,7 +19,12 @@ var hyppyPalkki;
 var onkoVastausTullut = true;
 var ukonEntisetKoordinaatit = {Vaaka: 0, Pysty: 0};
 var gamerid;
+var muutPelaajat = {}; 
+	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
 
+	// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
+	// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
+	
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
 // NODE.JS tutorial (etsi):
@@ -171,8 +176,27 @@ function liikuta() {
 			console.log("data from server: " + data);
 			if (data != "{}" ){
 				var koordinaatit = jQuery.parseJSON (data);
-				var pelaajanimet = Object.keys(data);
+				var pelaajanimet = Object.keys(koordinaatit);
+				console.log (pelaajanimet);
 
+				pelaajanimet.forEach (function (id) {
+					if (gamerid == id){}
+					else if (muutPelaajat[id] == undefined){
+						// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.
+						var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+						muidenBtmp.scaleX = skaalaus;
+						muidenBtmp.scaleY = skaalaus;
+						stage.addChild(muidenBtmp);
+						muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+					}
+					else{
+						// Vanha muu pelaaja
+						var muidenBtmp = muutPelaajat[id].hahmoBitmap;
+						muidenBtmp.x = koordinaatit[id].Vaaka;
+						muidenBtmp.y = koordinaatit[id].Pysty;
+					}
+				});
+				
 				// var x = parseFloat (koordinaatit[GAMERID].Vaaka);
 			};
 			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
