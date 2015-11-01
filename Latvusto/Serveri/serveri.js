@@ -41,7 +41,6 @@ pelaajienKoordinaatit:
 function processPost(request, response, callback) {
 	var queryData = "";
 	request.on('data', function(data) {
-		console.log('data...');
 		queryData += data;
 	});
 
@@ -64,8 +63,6 @@ function respondToOptions( response ) {
 }
 
 function respondToPost(data, response) {
-	console.log("-----");
-	console.log("Viesti vastaanotettu: ", data);
 	if(data.GAMERID	!= undefined){
 		pelaajienKoordinaatit[data.GAMERID] = { "Y" : data.Pysty, "X" : data.Vaaka };
 	};
@@ -75,7 +72,6 @@ function respondToPost(data, response) {
 	headers["Content-Type"] = 'text/plain';
 	response.writeHead(200, headers); 
 	var json = JSON.stringify(pelaajienKoordinaatit);
-	console.log("JSON = " + json);
 	response.write (json);
 	response.end();
 }
@@ -93,7 +89,3 @@ http.createServer(respondToIncomingMessage).listen(1337,'127.0.0.1');
 console.log('Server running at http://127.0.0.1:1337/');
 
 
-// Kotitehtävä 2015-09-22:
-// Jatkoa:
-// 4 Clientti päivivvää ukon sijannin, jos serveriltä tulee
-//   uudet koordinaatit, jotka ovat erilaiset kuin nykyiset.

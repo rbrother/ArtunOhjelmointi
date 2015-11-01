@@ -17,7 +17,7 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
-var ukonEntisetKoordinaatit = {Vaaka: 0, Pysty: 0};
+var ukonEntisetviestiServerilt = {Vaaka: 0, Pysty: 0};
 var gamerid;
 var muutPelaajat = {}; 
 	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
@@ -159,25 +159,21 @@ function liikuta() {
 
 		
 		
-		if( ukkoBitmap.x == ukonEntisetKoordinaatit.Vaaka && ukkoBitmap.y == ukonEntisetKoordinaatit.Pysty ){
+		if( ukkoBitmap.x == ukonEntisetviestiServerilt.Vaaka && ukkoBitmap.y == ukonEntisetviestiServerilt.Pysty ){
 			viesti = { };
-			console.log('...');
 		} else {
 			viesti = pelaajainformaatiota;
-			console.log('ukko liikkunut');
 		}
 		
-		ukonEntisetKoordinaatit = pelaajainformaatiota;
+		ukonEntisetviestiServerilt = pelaajainformaatiota;
 		$.post(url, viesti, function( data, status ) {	
 			/*  { 	"Mikko" : { Vaaka: 50, Pysty 80 },
 					"Matti" : { Vaaka: 30, Pysty: 100 } 
 				} */
 		
-			console.log("data from server: " + data);
 			if (data != "{}" ){
-				var koordinaatit = jQuery.parseJSON (data);
-				var pelaajanimet = Object.keys(koordinaatit);
-				console.log (pelaajanimet);
+				var viestiServerilt = jQuery.parseJSON (data);
+				var pelaajanimet = Object.keys(viestiServerilt);
 
 				pelaajanimet.forEach (function (id) {
 					if (gamerid == id){}
@@ -192,14 +188,14 @@ function liikuta() {
 					else{
 						// Vanha muu pelaaja
 						var muidenBtmp = muutPelaajat[id].hahmoBitmap;
-						muidenBtmp.x = koordinaatit[id].Vaaka;
-						muidenBtmp.y = koordinaatit[id].Pysty;
+						muidenBtmp.x = viestiServerilt[id].X;
+						muidenBtmp.y = viestiServerilt[id].Y;
 					}
 				});
 				
-				// var x = parseFloat (koordinaatit[GAMERID].Vaaka);
+				// var x = parseFloat (viestiServerilt[GAMERID].Vaaka);
 			};
-			setTimeout( function() { onkoVastausTullut = true; }, 500 );	
+			setTimeout( function() { onkoVastausTullut = true; }, 20 );	
 		} );
 	};	
 }
