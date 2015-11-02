@@ -20,6 +20,7 @@ var onkoVastausTullut = true;
 var ukonEntisetviestiServerilt = {Vaaka: 0, Pysty: 0};
 var gamerid;
 var muutPelaajat = {}; 
+var veteraani = false;
 	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
 
 	// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
@@ -184,6 +185,9 @@ function liikuta() {
 						muidenBtmp.scaleY = skaalaus;
 						stage.addChild(muidenBtmp);
 						muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+						if (muutPelaajat[id] == "veteran"){
+							
+						}
 					}
 					else{
 						// Vanha muu pelaaja
