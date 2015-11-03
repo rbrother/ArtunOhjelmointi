@@ -19,9 +19,8 @@ var hyppyPalkki;
 var onkoVastausTullut = true;
 var ukonEntisetviestiServerilt = {Vaaka: 0, Pysty: 0};
 var gamerid;
-var muutPelaajat = {}; 
-var veteraani = false;
-	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
+var muutPelaajat = {}; 	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
+var url = "http://127.0.0.1:1337/";
 
 	// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 	// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -53,6 +52,20 @@ var kentta2 = [
 
 window.onload = function() {
 	gamerid = prompt("Please, insert your gamer ID", "");
+	var alkuviesti = { GAMERID: gamerid };
+	$.post (url, alkuviesti, function (serverinVastausTeksti, status){
+		// t‰ss‰: 1. parsi serverinVastausTeksti javascript objektiksi,
+		// hae sielt‰ mink‰ ukon serveri on antanut t‰lle pelaajalle
+		// ja m‰‰r‰‰ png-tiedoston nimi sen mukaan
+		// 2. Serverin koodin lis‰‰minen niin, ett‰ se vastaa alkuviestiin oikein
+		var pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
+		ukkoBitmap = new createjs.Bitmap(pngNimi);
+		ukkoBitmap.scaleX = skaalaus;
+		ukkoBitmap.scaleY = skaalaus;
+		ukkoBitmap.x = 0*blokinKoko;
+		ukkoBitmap.y = 0*blokinKoko;
+		stage.addChild(ukkoBitmap);
+	});
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
@@ -60,17 +73,7 @@ window.onload = function() {
     TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
     stage.addChild(TestiTausta);
     
-    ukkoBitmap = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
-    ukkoBitmap.scaleX = skaalaus;
-    ukkoBitmap.scaleY = skaalaus;
-    ukkoBitmap.x = 0*blokinKoko;
-    ukkoBitmap.y = 0*blokinKoko;
-    stage.addChild(ukkoBitmap);
     
-    //kentta1.forEach( function(blokki) {
-    //BlokkiaLisaa(blokki.x,blokki.y);
-	//} );
-	
 	var y = 0;
 	kentta2.forEach(function(rivi){
 		y++;
@@ -153,7 +156,6 @@ function liikuta() {
 	
 	if( onkoVastausTullut ){
 		onkoVastausTullut = false;
-		var url = "http://127.0.0.1:1337/";
 		
 		
 		var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
@@ -179,7 +181,7 @@ function liikuta() {
 				pelaajanimet.forEach (function (id) {
 					if (gamerid == id){}
 					else if (muutPelaajat[id] == undefined){
-						// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.
+						// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
 						var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
 						muidenBtmp.scaleX = skaalaus;
 						muidenBtmp.scaleY = skaalaus;
