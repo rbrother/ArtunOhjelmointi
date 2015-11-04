@@ -1,6 +1,7 @@
 var http = require('http');
 var querystring = require('querystring');
 var aloitus = true;
+var jarjestys = 0;
 
 var pelaajienKoordinaatit = { };
 
@@ -62,26 +63,40 @@ function respondToOptions( response ) {
 	response.end();
 }
 
-function respondToPost(data, response) {
-	if(data.GAMERID	!= undefined){
-		pelaajienKoordinaatit[data.GAMERID] = { "Y" : data.Pysty, "X" : data.Vaaka };
-	};
-	var headers = {};
-	headers["Access-Control-Allow-Origin"] = "*";
-	headers["Access-Control-Allow-Credentials"] = false;
-	headers["Content-Type"] = 'text/plain';
-	response.writeHead(200, headers); 
-	var json = JSON.stringify(pelaajienKoordinaatit);
-	response.write (json);
-	response.end();
-}
-
 function respondToIncomingMessage(request, response) {
 	if ( request.method == 'OPTIONS') {
 		respondToOptions( response );
 	} else if ( request.method == 'POST') {
 		processPost(request, response, respondToPost);
 	}
+}
+
+// Yllä olevat funktiot tällä hetkellä irrelevantteja.
+
+function respondToPost(data, response) {
+	var paluuviesti;
+	if(data.GAMERID	!= undefined){
+		if (pelaajienKoordinaatit[data.GAMERID] != undefined){
+			paluuviesti = pelaajienKoordinaatit;
+			pelaajienKoordinaatit[data.GAMERID] = { "Y" : data.Pysty, "X" : data.Vaaka };
+		}else{
+			jarjestys++;
+			pelaajienKoordinaatit[data.GAMERID] = {"Y" : 0, "X" : 0};
+			console.log ("Pelaajien lukumääränä " + jarjestys);
+			paluuviesti = {jarjestys: jarjestys};
+		}
+		
+	}else{
+		paluuviesti = pelaajienKoordinaatit;
+	}
+	var headers = {};
+	headers["Access-Control-Allow-Origin"] = "*";
+	headers["Access-Control-Allow-Credentials"] = false;
+	headers["Content-Type"] = 'text/plain';
+	response.writeHead(200, headers); 
+	var json = JSON.stringify(paluuviesti);
+	response.write (json);
+	response.end();
 }
 
 http.createServer(respondToIncomingMessage).listen(1337,'127.0.0.1');

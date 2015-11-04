@@ -53,12 +53,22 @@ var kentta2 = [
 window.onload = function() {
 	gamerid = prompt("Please, insert your gamer ID", "");
 	var alkuviesti = { GAMERID: gamerid };
+	$.ajaxSetup({
+	  contentType: "application/json; charset=utf-8"
+	});
 	$.post (url, alkuviesti, function (serverinVastausTeksti, status){
-		// t‰ss‰: 1. parsi serverinVastausTeksti javascript objektiksi,
+		console.log (serverinVastausTeksti);
+		var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
+		var pngNimi;
+		if (parsittuVastaus.jarjestys == 1){
+			pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
+		}
+		else{
+			pngNimi = "Gimp/Tekstuuriset/temporal.png";
+		}
 		// hae sielt‰ mink‰ ukon serveri on antanut t‰lle pelaajalle
 		// ja m‰‰r‰‰ png-tiedoston nimi sen mukaan
 		// 2. Serverin koodin lis‰‰minen niin, ett‰ se vastaa alkuviestiin oikein
-		var pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
 		ukkoBitmap = new createjs.Bitmap(pngNimi);
 		ukkoBitmap.scaleX = skaalaus;
 		ukkoBitmap.scaleY = skaalaus;
@@ -88,7 +98,8 @@ window.onload = function() {
         
     // state.update() needs to be called continuously.
     // First update might not show bitmaps if they are not yet loaded.
-    setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+    
+	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
 		if(xVauhti == 0 && yVauhti < 0.4){
@@ -130,6 +141,7 @@ function aloitaHyppy(pituus,suunta){
 }
 
 function liikuta() {
+	if (ukkoBitmap == undefined) return
     if ( nappiPohjassa ) {
 		if(hyppypituus < 10){
 			hyppypituus = hyppypituus + 0.1;
@@ -150,9 +162,6 @@ function liikuta() {
     }
 	
     stage.update();
-	$.ajaxSetup({
-	  contentType: "application/json; charset=utf-8"
-	});
 	
 	if( onkoVastausTullut ){
 		onkoVastausTullut = false;
@@ -182,13 +191,8 @@ function liikuta() {
 					if (gamerid == id){}
 					else if (muutPelaajat[id] == undefined){
 						// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
-						var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
-						muidenBtmp.scaleX = skaalaus;
-						muidenBtmp.scaleY = skaalaus;
-						stage.addChild(muidenBtmp);
-						muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+						visuaalinenLuonti();
 						
-						console.log(muutPelaajat[id]);
 					}
 					else{
 						// Vanha muu pelaaja
@@ -233,8 +237,16 @@ function BlokkiaLisaa(x,y) {
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
     blokkienTiedot.push( { x: x*blokinKoko, y: y*blokinKoko } );
+
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
+function visuaalinenLuonti (jarjestys){
+var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+	muidenBtmp.scaleX = skaalaus;
+	muidenBtmp.scaleY = skaalaus;
+	stage.addChild(muidenBtmp);
+	muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+};
 
 
 /*
