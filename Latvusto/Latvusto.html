@@ -242,11 +242,12 @@ function BlokkiaLisaa(x,y) {
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
 function visuaalinenLuonti (jarjestys){
-var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
-	muidenBtmp.scaleX = skaalaus;
-	muidenBtmp.scaleY = skaalaus;
-	stage.addChild(muidenBtmp);
-	muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+	if (parsittuVastaus.jarjestys != 1)
+		var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
+		muidenBtmp.scaleX = skaalaus;
+		muidenBtmp.scaleY = skaalaus;
+		stage.addChild(muidenBtmp);
+		muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
 };
 
 
