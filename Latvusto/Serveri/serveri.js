@@ -84,7 +84,7 @@ function respondToPost(data, response) {
 			pelaajienKoordinaatit[data.GAMERID] = {"Y" : 0, "X" : 0};
 			console.log ("Pelaajien lukumääränä " + jarjestys);
 			paluuviesti = {jarjestys: jarjestys};
-		}
+		}	
 		
 	}else{
 		paluuviesti = pelaajienKoordinaatit;
