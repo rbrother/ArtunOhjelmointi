@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
-	<script src="jquery.js"></script>
+    <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script src="jquery.js"></script>
 <script>
 var oikealle = true; 
 var stage;
@@ -17,15 +17,15 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
-var ukonEntisetviestiServerilt = {Vaaka: 0, Pysty: 0};
+var edellisetKoordinaatit = {Vaaka: 0, Pysty: 0};
 var gamerid;
-var muutPelaajat = {}; 	// { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
+var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
 var url = "http://127.0.0.1:1337/";
 var id;
 
-	// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
-	// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
-	
+// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
+// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
+
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
 // NODE.JS tutorial (etsi):
@@ -52,31 +52,15 @@ var kentta2 = [
 ];
 
 window.onload = function() {
-	gamerid = prompt("Please, insert your gamer ID", "");
-	var alkuviesti = { GAMERID: gamerid };
-	$.ajaxSetup({
-	  contentType: "application/json; charset=utf-8"
-	});
-	$.post (url, alkuviesti, function (serverinVastausTeksti, status){
-		console.log (serverinVastausTeksti);
-		var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-		var pngNimi;
-		if (parsittuVastaus.jarjestys == 1){
-			pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
-		}
-		else{
-			pngNimi = "Gimp/Tekstuuriset/temporal.png";
-		}
-		// hae sielt‰ mink‰ ukon serveri on antanut t‰lle pelaajalle
-		// ja m‰‰r‰‰ png-tiedoston nimi sen mukaan
-		// 2. Serverin koodin lis‰‰minen niin, ett‰ se vastaa alkuviestiin oikein
-		ukkoBitmap = new createjs.Bitmap(pngNimi);
-		ukkoBitmap.scaleX = skaalaus;
-		ukkoBitmap.scaleY = skaalaus;
-		ukkoBitmap.x = 0*blokinKoko;
-		ukkoBitmap.y = 0*blokinKoko;
-		stage.addChild(ukkoBitmap);
-	});
+    gamerid = prompt("Please, insert your gamer ID", "");
+    var alkuviesti = { GAMERID: gamerid };
+    $.ajaxSetup({
+      contentType: "application/json; charset=utf-8"
+    });
+    $.post (url, alkuviesti, function (serverinVastausTeksti, status){
+        var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
+        ukkoBitmap = visuaalinenLuonti(parsittuVastaus.jarjestys);
+    });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
 
@@ -85,72 +69,70 @@ window.onload = function() {
     stage.addChild(TestiTausta);
     
     
-	var y = 0;
-	kentta2.forEach(function(rivi){
-		y++;
-		for(x = 0;x < rivi.length;x++){
-			merkki = rivi.charAt(x);
-			if(merkki == 'X'){
-			BlokkiaLisaa(x,y);
-			}
-		}
-	});
-	
+    var y = 0;
+    kentta2.forEach(function(rivi){
+        y++;
+        for(x = 0;x < rivi.length;x++){
+            merkki = rivi.charAt(x);
+            if(merkki == 'X'){
+            BlokkiaLisaa(x,y);
+            }
+        }
+    });
+    
         
     // state.update() needs to be called continuously.
-    // First update might not show bitmaps if they are not yet loaded.
+    // First update might not show ukkoBitmaps if they are not yet loaded.
     
-	setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+    setInterval( liikuta, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = function(event) { 
-		if(xVauhti == 0 && yVauhti < 0.4){
-			if(event.keyCode == 68 || event.keyCode == 65){
-				if(nappiPohjassa == false){
-					hyppyPalkki = new createjs.Bitmap("Gimp/Tekstuuriset/hyppy-palkki.png");
-					hyppyPalkki.scaleX = 0.33;
-					hyppyPalkki.scaleY = 0.33;
-					hyppyPalkki.y = ukkoBitmap.y + 50;
-					stage.addChild(hyppyPalkki);
-				}
-				nappiPohjassa = true;
-			}
-		}
-    }
-    
-    window.onkeyup = function(event) {
-		if(xVauhti == 0 && yVauhti < 0.4){
-			if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-				aloitaHyppy(hyppypituus,+1);
-				nappiPohjassa = false;
-				hyppypituus = 0;
-			}
-			else if(event.keyCode == 65){ // A
-				aloitaHyppy(hyppypituus,-1);
-				nappiPohjassa = false;            
-				hyppypituus = 0;
-			}
+        if(xVauhti == 0 && yVauhti < 0.4){
+            if(event.keyCode == 68 || event.keyCode == 65){
+                if(nappiPohjassa == false){
+                    hyppyPalkki = new createjs.Bitmap("Gimp/Tekstuuriset/hyppy-palkki.png");
+                    hyppyPalkki.scaleX = 0.33;
+                    hyppyPalkki.scaleY = 0.33;
+                    hyppyPalkki.y = ukkoBitmap.y + 50;
+                    stage.addChild(hyppyPalkki);
+                }
+                nappiPohjassa = true;
+            }
         }
     }
     
-	
+    window.onkeyup = function(event) {
+        if(xVauhti == 0 && yVauhti < 0.4){
+            if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
+                aloitaHyppy(hyppypituus,+1);
+                nappiPohjassa = false;
+                hyppypituus = 0;
+            }
+            else if(event.keyCode == 65){ // A
+                aloitaHyppy(hyppypituus,-1);
+                nappiPohjassa = false;            
+                hyppypituus = 0;
+            }
+        }
+    }
 }
 
-function aloitaHyppy(pituus,suunta){	
+function aloitaHyppy(pituus,suunta){    
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
-	stage.removeChild(hyppyPalkki);
+    stage.removeChild(hyppyPalkki);
 }
 
 function liikuta() {
-	if (ukkoBitmap == undefined) return
+    if (ukkoBitmap == undefined) return
     if ( nappiPohjassa ) {
-		if(hyppypituus < 10){
-			hyppypituus = hyppypituus + 0.1;
-		}
-		hyppyPalkki.scaleX = hyppypituus * 0.13;
-		var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-		hyppyPalkki.x = ukkoBitmap.x - 0.5 * hyppyPalkkiLeveys + 25.5;
-	}
+        if(hyppypituus < 10){
+            hyppypituus = hyppypituus + 0.1;
+        }
+        hyppyPalkki.scaleX = hyppypituus * 0.13;
+        var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
+        hyppyPalkki.x = ukkoBitmap.x - 0.5 * hyppyPalkkiLeveys + 25.5;
+    }
     var newX = ukkoBitmap.x + xVauhti;
     var newY = ukkoBitmap.y + yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
@@ -161,53 +143,46 @@ function liikuta() {
         ukkoBitmap.y = newY;
         yVauhti = yVauhti - painovoima;
     }
-	
+    
     stage.update();
-	
-	if( onkoVastausTullut ){
-		onkoVastausTullut = false;
-		
-		
-		var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
+    
+    if( onkoVastausTullut ){
+        onkoVastausTullut = false;
+        var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
+        if( ukkoBitmap.x == edellisetKoordinaatit.Vaaka && ukkoBitmap.y == edellisetKoordinaatit.Pysty ){
+            viesti = { };
+        } else {
+            viesti = pelaajainformaatiota;
+        }
+        
+        edellisetKoordinaatit = pelaajainformaatiota;
+        $.post(url, viesti, function( data, status ) {    
+            /*  {     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
+                    "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
+                } */
+        
+            if (data != "{}" ){
+                var viestiServerilt = jQuery.parseJSON (data);
+                var pelaajanimet = Object.keys(viestiServerilt);
 
-		
-		
-		if( ukkoBitmap.x == ukonEntisetviestiServerilt.Vaaka && ukkoBitmap.y == ukonEntisetviestiServerilt.Pysty ){
-			viesti = { };
-		} else {
-			viesti = pelaajainformaatiota;
-		}
-		
-		ukonEntisetviestiServerilt = pelaajainformaatiota;
-		$.post(url, viesti, function( data, status ) {	
-			/*  { 	"Mikko" : { Vaaka: 50, Pysty 80 },
-					"Matti" : { Vaaka: 30, Pysty: 100 } 
-				} */
-		
-			if (data != "{}" ){
-				var viestiServerilt = jQuery.parseJSON (data);
-				var pelaajanimet = Object.keys(viestiServerilt);
-
-				pelaajanimet.forEach (function (id) {
-					if (gamerid == id){}
-					else if (muutPelaajat[id] == undefined){
-						// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
-						visuaalinenLuonti();
-						
-					}
-					else{
-						// Vanha muu pelaaja
-						var muidenBtmp = muutPelaajat[id].hahmoBitmap;
-						muidenBtmp.x = viestiServerilt[id].X;
-						muidenBtmp.y = viestiServerilt[id].Y;
-					}
-				});
-				
-				// var x = parseFloat (viestiServerilt[GAMERID].Vaaka);
-			};
-			setTimeout( function() { onkoVastausTullut = true; }, 20 );	
-		} );
-	};	
+                pelaajanimet.forEach (function (id) {
+                    if (gamerid == id){}
+                    else if (muutPelaajat[id] == undefined){
+                        // Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
+                        hahmoBitmap = visuaalinenLuonti(viestiServerilt[id].jarjestys);
+                        muutPelaajat[id] = { bitmap: hahmoBitmap};
+                    }
+                    else{
+                        // Vanha muu pelaaja
+                        var muidenBtmp = muutPelaajat[id].bitmap;
+                        muidenBtmp.x = viestiServerilt[id].X;
+                        muidenBtmp.y = viestiServerilt[id].Y;
+                    }
+                });
+            };
+            setTimeout( function() { onkoVastausTullut = true; }, 20 );    
+        } );
+    };    
 }
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
@@ -241,13 +216,19 @@ function BlokkiaLisaa(x,y) {
 
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
-function visuaalinenLuonti (jarjestys){
-	if (parsittuVastaus.jarjestys != 1)
-		var muidenBtmp = new createjs.Bitmap("Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png");
-		muidenBtmp.scaleX = skaalaus;
-		muidenBtmp.scaleY = skaalaus;
-		stage.addChild(muidenBtmp);
-		muutPelaajat[id] = {hahmoBitmap: muidenBtmp};
+function visuaalinenLuonti(jarjestys){
+    if (jarjestys == 1){
+        pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
+    }else{
+        pngNimi = "Gimp/Tekstuuriset/temporal.png";
+    };
+    var bitmap = new createjs.Bitmap(pngNimi);
+    bitmap.scaleX = skaalaus;
+    bitmap.scaleY = skaalaus;
+    bitmap.x = 0*blokinKoko;
+    bitmap.y = 0*blokinKoko;
+    stage.addChild(bitmap);
+    return bitmap;
 };
 
 
@@ -258,7 +239,7 @@ Client (Web Browser)                    Server (Node.js)
 $.POST(...)
       OPTIONS            ->              
                          <-             OPTIONS response
-	  POST               ->             Processing the POST DATA.	                                    
+      POST               ->             Processing the POST DATA.                                        
 
 
 CLIENT1 (Matti) -----
@@ -268,183 +249,183 @@ CLIENT2 (Maija) -----
 
 
 _Tarina_
-	_Yleistettyn‰_
-		Alussa p‰‰henkilˆn veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heid‰n esi-is‰ns‰ Pilgut tulivat heid‰n saarelleen tuntemattomista syist‰. Kaikki oli hyvin, kunnes er‰s kauppias pudotti saaren 
-		valtavan mangrovepuun mahlaa ker‰‰miens‰ puunpalasten p‰‰lle. Tuolloin palasista muodoistui ilke‰nn‰kˆinen maski, mik‰ teki sovinnon kauppiaan kanssa. Kauppias pit‰isi maskia koko ajan p‰‰ll‰ ja maski voisi 
-		vastapalveluksena muuttaa kauppiaan miksi vain h‰n haluaisi. Kauppiaasta tuli kuuluisa ja h‰n myi n‰it‰ maagisia naamioita lis‰‰ saaren asukkaille. Kuitenkin asukkaat alkoivat ep‰ill‰ koko juttua, kun kului suunnattomasti 
-		aikaa eik‰ kauppias siltik‰‰n kuollut. 
-		Er‰‰n‰ p‰iv‰n‰ kuitenkin er‰s maskinpit‰jist‰ kuoli onnettomuudessa ja ruumiinavauksessa paljastui, ett‰ koko ruumis oli juurien vallassa eik‰ alkuper‰isest‰ saarelaisesta ollut miltei mit‰‰n j‰ljell‰. T‰m‰ sai
-		kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitk‰ sota ja p‰‰henkilˆn veli ei koskaan saanut tiet‰‰ ‰idilt‰‰n miten sota p‰‰ttyi.
-		Tarinan j‰lkeen ideana on se, ett‰ p‰‰henkilˆn veli l‰htee heid‰n ‰itins‰ haudalle, mik‰ on ensimm‰isen alueen lopussa. P‰‰henkilˆ hakee heid‰n talosta lahjoja haudalle samalla opettaen pelaajalle perusmekaniikat.
-		Kun h‰n on saanut tavarat hankittua h‰n ei kuitenkaan p‰‰se ulos talon p‰‰ovesta. H‰n menee katon kautta jolloin h‰n n‰kee, ett‰ ovea pid‰ttelee joukko maskeja. N‰in alkaa tutoriaalitason maskitaistelu ja t‰st‰ 
-		peli jatkuukin ihan tavallisesti ottaen.
-		Pomotaisteluiden j‰lkeen p‰‰henkilˆ ja h‰nen veljens‰ puhuvat eri aiheista sill‰ p‰‰henkilˆn veli on maskin vallassa ja t‰m‰ maski sattuu olemaan se ensimm‰inen, mink‰ kauppias lˆysi.
-		Kun p‰‰henkilˆ on viimeisen pomotaistelun ja lis‰pomojen j‰lkeen suorittanut suurpomotaistelun h‰nelle valkeaa, ett‰ vanhassa sodassa maskit voittivat, mutta kaikki maskit eiv‰t olleet loisia, mitk‰ loivat juuria
-		kantajansa sis‰‰n. Jotkut halusivat olla symbioosissa ja p‰‰henkilˆ on h‰mmentynyt(?) t‰st‰.
-	_Moninpeli(Kyll‰, ette lukeneet v‰‰rin)_
-		Moninpeliss‰ parasiittimaskit kantajineen (vihreit‰) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (keltaisia) toiselta puolelta planeettaa ovat n‰it‰ kahta vastaan. Iskujoukot ovat tulleet paikalle
-		sill‰ toisen pallonpuoliskon suurkaupungin presidentti on salaa p‰‰tt‰nyt, ett‰ turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
-			_Kouludemo_
-				Planeetan toisen puolen veteraani on tullut perheens‰ kanssa risteilyll‰ l‰helle pelin p‰‰saarta. H‰n vaimonsa ja kahden lapsensa kanssa l‰hev‰t ˆkyjahdilla turistilaivalta tiet‰m‰tt‰‰n saarta p‰in ja pian he 
-				katuvat p‰‰tˆst‰‰n sill‰ laivan keulasta hyˆkk‰‰ outo maskihumanoidi ja takaa-
-				p‰in taas hullu Pilgu. Veteraani sulkee vaimonsa lapsineen ruumavarastoon ja alkaa puolustamaan ovea kahdelta hyˆkk‰‰jlt‰. 
-				Edell‰ mainittu tarina selitet‰‰n kaikille kolmelle pelaajalle, mutta maskihahmolle esitet‰‰n, ett‰ h‰nen t‰ytyy tuoda perheenj‰senet saarelle, jotta n‰m‰ voitaisiin "k‰‰nnytt‰‰". Hullu-Pilgu taas ainoastaan 
-				tulee sekaisin ajatuksin hyˆk‰ten haluten miehistˆ‰ ˆkyjahdille p‰‰st‰kseen pois
-				saarelta mahdollisimman pian.
+    _Yleistettyn‰_
+        Alussa p‰‰henkilˆn veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heid‰n esi-is‰ns‰ Pilgut tulivat heid‰n saarelleen tuntemattomista syist‰. Kaikki oli hyvin, kunnes er‰s kauppias pudotti saaren 
+        valtavan mangrovepuun mahlaa ker‰‰miens‰ puunpalasten p‰‰lle. Tuolloin palasista muodoistui ilke‰nn‰kˆinen maski, mik‰ teki sovinnon kauppiaan kanssa. Kauppias pit‰isi maskia koko ajan p‰‰ll‰ ja maski voisi 
+        vastapalveluksena muuttaa kauppiaan miksi vain h‰n haluaisi. Kauppiaasta tuli kuuluisa ja h‰n myi n‰it‰ maagisia naamioita lis‰‰ saaren asukkaille. Kuitenkin asukkaat alkoivat ep‰ill‰ koko juttua, kun kului suunnattomasti 
+        aikaa eik‰ kauppias siltik‰‰n kuollut. 
+        Er‰‰n‰ p‰iv‰n‰ kuitenkin er‰s maskinpit‰jist‰ kuoli onnettomuudessa ja ruumiinavauksessa paljastui, ett‰ koko ruumis oli juurien vallassa eik‰ alkuper‰isest‰ saarelaisesta ollut miltei mit‰‰n j‰ljell‰. T‰m‰ sai
+        kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitk‰ sota ja p‰‰henkilˆn veli ei koskaan saanut tiet‰‰ ‰idilt‰‰n miten sota p‰‰ttyi.
+        Tarinan j‰lkeen ideana on se, ett‰ p‰‰henkilˆn veli l‰htee heid‰n ‰itins‰ haudalle, mik‰ on ensimm‰isen alueen lopussa. P‰‰henkilˆ hakee heid‰n talosta lahjoja haudalle samalla opettaen pelaajalle perusmekaniikat.
+        Kun h‰n on saanut tavarat hankittua h‰n ei kuitenkaan p‰‰se ulos talon p‰‰ovesta. H‰n menee katon kautta jolloin h‰n n‰kee, ett‰ ovea pid‰ttelee joukko maskeja. N‰in alkaa tutoriaalitason maskitaistelu ja t‰st‰ 
+        peli jatkuukin ihan tavallisesti ottaen.
+        Pomotaisteluiden j‰lkeen p‰‰henkilˆ ja h‰nen veljens‰ puhuvat eri aiheista sill‰ p‰‰henkilˆn veli on maskin vallassa ja t‰m‰ maski sattuu olemaan se ensimm‰inen, mink‰ kauppias lˆysi.
+        Kun p‰‰henkilˆ on viimeisen pomotaistelun ja lis‰pomojen j‰lkeen suorittanut suurpomotaistelun h‰nelle valkeaa, ett‰ vanhassa sodassa maskit voittivat, mutta kaikki maskit eiv‰t olleet loisia, mitk‰ loivat juuria
+        kantajansa sis‰‰n. Jotkut halusivat olla symbioosissa ja p‰‰henkilˆ on h‰mmentynyt(?) t‰st‰.
+    _Moninpeli(Kyll‰, ette lukeneet v‰‰rin)_
+        Moninpeliss‰ parasiittimaskit kantajineen (vihreit‰) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (keltaisia) toiselta puolelta planeettaa ovat n‰it‰ kahta vastaan. Iskujoukot ovat tulleet paikalle
+        sill‰ toisen pallonpuoliskon suurkaupungin presidentti on salaa p‰‰tt‰nyt, ett‰ turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
+            _Kouludemo_
+                Planeetan toisen puolen veteraani on tullut perheens‰ kanssa risteilyll‰ l‰helle pelin p‰‰saarta. H‰n vaimonsa ja kahden lapsensa kanssa l‰hev‰t ˆkyjahdilla turistilaivalta tiet‰m‰tt‰‰n saarta p‰in ja pian he 
+                katuvat p‰‰tˆst‰‰n sill‰ laivan keulasta hyˆkk‰‰ outo maskihumanoidi ja takaa-
+                p‰in taas hullu Pilgu. Veteraani sulkee vaimonsa lapsineen ruumavarastoon ja alkaa puolustamaan ovea kahdelta hyˆkk‰‰jlt‰. 
+                Edell‰ mainittu tarina selitet‰‰n kaikille kolmelle pelaajalle, mutta maskihahmolle esitet‰‰n, ett‰ h‰nen t‰ytyy tuoda perheenj‰senet saarelle, jotta n‰m‰ voitaisiin "k‰‰nnytt‰‰". Hullu-Pilgu taas ainoastaan 
+                tulee sekaisin ajatuksin hyˆk‰ten haluten miehistˆ‰ ˆkyjahdille p‰‰st‰kseen pois
+                saarelta mahdollisimman pian.
 _Visuaalisuus_
-	_Moninpeli_
-		_Kouludemo-
-			_Aseet_
-				Lemonade-revolveri koostuu keltaisesta k‰densijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja j‰lleen kerran hopeisesta 
-				piipunp‰‰st‰.
+    _Moninpeli_
+        _Kouludemo-
+            _Aseet_
+                Lemonade-revolveri koostuu keltaisesta k‰densijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja j‰lleen kerran hopeisesta 
+                piipunp‰‰st‰.
 _Pelimekaniikalliset aiheet_
-	_RoopenKommentit_
-		Max 3 pelaajaa yht‰ aikaa kent‰ll‰ moninpeliss‰, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
-		toisiaan vastaan. Serveri, jolle kaikki koneet l‰hett‰v‰t oman pelaajan liikkeen ja 
-		saavat tiedon muiden pelaajien liikkeist‰. Koska ukkojen lentorata hyppyjen aikana on
-		deterministinen (ennustettava), riitt‰nee ett‰ serverille l‰hetet‰‰n tieto hypyn
-		alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat 
-		lentoradat (samoin ammuttujen ammusten kohdalla)	
-		
-		Voi myˆs olla 2 selainta samalla koneella, jolloin.
-		
-		K‰ytet‰‰n AJAX-tekniikkaa: "Asynchronous JAvascript and XML"
-			https://en.wikipedia.org/wiki/Ajax_(programming)
-			AJAX:ssa v‰litet‰‰n JSON-viestej‰: https://en.wikipedia.org/wiki/JSON
-			
-		Ehk‰ k‰ytet‰‰n NODE-JS -tekniikkaa? Javascripti‰ sek‰ serverill‰ ett‰ clientill‰?
-			https://en.wikipedia.org/wiki/Node.js
-			(toinen mahdollisuus on k‰ytt‰‰ Ruby tai C# kieli‰)
-	_ArtunKommentit_
-		Firefoxissa konsoli avataan Ctrl+Shift+K.
-		_Linkkej‰_
-			https://nodejs.org/api/debugger.html
-			https://nodejs.org/api/repl.html
-			http://stackoverflow.com/questions/10600496/sending-messages-client-server-client-on-socket-io-on-node-js
-	_Kent‰t_
-		-
-	_Moninpeli_
-		Sek‰ Kouludemossa ett‰ lopullisessa versiossa hahmojen el‰m‰pisteet mitataan prosenteissa ja mit‰ v‰hemm‰n n‰it‰ on sit‰ todenn‰kˆisemp‰‰
-		on se, ett‰ seuraava isku kaataa pelihahmon.
-		Aseet YMS voivat tehd‰ desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli n‰ytt‰‰ pelaajalle vain kokonaislukuprosentit.
-		Aseita ja kykyj‰ vaihdellaan Q- ja E-n‰pp‰imill‰.
-		_Kouludemo_
-			_Kentt‰_
-				_Ideat_
-					Kentt‰ n‰ytt‰‰ ˆkyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kentt‰suunnitte-
-					lua hˆystettyn‰ v‰hint‰‰n kolmella eri reitill‰ p‰‰kohteisiin.
-			_Hahmot_
-				_Veteraani_
-					_Ase (Lemonade [Revolveri])_
-						| Ampuu 4 ammusta per sekunti 6 ammuksen klipill‰. Ammukset tekev‰t maksimissaan 7.5% vahinkoa ja menev‰t vihollisten ja
-						seinien l‰pi 75%
-						| Ammus tekee sit‰ v‰hemm‰n vahinkoa, mit‰ enemm‰n ampujan ja uhrin v‰lill‰ on et‰isyytt‰ (Vahinko tasaisesti v‰henee
-						tasaisesti 15 ruudun et‰isyydell‰ maksimistaan vain 10% maksimistaan).
-					_Toissijainen toiminto (Bio Storm)_
-						| Veteraani haltuunottaa 0.5% Boostia per sekunti.
-						| 25% Boostin hinnalla Veteraani voi aktivoida viiden sekunnin ajanjakson jolloin h‰n ottaa 50% v‰hemm‰n vahinkoa ja jolloin
-						h‰nen varastonoviaan ei voi availla.
-					_Objektiivi_
-						Kent‰n keskell‰ alhaalla on varasto-ovi, mink‰ takana Veteraanin perhe majailee. Viholliset yritt‰v‰t p‰‰at‰ t‰m‰n oven 
-						luokse avatakseen sen. Veteraanin t‰ytyy viiden minuutin ajan est‰‰ t‰t‰ ja jos avaamisprogressi on kesken ajan loppuessa 
-						ei taistelu lopu vaan vasta silloin, kun aika on lopussa ja avaamisprogressi on 0%. Kun Veteraani pysyy yksin varasto-oven 
-						edess‰ tehty avaamisprogressi katoaa samalla nopeudella mill‰ sit‰ ansaitaakin.
-					_Statit_
-						| Liikkuu normaalinopeudella. 
-						| Hypyn ja laskeutumisen v‰liss‰ Veteraani voi jompaakumpaa hyppynappia painamalla hyp‰t‰ v‰littˆm‰sti 25% hyppyvoimalla
-						joko vasemmalle tai oikealle.
-						| Kun Veteraani saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
-				_Hullu Pilgu_
-					_Ase (Mad Gloves [Repaleiset nyrkkeilyhanskat])_
-						| Ollessaan ilmassa Pilgu voi W-n‰pp‰int‰ painamalla ottaa itse‰‰n koskettavan vihollisien k‰siins‰ ja t‰m‰n j‰lkeen pit‰-
-						m‰ll‰ W-n‰pp‰int‰ pohjassa m‰‰r‰t‰ heittosuunnan. Kun W-n‰pp‰imest‰ p‰‰stet‰‰n irti vihollinen heitet‰‰n heittosuuntaan
-						t‰ydell‰ hyppynopeudella. Kun vihollinen seuraavan kerran osuu sein‰m‰‰n h‰n saa 10% vahinkoa kimmoten samalla peilim‰i-
-						sesti sein‰st‰ saaden seuraavan kerran sein‰‰n osuessaan j‰lleen kerran 10% vahikoa. T‰m‰n j‰lkeen seinist‰ kimpoilu
-						p‰‰ttyy. Jos vihollinen osuu toiseen viholliseen lent‰ess‰‰n he molemmat ansaitsevat 20% vahinkoa.
-						| Ollessaan Pilgun k‰siss‰ vihollinen p‰‰see pois painamalla nelj‰‰ ruudulla n‰kyv‰‰ ASDW-n‰pp‰int‰ ruudun j‰rjestyksess‰.
-					_Toissijainen toiminto (Gliding)_
-						| Pilgulla on p‰‰ll‰‰n lent‰j‰n puku ja p‰‰ss‰‰n miniriippuliidin. T‰m‰ puku hidastaa h‰nen putoamisnopeutta painovoiman
-						vaikutuksesta 50%.
-						| T‰m‰ asu p‰‰ll‰‰n h‰n voi myˆskin ollessaan ilmassa syˆksy‰ liitosuuntaassa A- ja D-n‰pp‰imill‰. Toisella h‰n voi syˆk-
-						sy‰ eteenp‰in ja toisella h‰n voi muuttaa liitosuuntaansa.
-						| T‰ll‰ syˆksyll‰ Pilgu ei voi tehd‰ vahinkoa, mutta h‰n voi tˆn‰ist‰ sill‰ vihollisia jolloin he hyp‰ht‰v‰t 25% maksimi-
-						voimastaan.
-					_Objektiivi_
-						Pilgu tulee ˆkyjahdin takaosasta ja h‰nen t‰ytyy p‰‰st‰ laivan ruuman varasto-oven luokse. Siell‰ h‰nen t‰ytyy seist‰ oven edess‰ yksin jolloin ovenavausprogressimittari t‰yttyy. Kest‰‰ kolmekymment‰
-						sekuntia avata ovi ja objektiivi suoritetaan, jos ovenavaus on suoritettu ja olet ainoa henkilˆ oven edess‰.
-					_Statit_
-						| Pilgun hyppy latautuu 25% nopeammin, kuin muiden pelihahmojen.  
-						| Likkuvuusbonuksena edell‰ mainittu hyppymittarinopeusboosti. 
-						| Kun Pilgu saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
-				_Maskihumanoidi_
-					_Ase (Olive [Kranaatti])_
-						| W-n‰pp‰imen painalluksella Humanoidi poistaa kranaattinsa sokan ja kun t‰m‰ ollaan suoritettu kranaatti r‰j‰ht‰‰ seuraa-
-						van 3 sekunnin kuluttua luoden 2 ruudun s‰teen kokoisen r‰j‰hdyksen mik‰ voi vahingoittaa myˆs h‰nt‰.
-						| Kun humanoidi on poistanut sokan, W-n‰pp‰int‰ pohjassa pit‰m‰ll‰ pelaaja voi p‰‰tt‰‰ kranaatin heittosuunnan ja kranaatti
-						heitet‰‰n t‰ydell‰ hyppynopeudella.
-						| Humanoidi kantaa aloittaessaan 3 kranaattia mukanaan, uudelleenluoden yhden puuttuvan takaisin tarpeen tullessa kymmeness‰
-						sekunnissa.
-						| Kranaatti aiheuttaa r‰j‰hdysalueellaan 20% vahinkoa.
-					_Toissijainen toiminto (Aura Matter)_
-						| W-n‰pp‰imen painalluksella Humanoidi asettaa seisomispaikalleen puolustusmaskin, mill‰ on alussa kyky toimia turvakamera-
-						na, vihollisherkkyyden nostajana ja vahingoittavan auran tuottajana.
-						| Edell‰ mainitussa vaiheessaan puolustusmaskia ymp‰rˆiv‰‰ aluetta (ei seinien l‰pi n‰kyv‰‰) voi tarkastella menem‰ll‰
-						Q- ja E-n‰pp‰imill‰ maskin asetuskohtaan ja katsomalla ruudun keskell‰ ylh‰‰ll‰ olevaan ruutuun n‰kien maskin n‰kˆkent‰n.
-						| Edell‰ mainitussa vaiheessa puolustusmaski nostaa n‰kemiens‰ vihollisten vahingonhaltuunottoa 20%.
-						| Edell‰ mainitussa vaiheessa puolustusmaski vahingoittaa n‰kemi‰‰n vihollisia 10% / sekunti (12% per sekunti, koska
-						edell‰ mainitussa vaiheessa maskilla aiheuttaa 20% enemm‰n vahinkoa vihollisiin).
-						| Edell‰ mainitussa vaiheessa puolustusmaski ottaa kaiken vahinkonsa 1.2-kertaisena.
-					_Obhektiivi_
-						Humanoidi tulee ˆkyjahdin keulasta ja h‰nell‰ on sama objektiivi, kuin Pilgulla, mutta humanoidi avaa varasto-ovea 
-						10% hitaammin, kuin Pilgu.
-		_Aseideat_
-			_Pistoolikaarijousi nimelt‰‰n ..._
-				| Aina kun aseen klippi on t‰ynn‰ se ampuu kolme eri suuntiin menev‰‰ nuolta, mitk‰ tekev‰t sit‰ enemm‰n vahinkoa mit‰ suurempi m‰‰r‰ nuolista osuu viholliseen.
-				
-				| Lataa hitaasti nuolia ja tekee v‰h‰n vahinkoa pienen nuolim‰‰r‰n osuessa vihollisiin.
-			_Haulikko nimelt‰‰n ... ja t‰m‰n aseen visuaalinen idea tulee kuvasta nimelt‰‰n Shotgun2.png_
-				| Kun iskujoukkolaisella on kaksi kappaletta t‰t‰ asetyyppi‰ h‰n voi k‰yt‰‰ niit‰ samaan aikaan ottamalla yhden aseen kumpaakin
-				k‰teens‰.
-				| Kun iskujoukkolaisella on n‰it‰ aseita kaksi h‰n lataa ne yhdell‰ liikkeell‰ hankaamalla niiden s‰hkˆnluomissensoreita toisiinsa.
-				| Alkuper‰isesti sis‰lt‰‰ Bounty Hunter-kuteja, mitk‰ tekev‰t 20% enemm‰n vahinkoa vihollisiin jotka ovat negatiivisen 
-				statuksen Hunted-efektin (Boostin maksu 35%? Boosti laittaa l‰himm‰isen vihollispelaajan n‰kym‰ttˆm‰‰n Hunted-mittariin 25 lis‰-
-				pistett‰ ja jos l‰hin pelaajan vihollinen on Hunted-efektil‰inen pelaaja ampuu automaattisesti vihollista p‰in tai Haste-hypp‰‰
-				ollessaan Pilgu tai heittelee kranaatteja ollessaan Maskihumanoidi. Hunted-efektist‰ ja pisteist‰ p‰‰see eroon ottamalla niin monta 
-				prosenttia vahinkoa, kuin miten paljon Hunted-pisteit‰ sinussa on tai kuolemalla.)
-				| Kyseinen haulikko ampuu suhteellisen hitaalla tahdilla (t‰m‰ on tietysti korjattavissa, jos pelaajalla on kaksi t‰m‰n tyypin
-				haulikkoa).
-				| Bounty Hunter-ammusboxit (tai t‰ss‰ tapauksessa generaattoorikapasiteettilaitteet [GPL] ovat vain 15% kokoisia ja sen sijaan, ett‰
-				t‰t‰ haulikkoa ladattaisiin tavallisesti se toimiikin materialla, mit‰ luodaan s‰hkˆll‰ ja t‰t‰ s‰hkˆ‰ luodaan yhdell‰ haulikolla
-				pyˆritt‰m‰ll‰ siin‰ olevan ympyr‰n metallirangasta ja kahdella haulikolla hinkkaamalla pikaisesti aseen kylki‰ toinen toistaan vasten)
-				ovat GPL-boxeja, mitk‰ sis‰lt‰v‰t pienen koonsa takia hyvin v‰h‰n materiahaulikkokapasiteettia ("ammuksia").
-			_Ase mik‰ k‰ytt‰‰ klippin‰‰n krokotiilik‰silaukkua._
+    _RoopenKommentit_
+        Max 3 pelaajaa yht‰ aikaa kent‰ll‰ moninpeliss‰, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
+        toisiaan vastaan. Serveri, jolle kaikki koneet l‰hett‰v‰t oman pelaajan liikkeen ja 
+        saavat tiedon muiden pelaajien liikkeist‰. Koska ukkojen lentorata hyppyjen aikana on
+        deterministinen (ennustettava), riitt‰nee ett‰ serverille l‰hetet‰‰n tieto hypyn
+        alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat 
+        lentoradat (samoin ammuttujen ammusten kohdalla)    
+        
+        Voi myˆs olla 2 selainta samalla koneella, jolloin.
+        
+        K‰ytet‰‰n AJAX-tekniikkaa: "Asynchronous JAvascript and XML"
+            https://en.wikipedia.org/wiki/Ajax_(programming)
+            AJAX:ssa v‰litet‰‰n JSON-viestej‰: https://en.wikipedia.org/wiki/JSON
+            
+        Ehk‰ k‰ytet‰‰n NODE-JS -tekniikkaa? Javascripti‰ sek‰ serverill‰ ett‰ clientill‰?
+            https://en.wikipedia.org/wiki/Node.js
+            (toinen mahdollisuus on k‰ytt‰‰ Ruby tai C# kieli‰)
+    _ArtunKommentit_
+        Firefoxissa konsoli avataan Ctrl+Shift+K.
+        _Linkkej‰_
+            https://nodejs.org/api/debugger.html
+            https://nodejs.org/api/repl.html
+            http://stackoverflow.com/questions/10600496/sending-messages-client-server-client-on-socket-io-on-node-js
+    _Kent‰t_
+        -
+    _Moninpeli_
+        Sek‰ Kouludemossa ett‰ lopullisessa versiossa hahmojen el‰m‰pisteet mitataan prosenteissa ja mit‰ v‰hemm‰n n‰it‰ on sit‰ todenn‰kˆisemp‰‰
+        on se, ett‰ seuraava isku kaataa pelihahmon.
+        Aseet YMS voivat tehd‰ desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli n‰ytt‰‰ pelaajalle vain kokonaislukuprosentit.
+        Aseita ja kykyj‰ vaihdellaan Q- ja E-n‰pp‰imill‰.
+        _Kouludemo_
+            _Kentt‰_
+                _Ideat_
+                    Kentt‰ n‰ytt‰‰ ˆkyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kentt‰suunnitte-
+                    lua hˆystettyn‰ v‰hint‰‰n kolmella eri reitill‰ p‰‰kohteisiin.
+            _Hahmot_
+                _Veteraani_
+                    _Ase (Lemonade [Revolveri])_
+                        | Ampuu 4 ammusta per sekunti 6 ammuksen klipill‰. Ammukset tekev‰t maksimissaan 7.5% vahinkoa ja menev‰t vihollisten ja
+                        seinien l‰pi 75%
+                        | Ammus tekee sit‰ v‰hemm‰n vahinkoa, mit‰ enemm‰n ampujan ja uhrin v‰lill‰ on et‰isyytt‰ (Vahinko tasaisesti v‰henee
+                        tasaisesti 15 ruudun et‰isyydell‰ maksimistaan vain 10% maksimistaan).
+                    _Toissijainen toiminto (Bio Storm)_
+                        | Veteraani haltuunottaa 0.5% Boostia per sekunti.
+                        | 25% Boostin hinnalla Veteraani voi aktivoida viiden sekunnin ajanjakson jolloin h‰n ottaa 50% v‰hemm‰n vahinkoa ja jolloin
+                        h‰nen varastonoviaan ei voi availla.
+                    _Objektiivi_
+                        Kent‰n keskell‰ alhaalla on varasto-ovi, mink‰ takana Veteraanin perhe majailee. Viholliset yritt‰v‰t p‰‰at‰ t‰m‰n oven 
+                        luokse avatakseen sen. Veteraanin t‰ytyy viiden minuutin ajan est‰‰ t‰t‰ ja jos avaamisprogressi on kesken ajan loppuessa 
+                        ei taistelu lopu vaan vasta silloin, kun aika on lopussa ja avaamisprogressi on 0%. Kun Veteraani pysyy yksin varasto-oven 
+                        edess‰ tehty avaamisprogressi katoaa samalla nopeudella mill‰ sit‰ ansaitaakin.
+                    _Statit_
+                        | Liikkuu normaalinopeudella. 
+                        | Hypyn ja laskeutumisen v‰liss‰ Veteraani voi jompaakumpaa hyppynappia painamalla hyp‰t‰ v‰littˆm‰sti 25% hyppyvoimalla
+                        joko vasemmalle tai oikealle.
+                        | Kun Veteraani saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
+                _Hullu Pilgu_
+                    _Ase (Mad Gloves [Repaleiset nyrkkeilyhanskat])_
+                        | Ollessaan ilmassa Pilgu voi W-n‰pp‰int‰ painamalla ottaa itse‰‰n koskettavan vihollisien k‰siins‰ ja t‰m‰n j‰lkeen pit‰-
+                        m‰ll‰ W-n‰pp‰int‰ pohjassa m‰‰r‰t‰ heittosuunnan. Kun W-n‰pp‰imest‰ p‰‰stet‰‰n irti vihollinen heitet‰‰n heittosuuntaan
+                        t‰ydell‰ hyppynopeudella. Kun vihollinen seuraavan kerran osuu sein‰m‰‰n h‰n saa 10% vahinkoa kimmoten samalla peilim‰i-
+                        sesti sein‰st‰ saaden seuraavan kerran sein‰‰n osuessaan j‰lleen kerran 10% vahikoa. T‰m‰n j‰lkeen seinist‰ kimpoilu
+                        p‰‰ttyy. Jos vihollinen osuu toiseen viholliseen lent‰ess‰‰n he molemmat ansaitsevat 20% vahinkoa.
+                        | Ollessaan Pilgun k‰siss‰ vihollinen p‰‰see pois painamalla nelj‰‰ ruudulla n‰kyv‰‰ ASDW-n‰pp‰int‰ ruudun j‰rjestyksess‰.
+                    _Toissijainen toiminto (Gliding)_
+                        | Pilgulla on p‰‰ll‰‰n lent‰j‰n puku ja p‰‰ss‰‰n miniriippuliidin. T‰m‰ puku hidastaa h‰nen putoamisnopeutta painovoiman
+                        vaikutuksesta 50%.
+                        | T‰m‰ asu p‰‰ll‰‰n h‰n voi myˆskin ollessaan ilmassa syˆksy‰ liitosuuntaassa A- ja D-n‰pp‰imill‰. Toisella h‰n voi syˆk-
+                        sy‰ eteenp‰in ja toisella h‰n voi muuttaa liitosuuntaansa.
+                        | T‰ll‰ syˆksyll‰ Pilgu ei voi tehd‰ vahinkoa, mutta h‰n voi tˆn‰ist‰ sill‰ vihollisia jolloin he hyp‰ht‰v‰t 25% maksimi-
+                        voimastaan.
+                    _Objektiivi_
+                        Pilgu tulee ˆkyjahdin takaosasta ja h‰nen t‰ytyy p‰‰st‰ laivan ruuman varasto-oven luokse. Siell‰ h‰nen t‰ytyy seist‰ oven edess‰ yksin jolloin ovenavausprogressimittari t‰yttyy. Kest‰‰ kolmekymment‰
+                        sekuntia avata ovi ja objektiivi suoritetaan, jos ovenavaus on suoritettu ja olet ainoa henkilˆ oven edess‰.
+                    _Statit_
+                        | Pilgun hyppy latautuu 25% nopeammin, kuin muiden pelihahmojen.  
+                        | Likkuvuusbonuksena edell‰ mainittu hyppymittarinopeusboosti. 
+                        | Kun Pilgu saa vahinkoa t‰m‰ vahinkom‰‰r‰ jaetaan yhdell‰.
+                _Maskihumanoidi_
+                    _Ase (Olive [Kranaatti])_
+                        | W-n‰pp‰imen painalluksella Humanoidi poistaa kranaattinsa sokan ja kun t‰m‰ ollaan suoritettu kranaatti r‰j‰ht‰‰ seuraa-
+                        van 3 sekunnin kuluttua luoden 2 ruudun s‰teen kokoisen r‰j‰hdyksen mik‰ voi vahingoittaa myˆs h‰nt‰.
+                        | Kun humanoidi on poistanut sokan, W-n‰pp‰int‰ pohjassa pit‰m‰ll‰ pelaaja voi p‰‰tt‰‰ kranaatin heittosuunnan ja kranaatti
+                        heitet‰‰n t‰ydell‰ hyppynopeudella.
+                        | Humanoidi kantaa aloittaessaan 3 kranaattia mukanaan, uudelleenluoden yhden puuttuvan takaisin tarpeen tullessa kymmeness‰
+                        sekunnissa.
+                        | Kranaatti aiheuttaa r‰j‰hdysalueellaan 20% vahinkoa.
+                    _Toissijainen toiminto (Aura Matter)_
+                        | W-n‰pp‰imen painalluksella Humanoidi asettaa seisomispaikalleen puolustusmaskin, mill‰ on alussa kyky toimia turvakamera-
+                        na, vihollisherkkyyden nostajana ja vahingoittavan auran tuottajana.
+                        | Edell‰ mainitussa vaiheessaan puolustusmaskia ymp‰rˆiv‰‰ aluetta (ei seinien l‰pi n‰kyv‰‰) voi tarkastella menem‰ll‰
+                        Q- ja E-n‰pp‰imill‰ maskin asetuskohtaan ja katsomalla ruudun keskell‰ ylh‰‰ll‰ olevaan ruutuun n‰kien maskin n‰kˆkent‰n.
+                        | Edell‰ mainitussa vaiheessa puolustusmaski nostaa n‰kemiens‰ vihollisten vahingonhaltuunottoa 20%.
+                        | Edell‰ mainitussa vaiheessa puolustusmaski vahingoittaa n‰kemi‰‰n vihollisia 10% / sekunti (12% per sekunti, koska
+                        edell‰ mainitussa vaiheessa maskilla aiheuttaa 20% enemm‰n vahinkoa vihollisiin).
+                        | Edell‰ mainitussa vaiheessa puolustusmaski ottaa kaiken vahinkonsa 1.2-kertaisena.
+                    _Obhektiivi_
+                        Humanoidi tulee ˆkyjahdin keulasta ja h‰nell‰ on sama objektiivi, kuin Pilgulla, mutta humanoidi avaa varasto-ovea 
+                        10% hitaammin, kuin Pilgu.
+        _Aseideat_
+            _Pistoolikaarijousi nimelt‰‰n ..._
+                | Aina kun aseen klippi on t‰ynn‰ se ampuu kolme eri suuntiin menev‰‰ nuolta, mitk‰ tekev‰t sit‰ enemm‰n vahinkoa mit‰ suurempi m‰‰r‰ nuolista osuu viholliseen.
+                
+                | Lataa hitaasti nuolia ja tekee v‰h‰n vahinkoa pienen nuolim‰‰r‰n osuessa vihollisiin.
+            _Haulikko nimelt‰‰n ... ja t‰m‰n aseen visuaalinen idea tulee kuvasta nimelt‰‰n Shotgun2.png_
+                | Kun iskujoukkolaisella on kaksi kappaletta t‰t‰ asetyyppi‰ h‰n voi k‰yt‰‰ niit‰ samaan aikaan ottamalla yhden aseen kumpaakin
+                k‰teens‰.
+                | Kun iskujoukkolaisella on n‰it‰ aseita kaksi h‰n lataa ne yhdell‰ liikkeell‰ hankaamalla niiden s‰hkˆnluomissensoreita toisiinsa.
+                | Alkuper‰isesti sis‰lt‰‰ Bounty Hunter-kuteja, mitk‰ tekev‰t 20% enemm‰n vahinkoa vihollisiin jotka ovat negatiivisen 
+                statuksen Hunted-efektin (Boostin maksu 35%? Boosti laittaa l‰himm‰isen vihollispelaajan n‰kym‰ttˆm‰‰n Hunted-mittariin 25 lis‰-
+                pistett‰ ja jos l‰hin pelaajan vihollinen on Hunted-efektil‰inen pelaaja ampuu automaattisesti vihollista p‰in tai Haste-hypp‰‰
+                ollessaan Pilgu tai heittelee kranaatteja ollessaan Maskihumanoidi. Hunted-efektist‰ ja pisteist‰ p‰‰see eroon ottamalla niin monta 
+                prosenttia vahinkoa, kuin miten paljon Hunted-pisteit‰ sinussa on tai kuolemalla.)
+                | Kyseinen haulikko ampuu suhteellisen hitaalla tahdilla (t‰m‰ on tietysti korjattavissa, jos pelaajalla on kaksi t‰m‰n tyypin
+                haulikkoa).
+                | Bounty Hunter-ammusboxit (tai t‰ss‰ tapauksessa generaattoorikapasiteettilaitteet [GPL] ovat vain 15% kokoisia ja sen sijaan, ett‰
+                t‰t‰ haulikkoa ladattaisiin tavallisesti se toimiikin materialla, mit‰ luodaan s‰hkˆll‰ ja t‰t‰ s‰hkˆ‰ luodaan yhdell‰ haulikolla
+                pyˆritt‰m‰ll‰ siin‰ olevan ympyr‰n metallirangasta ja kahdella haulikolla hinkkaamalla pikaisesti aseen kylki‰ toinen toistaan vasten)
+                ovat GPL-boxeja, mitk‰ sis‰lt‰v‰t pienen koonsa takia hyvin v‰h‰n materiahaulikkokapasiteettia ("ammuksia").
+            _Ase mik‰ k‰ytt‰‰ klippin‰‰n krokotiilik‰silaukkua._
 Alkuper‰inen dokumentti
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-	Peimekaniikat
-	Pelin sataprosenttinen l‰p‰isy
-		Kun pelaaja on tehnyt kaikki p‰ivitykset, saanut kaikki bonusaseet ja voittanut viidennen lis‰pomon h‰n voi taistella suurpomoa vastaan. N‰in h‰n saa tiet‰‰ 
-		viel‰ jotain mielenkiintoista tarinaa. H‰n voi myˆs taistella kaikkia mnipomoja, pomoja, lis‰pomoja ja viimeist‰ pomoa vastaan uudestaan.
-	Pelin kahdeksan maailmaa
-		Mangrovepuun latvusto (Lazy Lions)>Mangrovepuun lehvistˆ (Ancient Acorns)>Mangrovepuun lehvistˆ‰ kannatteleva oksisto (Seriosly Sacred)>Mangovepuun rungonsi-
-		s‰inen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sis‰ll‰ oleva mehil‰ispes‰ (Emperor's Economy)>Linnoitus mangrovepuun sis‰ll‰ (Ammo Army)>Mangrovepuun maanp‰‰lliset juuret (Massive Mangrove)>
-		Mangrovepuuta ymp‰rˆiv‰ hiekkaranta (Sick Sands)
-	Peliobjektit
-	Krediitit
-		Jokaisessa kahdeksassa maailmassa sata.
-		Viisikymment‰ terveysp‰ivitykseen ja loput voi k‰ytt‰‰ kyky- ja asep‰ivityksiin. 
-	Bonusaseet
-		Jokaisessa kahdeksassa maailmassa yksi.
-		Kyseisi‰ aseita voi k‰ytt‰‰ moninpeliss‰.
-	Kristalliavaimet
-		K‰ytet‰‰n lis‰pomojen taisteluihin p‰‰syyn.
-		Ensimm‰iseen lis‰pomoon tarvitaan kymmenen avainta, joista yhdeks‰n on pelimaailmassa ja kymmenes saadaan viimeiselt‰ pomolta.
-		Toiseen lis‰pomoon tarvitaan kaksikymment‰ avainta, joista 19 on pelimaailmassa ja kahdeskymmenes saadaan ensmm‰iselt‰ lis‰pomolta.
-		Kolmanteen lis‰pomoon tarvitaan kolmekymment‰ avainta, joista 29 on pelimaailmassa ja kolmaskymmenes saadaan toiselta lis‰pomolta.
-		Nelj‰nteen lis‰pomoon tarvitaan nelj‰kymment‰ avainta, joista 39 on pelimaailmassa ja nelj‰skymmenes saadaan kolmannelta lis‰pomolta.
-		Viidenteen lis‰pomoon tarvitaan viisikymment‰ avainta, joista 49 on pelimaailmassa ja viideskymmenes saadaan nelj‰nnelt‰ lis‰pomolta.
-	V‰limuistiot
-	Is‰n mˆkill‰ on er‰‰nlanen piirretty hahmo, jonka nimi on Pilkku. P‰‰hahmo ja Pilgut (Get it?) n‰ytt‰v‰t t‰lt‰ hahmolta.
-	
+    Peimekaniikat
+    Pelin sataprosenttinen l‰p‰isy
+        Kun pelaaja on tehnyt kaikki p‰ivitykset, saanut kaikki bonusaseet ja voittanut viidennen lis‰pomon h‰n voi taistella suurpomoa vastaan. N‰in h‰n saa tiet‰‰ 
+        viel‰ jotain mielenkiintoista tarinaa. H‰n voi myˆs taistella kaikkia mnipomoja, pomoja, lis‰pomoja ja viimeist‰ pomoa vastaan uudestaan.
+    Pelin kahdeksan maailmaa
+        Mangrovepuun latvusto (Lazy Lions)>Mangrovepuun lehvistˆ (Ancient Acorns)>Mangrovepuun lehvistˆ‰ kannatteleva oksisto (Seriosly Sacred)>Mangovepuun rungonsi-
+        s‰inen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sis‰ll‰ oleva mehil‰ispes‰ (Emperor's Economy)>Linnoitus mangrovepuun sis‰ll‰ (Ammo Army)>Mangrovepuun maanp‰‰lliset juuret (Massive Mangrove)>
+        Mangrovepuuta ymp‰rˆiv‰ hiekkaranta (Sick Sands)
+    Peliobjektit
+    Krediitit
+        Jokaisessa kahdeksassa maailmassa sata.
+        Viisikymment‰ terveysp‰ivitykseen ja loput voi k‰ytt‰‰ kyky- ja asep‰ivityksiin. 
+    Bonusaseet
+        Jokaisessa kahdeksassa maailmassa yksi.
+        Kyseisi‰ aseita voi k‰ytt‰‰ moninpeliss‰.
+    Kristalliavaimet
+        K‰ytet‰‰n lis‰pomojen taisteluihin p‰‰syyn.
+        Ensimm‰iseen lis‰pomoon tarvitaan kymmenen avainta, joista yhdeks‰n on pelimaailmassa ja kymmenes saadaan viimeiselt‰ pomolta.
+        Toiseen lis‰pomoon tarvitaan kaksikymment‰ avainta, joista 19 on pelimaailmassa ja kahdeskymmenes saadaan ensmm‰iselt‰ lis‰pomolta.
+        Kolmanteen lis‰pomoon tarvitaan kolmekymment‰ avainta, joista 29 on pelimaailmassa ja kolmaskymmenes saadaan toiselta lis‰pomolta.
+        Nelj‰nteen lis‰pomoon tarvitaan nelj‰kymment‰ avainta, joista 39 on pelimaailmassa ja nelj‰skymmenes saadaan kolmannelta lis‰pomolta.
+        Viidenteen lis‰pomoon tarvitaan viisikymment‰ avainta, joista 49 on pelimaailmassa ja viideskymmenes saadaan nelj‰nnelt‰ lis‰pomolta.
+    V‰limuistiot
+    Is‰n mˆkill‰ on er‰‰nlanen piirretty hahmo, jonka nimi on Pilkku. P‰‰hahmo ja Pilgut (Get it?) n‰ytt‰v‰t t‰lt‰ hahmolta.
+    
 TF2-ideat
 Suunnitelmat
 Pilvess‰
