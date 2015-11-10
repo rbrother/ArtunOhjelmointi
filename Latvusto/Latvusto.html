@@ -194,11 +194,11 @@ function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
 
 function ukonVisuaalinenLuonti(jarjestys){
     if (jarjestys == 1){
-        pngNimi = "Gimp/Tekstuuriset/0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
+        pngNimi = "0003 T_P‰‰hahmoLatvaEhk‰_iso.png";
     }else{
-        pngNimi = "Gimp/Tekstuuriset/temporal.png";
+        pngNimi = "temporal.png";
     };
-    var bitmap = new createjs.Bitmap(pngNimi);
+    var bitmap = new createjs.Bitmap("Gimp/Tekstuuriset/" + pngNimi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = 0*blokinKoko;
