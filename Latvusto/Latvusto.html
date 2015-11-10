@@ -3,7 +3,9 @@
 <head>
     <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
     <script src="jquery.js"></script>
-<script>
+	<script src="kentta.js"></script>
+
+	<script>
 var oikealle = true; 
 var stage;
 var ukkoBitmap;
@@ -33,23 +35,6 @@ var id;
 
 
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
-var kentta2 = [
-   '..........X...................',
-   '..........X...................',
-   '..........X...................',
-   '..........X...................',
-   'XXX.......X...................',
-   '..XXXXX...X...................',
-   '..........X...................',
-   '..........X.....X.............',
-   '...XXX....X...................',
-   '.....XXXXXXX..................',
-   '..............................',
-   '..............................',
-   'X........X......X.............',
-   '...X.....X....................',
-   '...XX....XXX..................',
-];
 
 window.onload = function() {
     gamerid = prompt("Please, insert your gamer ID", "");
@@ -59,7 +44,7 @@ window.onload = function() {
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        ukkoBitmap = visuaalinenLuonti(parsittuVastaus.jarjestys);
+        ukkoBitmap = ukonVisuaalinenLuonti(parsittuVastaus.jarjestys);
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -78,17 +63,6 @@ window.onload = function() {
     
     window.onkeyup = buttonUp;
 }
-
-function makeStage(){
-    var y = 0;
-    kentta2.forEach(function(rivi){
-        y++;
-        for(x = 0;x < rivi.length;x++){
-            var merkki = rivi.charAt(x);
-            if(merkki == 'X') { BlokkiaLisaa(x,y); }
-        }
-    });
-};
 
 function buttonUp(event) {
 	if(xVauhti == 0 && yVauhti < 0.4){
@@ -162,14 +136,20 @@ function serverinKeskustelu (){
         }
         
         edellisetKoordinaatit = pelaajainformaatiota;
-        $.post(url, viesti, ViestinKasittely);
+		
+		// Lähetetään viesti serverille ja pyydetään kutsumaan
+		// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
+        $.post(url, viesti, VastausViestinKasittely);
     }; 
 }
-            /*  {     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
-                    "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
-                } */   
-				
-function ViestinKasittely(data, status){
+
+/*
+Esimerkki serveriltä tulevasta viestistä:
+
+{     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
+		"Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
+} */   				
+function VastausViestinKasittely(data, status){
 	if (data != "{}" ){
         var viestiServerilt = jQuery.parseJSON (data);
         var pelaajanimet = Object.keys(viestiServerilt);
@@ -178,7 +158,7 @@ function ViestinKasittely(data, status){
 			if (gamerid == id){}
 			else if (muutPelaajat[id] == undefined){
 				// Jos tulee uusi pelaaja tänne päädytään.     A  B     Mies,Nainen
-				hahmoBitmap = visuaalinenLuonti(viestiServerilt[id].jarjestys);
+				hahmoBitmap = ukonVisuaalinenLuonti(viestiServerilt[id].jarjestys);
 				muutPelaajat[id] = { bitmap: hahmoBitmap};
 			}
 			else{
@@ -212,18 +192,7 @@ function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
     return true; // Ukko koskettaa blokkia
 }
 
-function BlokkiaLisaa(x,y) {
-    var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
-    bitmap.scaleX = skaalaus;
-    bitmap.scaleY = skaalaus;
-    bitmap.x = x*blokinKoko;
-    bitmap.y = y*blokinKoko;
-    stage.addChild(bitmap);
-    blokkienTiedot.push( { x: x*blokinKoko, y: y*blokinKoko } );
-
-    // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
-}
-function visuaalinenLuonti(jarjestys){
+function ukonVisuaalinenLuonti(jarjestys){
     if (jarjestys == 1){
         pngNimi = "Gimp/Tekstuuriset/0003 T_PäähahmoLatvaEhkä_iso.png";
     }else{
@@ -237,8 +206,6 @@ function visuaalinenLuonti(jarjestys){
     stage.addChild(bitmap);
     return bitmap;
 };
-
-
     
  </script>
 </head>
