@@ -67,20 +67,8 @@ window.onload = function() {
     TestiTausta = new createjs.Shape();
     TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
     stage.addChild(TestiTausta);
-    
-    
-    var y = 0;
-    kentta2.forEach(function(rivi){
-        y++;
-        for(x = 0;x < rivi.length;x++){
-            merkki = rivi.charAt(x);
-            if(merkki == 'X'){
-            BlokkiaLisaa(x,y);
-            }
-        }
-    });
-    
-        
+	makeStage();
+            
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
@@ -90,6 +78,17 @@ window.onload = function() {
     
     window.onkeyup = buttonUp;
 }
+
+function makeStage(){
+    var y = 0;
+    kentta2.forEach(function(rivi){
+        y++;
+        for(x = 0;x < rivi.length;x++){
+            var merkki = rivi.charAt(x);
+            if(merkki == 'X') { BlokkiaLisaa(x,y); }
+        }
+    });
+};
 
 function buttonUp(event) {
 	if(xVauhti == 0 && yVauhti < 0.4){
@@ -149,8 +148,11 @@ function liikuta() {
     }
     
     stage.update();
-    
-    if( onkoVastausTullut ) {
+    serverinKeskustelu();
+}
+
+function serverinKeskustelu (){
+	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
         var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
         if( ukkoBitmap.x == edellisetKoordinaatit.Vaaka && ukkoBitmap.y == edellisetKoordinaatit.Pysty ){
@@ -160,34 +162,35 @@ function liikuta() {
         }
         
         edellisetKoordinaatit = pelaajainformaatiota;
-        $.post(url, viesti, function( data, status ) {    
+        $.post(url, viesti, ViestinKasittely);
+    }; 
+}
             /*  {     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
                     "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
-                } */
-        
-            if (data != "{}" ){
-                var viestiServerilt = jQuery.parseJSON (data);
-                var pelaajanimet = Object.keys(viestiServerilt);
+                } */   
+				
+function ViestinKasittely(data, status){
+	if (data != "{}" ){
+        var viestiServerilt = jQuery.parseJSON (data);
+        var pelaajanimet = Object.keys(viestiServerilt);
 
-                pelaajanimet.forEach (function (id) {
-                    if (gamerid == id){}
-                    else if (muutPelaajat[id] == undefined){
-                        // Jos tulee uusi pelaaja tänne päädytään.     A  B     Mies,Nainen
-                        hahmoBitmap = visuaalinenLuonti(viestiServerilt[id].jarjestys);
-                        muutPelaajat[id] = { bitmap: hahmoBitmap};
-                    }
-                    else{
-                        // Vanha muu pelaaja
-                        var muidenBtmp = muutPelaajat[id].bitmap;
-                        muidenBtmp.x = viestiServerilt[id].X;
-                        muidenBtmp.y = viestiServerilt[id].Y;
-                    }
-                });
-            };
-            setTimeout( function() { onkoVastausTullut = true; }, 20 );    
-        } );
-    };    
-}
+		pelaajanimet.forEach (function (id) {
+			if (gamerid == id){}
+			else if (muutPelaajat[id] == undefined){
+				// Jos tulee uusi pelaaja tänne päädytään.     A  B     Mies,Nainen
+				hahmoBitmap = visuaalinenLuonti(viestiServerilt[id].jarjestys);
+				muutPelaajat[id] = { bitmap: hahmoBitmap};
+			}
+			else{
+				// Vanha muu pelaaja
+				var muidenBtmp = muutPelaajat[id].bitmap;
+				muidenBtmp.x = viestiServerilt[id].X;
+				muidenBtmp.y = viestiServerilt[id].Y;
+			}
+		});
+	};
+	setTimeout( function() { onkoVastausTullut = true; }, 20 );
+};
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
     result = false;
