@@ -24,6 +24,7 @@ var gamerid;
 var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
 var url = "http://127.0.0.1:1337/";
 var id;
+var hahmoTyyppi;
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -44,7 +45,8 @@ window.onload = function() {
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        ukkoBitmap = ukonVisuaalinenLuonti(parsittuVastaus.jarjestys);
+		hahmoTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
+        ukkoBitmap = ukonVisuaalinenLuonti();
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -192,12 +194,24 @@ function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
     return true; // Ukko koskettaa blokkia
 }
 
-function ukonVisuaalinenLuonti(jarjestys){
+function HahmoTyyppi(jarjestys) {
     if (jarjestys == 1){
+		return "HP";
+    } else if (jarjestys == 2){
+		return "Veteraani";
+    } else{
+		return "Humanoidi";
+	};
+}
+
+function ukonVisuaalinenLuonti(){
+    if (hahmoTyyppi == "HP"){
         pngNimi = "HulluPilgu.png";
-    }else{
+    }else if (hahmoTyyppi == "Veteraani"){
         pngNimi = "Veteraani.png";
-    };
+    }else{
+		pngNimi = "Maskihumanoidi.png";
+	};
     var bitmap = new createjs.Bitmap("Kuva-aineisto/" + pngNimi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
