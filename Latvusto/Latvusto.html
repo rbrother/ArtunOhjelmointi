@@ -25,6 +25,7 @@ var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...
 var url = "http://127.0.0.1:1337/";
 var id;
 var hahmoTyyppi;
+var extraHyppy = true;
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -68,21 +69,18 @@ window.onload = function() {
 
 function buttonUp(event) {
 	if(xVauhti == 0 && yVauhti < 0.4){
-		if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-			aloitaHyppy(hyppypituus,+1);
-			nappiPohjassa = false;
-			hyppypituus = 0;
-		}
-		else if(event.keyCode == 65){ // A
-			aloitaHyppy(hyppypituus,-1);
-			nappiPohjassa = false;            
-			hyppypituus = 0;
-		}
+		hyppysuunta(event);
 	}
 }
 
 function NappiAlas(event) { 
+	if (hahmoTyyppi == "HP" && xVauhti != 0 && extraHyppy){
+		hyppypituus = 2.5;
+		hyppysuunta(event);
+		extraHyppy = false;
+	}
 	if(xVauhti == 0 && yVauhti < 0.4){
+		extraHyppy = true;
 		if(event.keyCode == 68 || event.keyCode == 65){
 			if(nappiPohjassa == false){
 				hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
@@ -96,10 +94,21 @@ function NappiAlas(event) {
 	}
 }
 
+function hyppysuunta(event){
+	if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
+		aloitaHyppy(hyppypituus,+1);
+	}
+	if (event.keyCode == 65){
+		aloitaHyppy (hyppypituus, -1);
+	}
+}
+
 function aloitaHyppy(pituus,suunta){    
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
+	nappiPohjassa = false;
+	hyppypituus = 0;
 }
 
 function liikuta() {
