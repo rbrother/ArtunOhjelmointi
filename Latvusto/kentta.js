@@ -10,7 +10,7 @@ function makeStage(){
 }
 
 function BlokkiaLisaa(x,y) {
-    var bitmap = new createjs.Bitmap("Gimp/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+    var bitmap = new createjs.Bitmap("Kuva-aineisto/150x150/0002 150_TestihuoneenMateriaaliPng.png");
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = x*blokinKoko;

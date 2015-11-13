@@ -83,7 +83,7 @@ function NappiAlas(event) {
 	if(xVauhti == 0 && yVauhti < 0.4){
 		if(event.keyCode == 68 || event.keyCode == 65){
 			if(nappiPohjassa == false){
-				hyppyPalkki = new createjs.Bitmap("Gimp/Tekstuuriset/hyppy-palkki.png");
+				hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
 				hyppyPalkki.scaleX = 0.33;
 				hyppyPalkki.scaleY = 0.33;
 				hyppyPalkki.y = ukkoBitmap.y + 50;
@@ -194,11 +194,11 @@ function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
 
 function ukonVisuaalinenLuonti(jarjestys){
     if (jarjestys == 1){
-        pngNimi = "0003 T_PäähahmoLatvaEhkä_iso.png";
+        pngNimi = "HulluPilgu.png";
     }else{
-        pngNimi = "temporal.png";
+        pngNimi = "Veteraani.png";
     };
-    var bitmap = new createjs.Bitmap("Gimp/Tekstuuriset/" + pngNimi);
+    var bitmap = new createjs.Bitmap("Kuva-aineisto/" + pngNimi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = 0*blokinKoko;
