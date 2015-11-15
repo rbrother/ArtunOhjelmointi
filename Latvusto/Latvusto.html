@@ -26,6 +26,7 @@ var url = "http://127.0.0.1:1337/";
 var id;
 var omanHahmonTyyppi;
 var extraHyppy = true;
+var oikealle = true;
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -74,6 +75,17 @@ function buttonUp(event) {
 }
 
 function NappiAlas(event) { 
+	if(event.keyCode == 68 || event.keyCode == 65) {
+		liikutusNappiAlas(event);
+	}
+
+	if (event.keyCode == 87){
+	// Tänne tullaan, jos W-näppäintä painetaan.
+	console.log ("Shot fired!");
+	}
+}
+
+function liikutusNappiAlas(event){
 	if (omanHahmonTyyppi == "HP" && xVauhti != 0 && extraHyppy){
 		hyppypituus = 2.5;
 		hyppysuunta(event);
@@ -81,16 +93,14 @@ function NappiAlas(event) {
 	}
 	if(xVauhti == 0 && yVauhti < 0.4){
 		extraHyppy = true;
-		if(event.keyCode == 68 || event.keyCode == 65){
-			if(nappiPohjassa == false){
-				hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
-				hyppyPalkki.scaleX = 0.33;
-				hyppyPalkki.scaleY = 0.33;
-				hyppyPalkki.y = ukkoBitmap.y + 50;
-				stage.addChild(hyppyPalkki);
-			}
-			nappiPohjassa = true;
+		if(nappiPohjassa == false){
+			hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
+			hyppyPalkki.scaleX = 0.33;
+			hyppyPalkki.scaleY = 0.33;
+			hyppyPalkki.y = ukkoBitmap.y + 50;
+			stage.addChild(hyppyPalkki);
 		}
+		nappiPohjassa = true;
 	}
 }
 

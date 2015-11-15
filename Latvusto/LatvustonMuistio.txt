@@ -75,6 +75,12 @@ _Pelimekaniikalliset aiheet_
         Aseet YMS voivat tehdä desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli näyttää pelaajalle vain kokonaislukuprosentit.
         Aseita ja kykyjä vaihdellaan Q- ja E-näppäimillä.
         _Kouludemo_
+			TEHTÄVÄLISTA
+				Kentän teko
+				Globaali serveri
+				1. Aseiden teko
+				Hahmon valinta
+				Hahmoinformaation anto
             _Kenttä_
                 _Ideat_
                     Kenttä näyttää ökyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kenttäsuunnitte-
