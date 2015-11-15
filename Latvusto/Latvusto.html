@@ -24,7 +24,7 @@ var gamerid;
 var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
 var url = "http://127.0.0.1:1337/";
 var id;
-var hahmoTyyppi;
+var omanHahmonTyyppi;
 var extraHyppy = true;
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
@@ -46,8 +46,8 @@ window.onload = function() {
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-		hahmoTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
-        ukkoBitmap = ukonVisuaalinenLuonti();
+		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
+        ukkoBitmap = ukonVisuaalinenLuonti(omanHahmonTyyppi);
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -74,7 +74,7 @@ function buttonUp(event) {
 }
 
 function NappiAlas(event) { 
-	if (hahmoTyyppi == "HP" && xVauhti != 0 && extraHyppy){
+	if (omanHahmonTyyppi == "HP" && xVauhti != 0 && extraHyppy){
 		hyppypituus = 2.5;
 		hyppysuunta(event);
 		extraHyppy = false;
@@ -169,7 +169,9 @@ function VastausViestinKasittely(data, status){
 			if (gamerid == id){}
 			else if (muutPelaajat[id] == undefined){
 				// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
-				hahmoBitmap = ukonVisuaalinenLuonti(viestiServerilt[id].jarjestys);
+				var jarjestys = viestiServerilt[id].jarjestys;
+				var toinenHahmo = HahmoTyyppi(jarjestys);
+				hahmoBitmap = ukonVisuaalinenLuonti(toinenHahmo);
 				muutPelaajat[id] = { bitmap: hahmoBitmap};
 			}
 			else{
@@ -213,10 +215,10 @@ function HahmoTyyppi(jarjestys) {
 	};
 }
 
-function ukonVisuaalinenLuonti(){
-    if (hahmoTyyppi == "HP"){
+function ukonVisuaalinenLuonti(characterType){
+    if (characterType == "HP"){
         pngNimi = "HulluPilgu.png";
-    }else if (hahmoTyyppi == "Veteraani"){
+    }else if (characterType == "Veteraani"){
         pngNimi = "Veteraani.png";
     }else{
 		pngNimi = "Maskihumanoidi.png";
