@@ -6,7 +6,8 @@
 	<script src="kentta.js"></script>
 
 	<script>
-var oikealle = true; 
+	
+	// http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
 var stage;
 var ukkoBitmap;
 var blokinKoko = 50;
@@ -27,6 +28,7 @@ var id;
 var omanHahmonTyyppi;
 var extraHyppy = true;
 var oikealle = true;
+var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -81,7 +83,7 @@ function NappiAlas(event) {
 
 	if (event.keyCode == 87){
 	// Tänne tullaan, jos W-näppäintä painetaan.
-	console.log ("Shot fired!");
+	laukausAudio.play();
 	}
 }
 
@@ -115,7 +117,16 @@ function hyppysuunta(event){
 	}
 }
 
-function aloitaHyppy(pituus,suunta){    
+function aloitaHyppy(pituus,suunta){  
+	if(suunta > 0){ // oikealle
+		ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
+		ukkoBitmap.scaleX = -skaalaus;
+		oikealle = true;
+	}else{
+		ukkoBitmap.x = ukkoBitmap.x - blokinKoko;
+		ukkoBitmap.scaleX = skaalaus;
+		oikealle = false;
+	};
     yVauhti = -pituus;
     xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
