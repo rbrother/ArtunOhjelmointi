@@ -79,6 +79,8 @@ _Pelimekaniikalliset aiheet_
 				Kentän teko
 				Globaali serveri
 				1. Aseiden teko
+                    Revolveriääni:
+                        https://freesound.org/people/Rock%20Savage/sounds/58906/
 				Hahmon valinta
 				Hahmoinformaation anto
             _Kenttä_

@@ -86,10 +86,12 @@ function NappiAlas(event) {
 }
 
 function liikutusNappiAlas(event){
-	if (omanHahmonTyyppi == "HP" && xVauhti != 0 && extraHyppy){
-		hyppypituus = 2.5;
-		hyppysuunta(event);
-		extraHyppy = false;
+	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
+        if(xVauhti != 0 && extraHyppy){
+            hyppypituus = 2.5;
+            hyppysuunta(event);
+            extraHyppy = false;
+        }
 	}
 	if(xVauhti == 0 && yVauhti < 0.4){
 		extraHyppy = true;
