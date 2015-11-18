@@ -118,11 +118,11 @@ function hyppysuunta(event){
 }
 
 function aloitaHyppy(pituus,suunta){  
-	if(suunta > 0){ // oikealle
+	if(suunta == +1 && oikealle == false){ // oikealle
 		ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
 		ukkoBitmap.scaleX = -skaalaus;
 		oikealle = true;
-	}else{
+	}else if (suunta == -1 && oikealle == true){
 		ukkoBitmap.x = ukkoBitmap.x - blokinKoko;
 		ukkoBitmap.scaleX = skaalaus;
 		oikealle = false;
