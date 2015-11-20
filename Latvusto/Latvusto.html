@@ -116,15 +116,22 @@ function hyppysuunta(event){
 		aloitaHyppy (hyppypituus, -1);
 	}
 }
-
-function aloitaHyppy(pituus,suunta){  
-	if(suunta == +1 && oikealle == false){ // oikealle
-		ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
-		ukkoBitmap.scaleX = -skaalaus;
+ 
+function aloitaHyppy(pituus,suunta){ 
+    // Ongelmaraportti: Hypin oikealle p‰in. Vaikuttaa silt‰, ett‰ voin tehd‰ sit‰ loputtomiin ongelmitta. Sitten
+    // hypp‰‰n vasemmalle ja hahmo n‰ytt‰‰ ensin olevan oikeammalla kuin pit‰isi mutta sitten kaikki jatkuu ongelmitta.
+    // Lopuksi hypp‰‰n oikealle ja sitten ohjelma ei en‰‰ toimi kunnolla.
+	if(suunta == +1){ // oikealle
+        if(oikealle == false){
+            ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
+            ukkoBitmap.scaleX = -skaalaus;
+        };
 		oikealle = true;
-	}else if (suunta == -1 && oikealle == true){
-		ukkoBitmap.x = ukkoBitmap.x - blokinKoko;
-		ukkoBitmap.scaleX = skaalaus;
+	}else if(suunta == -1){ // vasemmalle
+        if(oikealle == true){
+            ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
+            ukkoBitmap.scaleX = skaalaus; 
+        };
 		oikealle = false;
 	};
     yVauhti = -pituus;

@@ -172,6 +172,11 @@ _Pelimekaniikalliset aiheet_
                 pyörittämällä siinä olevan ympyrän metallirangasta ja kahdella haulikolla hinkkaamalla pikaisesti aseen kylkiä toinen toistaan vasten)
                 ovat GPL-boxeja, mitkä sisältävät pienen koonsa takia hyvin vähän materiahaulikkokapasiteettia ("ammuksia").
             _Ase mikä käyttää klippinään krokotiilikäsilaukkua._
+            _Kranaatti Humanoideille_
+                | Kyseinen kranaatti näyttää Frodi-koiran kaulassa käytetyltä lumihiutalevalolta.
+                | Räjähtäessään pysäyttää räjähdysalueella olevat viholliset, vihollisprojectiilit, yms ja kranaatin 
+                heittäjän.
+                | Huonona puolena sekunnin pidempi sokka-räjähdysaika verrattuna normikranaattiin.
 Alkuperäinen dokumentti
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     Peimekaniikat
@@ -567,5 +572,7 @@ Ability of Q (Turtle Wall) | Cldwn: 35s
 Turtle places a big wall in front of him that deploys 1.5 seconds after it's placement. It lowers it's horizontal size
 if an ally tries to go through it's non-middle point. The wall has 500 health and only one wall per Turtle can be
 placed on the field.
-Ability of E (Blast Mine) | One non-carried mine regenerated every 10 seconds
-Turtle throws
+Ability of E (Blast Mine) | One non-carried mine regenerated every 12 seconds
+Turtle throws a mine onto the ground. He can plant up to 4 ones of these. They are reclaimable. They function almost 
+identically to the Proximity mine of Proxy. When mine is triggered via shooting or enemy coming close to it, it will
+create a pushback blast that can push enemies with a force of around 1000 distance units per second.
