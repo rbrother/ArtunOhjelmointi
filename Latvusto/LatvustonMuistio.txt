@@ -1,5 +1,14 @@
 Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
 
+TEHTÄVÄLISTA
+	1. Ampumisviiva myös vasemmalle, jos ukko osoittaa vasemmalle
+	2. Ampumisviivan häipuminen pienen viiveen kuluittua
+
+	Kentän teko
+	Globaali serveri
+	Hahmon valinta
+	Hahmoinformaation anto
+
 Client (Web Browser)                    Server (Node.js)
 $.POST(...)
       OPTIONS            ->              
@@ -75,14 +84,6 @@ _Pelimekaniikalliset aiheet_
         Aseet YMS voivat tehdä desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli näyttää pelaajalle vain kokonaislukuprosentit.
         Aseita ja kykyjä vaihdellaan Q- ja E-näppäimillä.
         _Kouludemo_
-			TEHTÄVÄLISTA
-				Kentän teko
-				Globaali serveri
-				1. Aseiden teko
-                    Revolveriääni:
-                        https://freesound.org/people/Rock%20Savage/sounds/58906/
-				Hahmon valinta
-				Hahmoinformaation anto
             _Kenttä_
                 _Ideat_
                     Kenttä näyttää ökyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kenttäsuunnitte-

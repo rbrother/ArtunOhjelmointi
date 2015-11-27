@@ -30,6 +30,7 @@ var omanHahmonTyyppi;
 var extraHyppy = true;
 var oikealle = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
+var ampumisviiva;
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -83,9 +84,16 @@ function NappiAlas(event) {
 	}
 
 	if (event.keyCode == 87){
-	// Tänne tullaan, jos W-näppäintä painetaan.
-	laukausAudio.play();
-	}
+		// Tänne tullaan, jos W-näppäintä painetaan.
+		laukausAudio.play();
+		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
+		ampumisviiva.scaleX = 1000;
+		ampumisviiva.scaleY = 1;
+		ampumisviiva.y = nykyisetKoordinaatit.Pysty + 0.5*blokinKoko;
+		ampumisviiva.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+		stage.addChild(ampumisviiva);
+		
+		}
 }
 
 function liikutusNappiAlas(event){
