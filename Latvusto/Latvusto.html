@@ -20,6 +20,7 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
+var nykyisetKoordinaatit = {Vaaka: 0, Pysty: 0};
 var edellisetKoordinaatit = {Vaaka: 0, Pysty: 0};
 var gamerid;
 var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
@@ -101,7 +102,7 @@ function liikutusNappiAlas(event){
 			hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
 			hyppyPalkki.scaleX = 0.33;
 			hyppyPalkki.scaleY = 0.33;
-			hyppyPalkki.y = ukkoBitmap.y + 50;
+			hyppyPalkki.y = nykyisetKoordinaatit.Pysty + 50;
 			stage.addChild(hyppyPalkki);
 		}
 		nappiPohjassa = true;
@@ -122,16 +123,8 @@ function aloitaHyppy(pituus,suunta){
     // hypp‰‰n vasemmalle ja hahmo n‰ytt‰‰ ensin olevan oikeammalla kuin pit‰isi mutta sitten kaikki jatkuu ongelmitta.
     // Lopuksi hypp‰‰n oikealle ja sitten ohjelma ei en‰‰ toimi kunnolla.
 	if(suunta == +1){ // oikealle
-        if(oikealle == false){
-            ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
-            ukkoBitmap.scaleX = -skaalaus;
-        };
 		oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
-        if(oikealle == true){
-            ukkoBitmap.x = ukkoBitmap.x + blokinKoko;
-            ukkoBitmap.scaleX = skaalaus; 
-        };
 		oikealle = false;
 	};
     yVauhti = -pituus;
@@ -149,19 +142,28 @@ function liikuta() {
         }
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-        hyppyPalkki.x = ukkoBitmap.x - 0.5 * hyppyPalkkiLeveys + 25.5;
+        hyppyPalkki.x = nykyisetKoordinaatit.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
     }
-    var newX = ukkoBitmap.x + xVauhti;
-    var newY = ukkoBitmap.y + yVauhti;
+    var newX = nykyisetKoordinaatit.Vaaka + xVauhti;
+    var newY = nykyisetKoordinaatit.Pysty + yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
         yVauhti = 0;
         xVauhti = 0;
     } else {
-        ukkoBitmap.x = newX;
-        ukkoBitmap.y = newY;
+        nykyisetKoordinaatit.Vaaka = newX;
+        nykyisetKoordinaatit.Pysty = newY;
         yVauhti = yVauhti - painovoima;
     }
-    
+
+	ukkoBitmap.y = nykyisetKoordinaatit.Pysty;
+	if ( oikealle ) {
+		ukkoBitmap.x = nykyisetKoordinaatit.Vaaka;
+		ukkoBitmap.scaleX = skaalaus;
+	} else {
+		ukkoBitmap.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+		ukkoBitmap.scaleX = -skaalaus;
+	}
+	
     stage.update();
     serverinKeskustelu();
 }
@@ -169,8 +171,10 @@ function liikuta() {
 function serverinKeskustelu (){
 	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
-        var pelaajainformaatiota = { Vaaka: ukkoBitmap.x, Pysty: ukkoBitmap.y, GAMERID: gamerid };
-        if( ukkoBitmap.x == edellisetKoordinaatit.Vaaka && ukkoBitmap.y == edellisetKoordinaatit.Pysty ){
+        var pelaajainformaatiota = { Vaaka: nykyisetKoordinaatit.Vaaka, Pysty: nykyisetKoordinaatit.Pysty, 
+			GAMERID: gamerid };
+        if( nykyisetKoordinaatit.Vaaka == edellisetKoordinaatit.Vaaka && 
+			nykyisetKoordinaatit.Pysty == edellisetKoordinaatit.Pysty ){
             viesti = { };
         } else {
             viesti = pelaajainformaatiota;
