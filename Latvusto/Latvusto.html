@@ -31,6 +31,18 @@ var extraHyppy = true;
 var oikealle = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var ampumisviiva;
+var poistonumero = 0;
+
+function viivapoisto(){
+	if(ampumisviiva != undefined){
+		poistonumero++;
+		if(poistonumero == 5){
+			stage.removeChild(ampumisviiva);
+			ampumisviiva = undefined;
+			poistonumero = 0;
+		}
+	}
+};
 
 // hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
@@ -66,6 +78,8 @@ window.onload = function() {
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
     setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+	
+	setInterval( viivapoisto, 20);
 
     window.onkeydown = NappiAlas;
     
@@ -87,10 +101,15 @@ function NappiAlas(event) {
 		// T‰nne tullaan, jos W-n‰pp‰int‰ painetaan.
 		laukausAudio.play();
 		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
-		ampumisviiva.scaleX = 1000;
-		ampumisviiva.scaleY = 1;
+		ampumisviiva.scaleY = 0.25;
 		ampumisviiva.y = nykyisetKoordinaatit.Pysty + 0.5*blokinKoko;
-		ampumisviiva.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+		if(oikealle){
+			ampumisviiva.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+			ampumisviiva.scaleX = 1000;
+		}else{
+			ampumisviiva.x = nykyisetKoordinaatit.Vaaka;
+			ampumisviiva.scaleX = -1000;
+		};
 		stage.addChild(ampumisviiva);
 		
 		}
@@ -127,9 +146,6 @@ function hyppysuunta(event){
 }
  
 function aloitaHyppy(pituus,suunta){ 
-    // Ongelmaraportti: Hypin oikealle p‰in. Vaikuttaa silt‰, ett‰ voin tehd‰ sit‰ loputtomiin ongelmitta. Sitten
-    // hypp‰‰n vasemmalle ja hahmo n‰ytt‰‰ ensin olevan oikeammalla kuin pit‰isi mutta sitten kaikki jatkuu ongelmitta.
-    // Lopuksi hypp‰‰n oikealle ja sitten ohjelma ei en‰‰ toimi kunnolla.
 	if(suunta == +1){ // oikealle
 		oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
