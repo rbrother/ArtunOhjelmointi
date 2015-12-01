@@ -36,7 +36,7 @@ var poistonumero = 0;
 function viivapoisto(){
 	if(ampumisviiva != undefined){
 		poistonumero++;
-		if(poistonumero == 5){
+		if(poistonumero == 12){
 			stage.removeChild(ampumisviiva);
 			ampumisviiva = undefined;
 			poistonumero = 0;
@@ -157,6 +157,7 @@ function aloitaHyppy(pituus,suunta){
 }
 
 function liikuta() {
+	viivapoisto();
     if (ukkoBitmap == undefined) return
     if ( nappiPohjassa ) {
         if(hyppypituus < 10){
