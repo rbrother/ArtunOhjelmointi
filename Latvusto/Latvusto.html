@@ -78,8 +78,6 @@ window.onload = function() {
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
     setInterval( liikuta, 20 ); // 20 ms = 50 FPS
-	
-	setInterval( viivapoisto, 20);
 
     window.onkeydown = NappiAlas;
     
@@ -97,7 +95,7 @@ function NappiAlas(event) {
 		liikutusNappiAlas(event);
 	}
 
-	if (event.keyCode == 87){
+	if (event.keyCode == 87 && ampumisviiva == undefined){
 		// Tänne tullaan, jos W-näppäintä painetaan.
 		laukausAudio.play();
 		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
