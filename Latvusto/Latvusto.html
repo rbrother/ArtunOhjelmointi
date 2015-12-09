@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
     <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
     <script src="jquery.js"></script>
 	<script src="kentta.js"></script>
@@ -57,7 +58,7 @@ function viivapoisto(){
 
 window.onload = function() {
     gamerid = prompt("Please, insert your gamer ID", "");
-    var alkuviesti = { GAMERID: gamerid };
+    var alkuviesti = { GAMERID: gamerid, viestityyppi: "aloitus"};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
     });
@@ -195,10 +196,10 @@ function serverinKeskustelu (){
 	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
         var pelaajainformaatiota = { Vaaka: nykyisetKoordinaatit.Vaaka, Pysty: nykyisetKoordinaatit.Pysty, 
-			GAMERID: gamerid };
+			GAMERID: gamerid, viestityyppi: "sijainti"};
         if( nykyisetKoordinaatit.Vaaka == edellisetKoordinaatit.Vaaka && 
 			nykyisetKoordinaatit.Pysty == edellisetKoordinaatit.Pysty ){
-            viesti = { };
+            viesti = {viestityyppi: "staattinen"};
         } else {
             viesti = pelaajainformaatiota;
         }

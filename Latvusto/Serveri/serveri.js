@@ -4,6 +4,7 @@ var aloitus = true;
 var jarjestys = 0;
 
 var pelaajienKoordinaatit = { };
+var tallennettuResponse;
 
 /*
 
@@ -47,39 +48,37 @@ function respondToIncomingMessage(request, response) {
     if ( request.method == 'OPTIONS') {
         respondToOptions( response );
     } else if ( request.method == 'POST') {
-        processPost(request, response, respondToPost);
+        processPost(request, response, vastaaViestiin);
     }
 }
 
+function vastaaViestiin(data, response) {
+	var viestityyppi = data.viestityyppi;
+	if(viestityyppi == "kysely"){
+		tallennaTapahtumakysely(data, response);
+	}else if (viestityyppi == "ilmoitus"){
+		vastaaTapahtumailmoitukseen(data, response);
+	}else{
+		console.log("The message was undefined");
+	}
+}
 // Yllä olevat funktiot tällä hetkellä irrelevantteja.
 
-function respondToPost(data, response) {
-    var paluuviesti;
-    if(data.GAMERID != undefined) {
-        var tamanPelaajanKoordinaatit = pelaajienKoordinaatit[data.GAMERID];
-        if ( tamanPelaajanKoordinaatit != undefined ){
-            // vanhalta pelaajalta tullut koordinaattipäivitykset
-            tamanPelaajanKoordinaatit.X = data.Vaaka;
-            tamanPelaajanKoordinaatit.Y = data.Pysty;
-            paluuviesti = pelaajienKoordinaatit;
-        }else{
-            // uusi pelaaja tullut mukaan
-            jarjestys++;
-            pelaajienKoordinaatit[data.GAMERID] = {"Y" : 0, "X" : 0, jarjestys: jarjestys};
-            console.log ("Pelaajien lukumääränä " + jarjestys);
-            paluuviesti = {jarjestys: jarjestys};
-        };
-    }else{
-        paluuviesti = pelaajienKoordinaatit;
-    }
+function tallennaTapahtumakysely(data, response) {
+	// TODO: Muuta tätä niin, että se voi tallentaa
+	// useilta eri clienteiltä tulevat response-objektit
+	tallennettuResponse = response;
+}
+
+function vastaaTapahtumailmoitukseen(data, response){
     var headers = {};
     headers["Access-Control-Allow-Origin"] = "*";
     headers["Access-Control-Allow-Credentials"] = false;
     headers["Content-Type"] = 'text/plain';
-    response.writeHead(200, headers); 
+    tallennettuResponse.writeHead(200, headers); 
     var json = JSON.stringify(paluuviesti);
-    response.write (json);
-    response.end();
+    tallennettuResponse.write (json);
+    tallennettuResponse.end();
 }
 
 http.createServer(respondToIncomingMessage).listen(1337,'127.0.0.1');
