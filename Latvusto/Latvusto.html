@@ -13,26 +13,32 @@ var stage;
 var ukkoBitmap;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
-var yVauhti = 0;
-var xVauhti = 0;
 var painovoima = -0.3;
 var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
-var nykyisetKoordinaatit = {Vaaka: 0, Pysty: 0};
-var edellisetKoordinaatit = {Vaaka: 0, Pysty: 0};
-var gamerid;
-var muutPelaajat = {};     // { nimi1: { hahmoBitmap: ... }, nimi2: { ... }, ...    } 
+// TODO: Korvaa pelaajaTiedot sisältämillä koordinaateilla
+//var nykyisetKoordinaatit = {Vaaka: 0, Pysty: 0};  
+var omaId;
 var url = "http://127.0.0.1:1337/";
-var id;
-var omanHahmonTyyppi;
+//var omanHahmonTyyppi;
 var extraHyppy = true;
-var oikealle = true;
+// var oikealle = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var ampumisviiva;
 var poistonumero = 0;
+
+// pelaajatiedot:
+// { 
+//	 id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
+//          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, Oikealle: true }, 
+//   id2: { hahmoTyyppi: "HP", ... }, 
+//   ...    
+// } 
+var pelaajatiedot = {};     
+
 
 function viivapoisto(){
 	if(ampumisviiva != undefined){
@@ -45,8 +51,8 @@ function viivapoisto(){
 	}
 };
 
-// hae pelaajan "mikko" tiedot ->   muutPelaajat.mikko
-// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     muutPelaajat[n] 
+// hae pelaajan "mikko" tiedot ->   pelaajatiedot.mikko
+// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     pelaajatiedot[n] 
 
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
@@ -57,8 +63,8 @@ function viivapoisto(){
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
 
 window.onload = function() {
-    gamerid = prompt("Please, insert your gamer ID", "");
-    var alkuviesti = { GAMERID: gamerid, viestityyppi: "aloitus"};
+    omaId = prompt("Please, insert your gamer ID", "");
+    var alkuviesti = { GAMERID: omaId, viestityyppi: "aloitus"};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
     });
@@ -86,8 +92,11 @@ window.onload = function() {
 }
 
 function buttonUp(event) {
+    var xVauhti = pelaajatiedot[omaId].xVauhti;
+	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if(xVauhti == 0 && yVauhti < 0.4){
-		hyppysuunta(event);
+		var oikealle = ( event.keyCode == 68 );
+		hyppysuunta(oikealle, omaId);
 	}
 }
 
@@ -115,10 +124,13 @@ function NappiAlas(event) {
 }
 
 function liikutusNappiAlas(event){
+	var xVauhti = pelaajatiedot[omaId].xVauhti;
+	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
         if(xVauhti != 0 && extraHyppy){
             hyppypituus = 2.5;
-            hyppysuunta(event);
+			var oikealle = ( event.keyCode == 68 );
+            hyppysuunta(oikealle, omaId);
             extraHyppy = false;
         }
 	}
@@ -135,29 +147,37 @@ function liikutusNappiAlas(event){
 	}
 }
 
-function hyppysuunta(event){
-	if(event.keyCode == 68){ // D, ks. http://www.asciitable.com/
-		aloitaHyppy(hyppypituus,+1);
+function hyppysuunta(oikealle,id){
+	if(oikealle){ // D, ks. http://www.asciitable.com/
+		aloitaHyppy(hyppypituus,+1, id);
 	}
-	if (event.keyCode == 65){
-		aloitaHyppy (hyppypituus, -1);
+	else{ // A
+		aloitaHyppy (hyppypituus, -1, id);
 	}
 }
  
-function aloitaHyppy(pituus,suunta){ 
+function aloitaHyppy(pituus,suunta, id){ 
 	if(suunta == +1){ // oikealle
 		oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
 		oikealle = false;
 	};
-    yVauhti = -pituus;
-    xVauhti = pituus * suunta;
+    pelaajaTiedot[id].yVauhti = -pituus;
+    pelaajaTiedot[id].xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
 	nappiPohjassa = false;
 	hyppypituus = 0;
 }
 
-function liikuta() {
+function XVauhti(id) {
+	return pelaajaTiedot[id].XVauhti;
+}
+
+function YVauhti(id) {
+	return pelaajaTiedot[id].YVauhti;
+}
+
+function liikuta(id) {
 	viivapoisto();
     if (ukkoBitmap == undefined) return
     if ( nappiPohjassa ) {
@@ -168,15 +188,15 @@ function liikuta() {
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
         hyppyPalkki.x = nykyisetKoordinaatit.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
     }
-    var newX = nykyisetKoordinaatit.Vaaka + xVauhti;
-    var newY = nykyisetKoordinaatit.Pysty + yVauhti;
+    var newX = nykyisetKoordinaatit.Vaaka + pelaajaTiedot[id].xVauhti;
+    var newY = nykyisetKoordinaatit.Pysty + pelaajaTiedot[id].yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
-        yVauhti = 0;
-        xVauhti = 0;
+        pelaajaTiedot[id].xVauhti = 0;
+        pelaajaTiedot[id].yVauhti = 0;
     } else {
         nykyisetKoordinaatit.Vaaka = newX;
         nykyisetKoordinaatit.Pysty = newY;
-        yVauhti = yVauhti - painovoima;
+        pelaajaTiedot[id].yVauhti = pelaajaTiedot[id].yVauhti - painovoima;
     }
 
 	ukkoBitmap.y = nykyisetKoordinaatit.Pysty;
@@ -195,17 +215,7 @@ function liikuta() {
 function serverinKeskustelu (){
 	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
-        var pelaajainformaatiota = { Vaaka: nykyisetKoordinaatit.Vaaka, Pysty: nykyisetKoordinaatit.Pysty, 
-			GAMERID: gamerid, viestityyppi: "sijainti"};
-        if( nykyisetKoordinaatit.Vaaka == edellisetKoordinaatit.Vaaka && 
-			nykyisetKoordinaatit.Pysty == edellisetKoordinaatit.Pysty ){
-            viesti = {viestityyppi: "staattinen"};
-        } else {
-            viesti = pelaajainformaatiota;
-        }
-        
-        edellisetKoordinaatit = pelaajainformaatiota;
-		
+        viesti = {viestityyppi: "staattinen"};
 		// Lähetetään viesti serverille ja pyydetään kutsumaan
 		// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
         $.post(url, viesti, VastausViestinKasittely);
@@ -224,17 +234,17 @@ function VastausViestinKasittely(data, status){
         var pelaajanimet = Object.keys(viestiServerilt);
 
 		pelaajanimet.forEach (function (id) {
-			if (gamerid == id){}
-			else if (muutPelaajat[id] == undefined){
+			if (omaId == id){}
+			else if (pelaajatiedot[id] == undefined){
 				// Jos tulee uusi pelaaja tänne päädytään.     A  B     Mies,Nainen
 				var jarjestys = viestiServerilt[id].jarjestys;
 				var toinenHahmo = HahmoTyyppi(jarjestys);
 				hahmoBitmap = ukonVisuaalinenLuonti(toinenHahmo);
-				muutPelaajat[id] = { bitmap: hahmoBitmap};
+				pelaajatiedot[id] = { bitmap: hahmoBitmap};
 			}
 			else{
 				// Vanha muu pelaaja
-				var muidenBtmp = muutPelaajat[id].bitmap;
+				var muidenBtmp = pelaajatiedot[id].bitmap;
 				muidenBtmp.x = viestiServerilt[id].X;
 				muidenBtmp.y = viestiServerilt[id].Y;
 			}

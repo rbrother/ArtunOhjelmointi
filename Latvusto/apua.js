@@ -28,11 +28,11 @@ function objektinAttribuuttienAsetus() {
 
     // -> obj on nyt { "zom" : 111, "nam": 555, "moi": 123, "gak": 777 }
     
-    // printataan objektista "nam" attribuutin arvo:
+  // printataan objektista "nam" attribuutin arvo:
     
     console.log(obj["nam"]);    // tai
-    console.log(obj.nam);
-    
+    console.log(obj.nam);	
+	
 }
 
 function muuttujatJaArvot() {
