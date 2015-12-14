@@ -19,8 +19,6 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var onkoVastausTullut = true;
-// TODO: Korvaa nykyisetKoordinaatit pelaajaTiedot-sisältämillä koordinaateilla
-//var nykyisetKoordinaatit = {Vaaka: 0, Pysty: 0};  
 var omaId;
 var url = "http://127.0.0.1:1337/";
 //var omanHahmonTyyppi;
@@ -110,12 +108,12 @@ function NappiAlas(event) {
 		laukausAudio.play();
 		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
 		ampumisviiva.scaleY = 0.25;
-		ampumisviiva.y = nykyisetKoordinaatit.Pysty + 0.5*blokinKoko;
+		ampumisviiva.y = pelaajaTiedot[omaId].Pysty + 0.5*blokinKoko;
 		if(oikealle){
-			ampumisviiva.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+			ampumisviiva.x = pelaajaTiedot[omaId].Vaaka + blokinKoko;
 			ampumisviiva.scaleX = 1000;
 		}else{
-			ampumisviiva.x = nykyisetKoordinaatit.Vaaka;
+			ampumisviiva.x = pelaajaTiedot[omaId].Vaaka;
 			ampumisviiva.scaleX = -1000;
 		};
 		stage.addChild(ampumisviiva);
@@ -140,7 +138,7 @@ function liikutusNappiAlas(event){
 			hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
 			hyppyPalkki.scaleX = 0.33;
 			hyppyPalkki.scaleY = 0.33;
-			hyppyPalkki.y = nykyisetKoordinaatit.Pysty + 50;
+			hyppyPalkki.y = pelaajaTiedot[omaId].Pysty + 50;
 			stage.addChild(hyppyPalkki);
 		}
 		nappiPohjassa = true;
@@ -186,25 +184,25 @@ function liikuta(id) {
         }
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-        hyppyPalkki.x = nykyisetKoordinaatit.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
+        hyppyPalkki.x = pelaajaTiedot[id].Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
     }
-    var newX = nykyisetKoordinaatit.Vaaka + pelaajaTiedot[id].xVauhti;
-    var newY = nykyisetKoordinaatit.Pysty + pelaajaTiedot[id].yVauhti;
+    var newX = pelaajaTiedot[id].Vaaka + pelaajaTiedot[id].xVauhti;
+    var newY = pelaajaTiedot[id].Pysty + pelaajaTiedot[id].yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
         pelaajaTiedot[id].xVauhti = 0;
         pelaajaTiedot[id].yVauhti = 0;
     } else {
-        nykyisetKoordinaatit.Vaaka = newX;
-        nykyisetKoordinaatit.Pysty = newY;
+        pelaajaTiedot[id].Vaaka = newX;
+        pelaajaTiedot[id].Pysty = newY;
         pelaajaTiedot[id].yVauhti = pelaajaTiedot[id].yVauhti - painovoima;
     }
 
-	ukkoBitmap.y = nykyisetKoordinaatit.Pysty;
+	ukkoBitmap.y = pelaajaTiedot[id].Pysty;
 	if ( oikealle ) {
-		ukkoBitmap.x = nykyisetKoordinaatit.Vaaka;
+		ukkoBitmap.x = pelaajaTiedot[id].Vaaka;
 		ukkoBitmap.scaleX = skaalaus;
 	} else {
-		ukkoBitmap.x = nykyisetKoordinaatit.Vaaka + blokinKoko;
+		ukkoBitmap.x = pelaajaTiedot[id].Vaaka + blokinKoko;
 		ukkoBitmap.scaleX = -skaalaus;
 	}
 	
