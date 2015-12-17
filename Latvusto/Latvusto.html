@@ -34,7 +34,7 @@ var poistonumero = 0;
 //   id2: { hahmoTyyppi: "HP", ... }, 
 //   ...    
 // } 
-var pelaajatiedot = {};     
+var pelaajaTiedot = {};     
 
 
 function viivapoisto(){
@@ -81,15 +81,17 @@ window.onload = function() {
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
-    setInterval( liikuta, 20 ); // 20 ms = 50 FPS
+    setInterval( liikutuskutsu, 200 ); // 20 ms = 50 FPS
 
     window.onkeydown = NappiAlas;
     
     window.onkeyup = buttonUp;
+	
+    stage.update();
 }
 
 function buttonUp(event) {
-    var xVauhti = pelaajatiedot[omaId].xVauhti;
+    var xVauhti = pelaajaTiedot[omaId].xVauhti;
 	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if(xVauhti == 0 && yVauhti < 0.4){
 		var oikealle = ( event.keyCode == 68 );
@@ -121,7 +123,7 @@ function NappiAlas(event) {
 }
 
 function liikutusNappiAlas(event){
-	var xVauhti = pelaajatiedot[omaId].xVauhti;
+	var xVauhti = pelaajaTiedot[omaId].xVauhti;
 	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
         if(xVauhti != 0 && extraHyppy){
@@ -174,10 +176,19 @@ function YVauhti(id) {
 	return pelaajaTiedot[id].YVauhti;
 }
 
+function liikutuskutsu(){
+	liikuta(omaId);
+	//  TODO: Muuta tätä rutiinia niin, että
+	// liikuta-funktiota kutsutaan yksi kerrallaan
+	// kaikille pelaajille (myös omalle)
+}
+
 function liikuta(id) {
 	viivapoisto();
+	console.log (pelaajaTiedot);
+	console.log (id);
 	var pelaaja = pelaajaTiedot[id];
-    if (pelaaja.hahmoBitmap == undefined) return
+    if (pelaaja == undefined) return
     if ( nappiPohjassa ) {
         if(hyppypituus < 10){
             hyppypituus = hyppypituus + 0.1;
@@ -235,16 +246,16 @@ function VastausViestinKasittely(data, status){
 
 		pelaajanimet.forEach (function (id) {
 			if (omaId == id){}
-			else if (pelaajatiedot[id] == undefined){
+			else if (pelaajaTiedot[id] == undefined){
 				// Jos tulee uusi pelaaja tänne päädytään.     A  B     Mies,Nainen
 				var jarjestys = viestiServerilt[id].jarjestys;
 				var toinenHahmo = HahmoTyyppi(jarjestys);
 				hahmoBitmap = ukonVisuaalinenLuonti(toinenHahmo);
-				pelaajatiedot[id] = { bitmap: hahmoBitmap};
+				pelaajaTiedot[id] = { bitmap: hahmoBitmap};
 			}
 			else{
 				// Vanha muu pelaaja
-				var muidenBtmp = pelaajatiedot[id].bitmap;
+				var muidenBtmp = pelaajaTiedot[id].bitmap;
 				muidenBtmp.x = viestiServerilt[id].X;
 				muidenBtmp.y = viestiServerilt[id].Y;
 			}
