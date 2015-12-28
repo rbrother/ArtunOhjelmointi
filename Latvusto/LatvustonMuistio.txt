@@ -1,4 +1,4 @@
-Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
+﻿Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
 
 TEHTÄVÄLISTA
 	#1 Debuggaa kahdella pelaajalla.
@@ -590,3 +590,12 @@ Ability of E (Blast Mine) | One non-carried mine regenerated every 12 seconds
 Turtle throws a mine onto the ground. He can plant up to 4 ones of these. They are reclaimable. They function almost 
 identically to the Proximity mine of Proxy. When mine is triggered via shooting or enemy coming close to it, it will
 create a pushback blast that can push enemies with a force of around 1000 distance units per second.
+
+Team Fortress 2 Weapon | Heavy | Secondary ("Shotgun")
+ | 60% faster fire rate
+ | 75% accuracy rise
+ | Alt-fire to ironsight
+ | Reload rate lowered by 20%
+ | Secondary ammo amount lowered by 81%
+ | The weapon's a light machine gun
+ | Stats not yet complete
