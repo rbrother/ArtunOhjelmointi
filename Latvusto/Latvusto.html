@@ -30,7 +30,7 @@ var poistonumero = 0;
 // pelaajatiedot:
 // { 
 //	 id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
-//          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, Oikealle: true }, 
+//          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true }, 
 //   id2: { hahmoTyyppi: "HP", ... }, 
 //   ...    
 // } 
@@ -68,7 +68,8 @@ window.onload = function() {
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
 		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
-        pelaajaTiedot[omaId].hahmoBitmap = ukonVisuaalinenLuonti(omanHahmonTyyppi);
+		pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
+			hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -81,7 +82,7 @@ window.onload = function() {
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
-    setInterval( liikutuskutsu, 200 ); // 20 ms = 50 FPS
+    setInterval( liikutuskutsu, 20 ); // 20 ms = 50 FPS
 
     window.onkeydown = NappiAlas;
     
@@ -110,7 +111,7 @@ function NappiAlas(event) {
 		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
 		ampumisviiva.scaleY = 0.25;
 		ampumisviiva.y = pelaajaTiedot[omaId].Pysty + 0.5*blokinKoko;
-		if(oikealle){
+		if(pelaajaTiedot[omaId].oikealle){
 			ampumisviiva.x = pelaajaTiedot[omaId].Vaaka + blokinKoko;
 			ampumisviiva.scaleX = 1000;
 		}else{
@@ -119,7 +120,7 @@ function NappiAlas(event) {
 		};
 		stage.addChild(ampumisviiva);
 		
-		}
+	}
 }
 
 function liikutusNappiAlas(event){
@@ -157,9 +158,9 @@ function hyppysuunta(oikealle,id){
  
 function aloitaHyppy(pituus,suunta, id){ 
 	if(suunta == +1){ // oikealle
-		oikealle = true;
+		pelaajaTiedot[id].oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
-		oikealle = false;
+		pelaajaTiedot[id].oikealle = false;
 	};
     pelaajaTiedot[id].yVauhti = -pituus;
     pelaajaTiedot[id].xVauhti = pituus * suunta;
@@ -185,8 +186,6 @@ function liikutuskutsu(){
 
 function liikuta(id) {
 	viivapoisto();
-	console.log (pelaajaTiedot);
-	console.log (id);
 	var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return
     if ( nappiPohjassa ) {
@@ -211,7 +210,7 @@ function liikuta(id) {
 	var bitmap = pelaaja.hahmoBitmap;
 	
 	bitmap.y = pelaaja.Pysty;
-	if ( oikealle ) {
+	if ( pelaajaTiedot[id].oikealle ) {
 		bitmap.x = pelaaja.Vaaka;
 		bitmap.scaleX = skaalaus;
 	} else {
@@ -220,7 +219,8 @@ function liikuta(id) {
 	}
 	
     stage.update();
-    serverinKeskustelu();
+	
+	serverinKeskustelu();
 }
 
 function serverinKeskustelu (){

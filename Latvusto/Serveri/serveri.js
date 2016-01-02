@@ -3,7 +3,6 @@ var querystring = require('querystring');
 var aloitus = true;
 var jarjestys = 0;
 
-var pelaajienKoordinaatit = { };
 var tallennettuResponse;
 
 /*
@@ -52,17 +51,24 @@ function respondToIncomingMessage(request, response) {
     }
 }
 
+// Yllä olevat funktiot tällä hetkellä irrelevantteja.
+
 function vastaaViestiin(data, response) {
 	var viestityyppi = data.viestityyppi;
 	if(viestityyppi == "kysely"){
 		tallennaTapahtumakysely(data, response);
 	}else if (viestityyppi == "ilmoitus"){
 		vastaaTapahtumailmoitukseen(data, response);
+	}else if (viestityyppi == "aloitus"){
+		 // uusi pelaaja tullut mukaan
+        jarjestys++;
+        console.log ("Pelaajien lukumääränä " + jarjestys);
+        var paluuviesti = {jarjestys: jarjestys};
+		lahetaVastaus(paluuviesti, response);
 	}else{
 		console.log("The message was undefined");
 	}
 }
-// Yllä olevat funktiot tällä hetkellä irrelevantteja.
 
 function tallennaTapahtumakysely(data, response) {
 	// TODO: Muuta tätä niin, että se voi tallentaa
@@ -71,14 +77,18 @@ function tallennaTapahtumakysely(data, response) {
 }
 
 function vastaaTapahtumailmoitukseen(data, response){
-    var headers = {};
+	lahetaVastaus(paluuviesti, tallennettuResponse);
+}
+
+function lahetaVastaus(vastausViesti, response) {
+	var headers = {};
     headers["Access-Control-Allow-Origin"] = "*";
     headers["Access-Control-Allow-Credentials"] = false;
     headers["Content-Type"] = 'text/plain';
-    tallennettuResponse.writeHead(200, headers); 
-    var json = JSON.stringify(paluuviesti);
-    tallennettuResponse.write (json);
-    tallennettuResponse.end();
+    response.writeHead(200, headers); 
+    var json = JSON.stringify(vastausViesti);
+    response.write (json);
+    response.end();	
 }
 
 http.createServer(respondToIncomingMessage).listen(1337,'127.0.0.1');

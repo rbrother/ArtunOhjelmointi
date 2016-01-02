@@ -25,7 +25,7 @@ facilitating live content and the creation of real-time games. This is made poss
 providing a standardized way for the server to send content to the browser without being 
 solicited by the client"
 
-Ohje node.js + socket.io:
+Ohje node.js + socket.io
 http://code.tutsplus.com/tutorials/using-nodejs-and-websockets-to-build-a-chat-service--net-34482
 
 
