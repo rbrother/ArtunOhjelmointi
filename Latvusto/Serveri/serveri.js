@@ -66,7 +66,7 @@ function vastaaViestiin(data, response) {
         var paluuviesti = {jarjestys: jarjestys};
 		lahetaVastaus(paluuviesti, response);
 	}else{
-		console.log("The message was undefined");
+		console.log("Tuntematon viestityyppi: ", viestityyppi);
 	}
 }
 
