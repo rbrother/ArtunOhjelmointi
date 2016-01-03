@@ -76,8 +76,11 @@ function tallennaTapahtumakysely(data, response) {
 	tallennettuResponse = response;
 }
 
-function vastaaTapahtumailmoitukseen(data, response){
+function vastaaTapahtumailmoitukseen(data, response) {
+	// Vastaa aiempiin meiden clienttien kyselyihin
 	lahetaVastaus(paluuviesti, tallennettuResponse);
+	// Vastaa itse ilmoitukseen hyvin lyhyesti
+	lahetaVastaus( { vastaus: "ok"}, response );
 }
 
 function lahetaVastaus(vastausViesti, response) {

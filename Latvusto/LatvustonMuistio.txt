@@ -1,9 +1,7 @@
 ﻿Muistiinpanot Latvuston kehityksessä 
 
 TEHTÄVÄLISTA
-	#1 Debuggaa kahdella pelaajalla.
-	  * Tuleeko virheilmoituksia serverillä tai clinetillä? Jos tulee, pohdi/debuggaa miksi
-      * Jos ei tule virheilmoituksia, mutta ei toimi oikein, debuggaa muksi /eg. console.log	  
+	#1 Tee hyppäämisestä yleistä kuten ampumisesta.	  
 
 	1. Ampumisviiva myös vasemmalle, jos ukko osoittaa vasemmalle
 	2. Ampumisviivan häipuminen pienen viiveen kuluittua

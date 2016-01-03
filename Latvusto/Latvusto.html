@@ -98,6 +98,8 @@ function NappiAlas(event) {
 
 	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
 		ampuminen(omaId);
+		var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
+		$.post(url, viesti, function () { } );	
 	}
 }
 
@@ -235,7 +237,7 @@ function liikuta(id) {
 function serverinKeskustelu (){
 	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
-        viesti = {viestityyppi: "staattinen"};
+        viesti = {viestityyppi: "kysely"};
 		// L‰hetet‰‰n viesti serverille ja pyydet‰‰n kutsumaan
 		// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
         $.post(url, viesti, VastausViestinKasittely);
