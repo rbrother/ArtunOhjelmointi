@@ -20,33 +20,21 @@ var hyppyPalkki;
 var onkoVastausTullut = true;
 var omaId;
 var url = "http://127.0.0.1:1337/";
-//var omanHahmonTyyppi;
 var extraHyppy = true;
-// var oikealle = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
-var ampumisviiva;
-var poistonumero = 0;
 
 // pelaajatiedot:
 // { 
 //	 id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
-//          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true }, 
+//          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true,
+//          ampumisviiva: <bitmap>, ampumisLaskuri: 0 }, 
 //   id2: { hahmoTyyppi: "HP", ... }, 
 //   ...    
 // } 
 var pelaajaTiedot = {};     
 
 
-function viivapoisto(){
-	if(ampumisviiva != undefined){
-		poistonumero++;
-		if(poistonumero == 12){
-			stage.removeChild(ampumisviiva);
-			ampumisviiva = undefined;
-			poistonumero = 0;
-		}
-	}
-};
+
 
 // hae pelaajan "mikko" tiedot ->   pelaajatiedot.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     pelaajatiedot[n] 
@@ -92,12 +80,15 @@ window.onload = function() {
 }
 
 function buttonUp(event) {
-    var xVauhti = pelaajaTiedot[omaId].xVauhti;
-	var yVauhti = pelaajaTiedot[omaId].yVauhti;
-	if(xVauhti == 0 && yVauhti < 0.4){
-		var oikealle = ( event.keyCode == 68 );
-		hyppysuunta(oikealle, omaId);
+	if(event.keyCode == 68 || event.keyCode == 65) {
+	    var xVauhti = pelaajaTiedot[omaId].xVauhti;
+		var yVauhti = pelaajaTiedot[omaId].yVauhti;
+		if(xVauhti == 0 && yVauhti < 0.4){
+			var oikealle = ( event.keyCode == 68 );
+			hyppysuunta(oikealle, omaId);
+		}	
 	}
+
 }
 
 function NappiAlas(event) { 
@@ -105,23 +96,30 @@ function NappiAlas(event) {
 		liikutusNappiAlas(event);
 	}
 
-	if (event.keyCode == 87 && ampumisviiva == undefined){
-		// Tänne tullaan, jos W-näppäintä painetaan.
-		laukausAudio.play();
-		ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
-		ampumisviiva.scaleY = 0.25;
-		ampumisviiva.y = pelaajaTiedot[omaId].Pysty + 0.5*blokinKoko;
-		if(pelaajaTiedot[omaId].oikealle){
-			ampumisviiva.x = pelaajaTiedot[omaId].Vaaka + blokinKoko;
-			ampumisviiva.scaleX = 1000;
-		}else{
-			ampumisviiva.x = pelaajaTiedot[omaId].Vaaka;
-			ampumisviiva.scaleX = -1000;
-		};
-		stage.addChild(ampumisviiva);
-		
+	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
+		ampuminen(omaId);
 	}
 }
+
+function ampuminen(pelaajaId){
+
+	// Tänne tullaan, jos W-näppäintä painetaan.
+	laukausAudio.play();
+	var pelaaja = pelaajaTiedot[pelaajaId];
+	pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
+	var shooting = pelaaja.ampumisviiva;
+	shooting.scaleY = 0.25;
+	shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
+	if(pelaaja.oikealle){
+		shooting.x = pelaaja.Vaaka + blokinKoko;
+		shooting.scaleX = 1000;
+	}else{
+		shooting.x = pelaaja.Vaaka;
+		shooting.scaleX = -1000;
+	};
+	stage.addChild(shooting);
+	pelaaja.ampumisLaskuri = 0;
+};
 
 function liikutusNappiAlas(event){
 	var xVauhti = pelaajaTiedot[omaId].xVauhti;
@@ -184,10 +182,21 @@ function liikutuskutsu(){
 	// kaikille pelaajille (myös omalle)
 }
 
+function viivapoisto(pelaaja){
+	if(pelaaja.ampumisviiva != undefined){
+		pelaaja.ampumisLaskuri++;
+		if(pelaaja.ampumisLaskuri == 12){
+			stage.removeChild(pelaaja.ampumisviiva);
+			pelaaja.ampumisviiva = undefined;
+			pelaaja.ampumisLaskuri = 0;
+		}
+	}
+}
+
 function liikuta(id) {
-	viivapoisto();
 	var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return
+	viivapoisto(pelaaja);
     if ( nappiPohjassa ) {
         if(hyppypituus < 10){
             hyppypituus = hyppypituus + 0.1;
