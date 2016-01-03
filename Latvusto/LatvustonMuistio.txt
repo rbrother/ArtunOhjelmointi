@@ -1,4 +1,4 @@
-﻿Muistiinpanot Latvuston kehityksessä (Uskon, että ne voidaan pitää itse HTML-dokumentissa?)
+﻿Muistiinpanot Latvuston kehityksessä 
 
 TEHTÄVÄLISTA
 	#1 Debuggaa kahdella pelaajalla.
