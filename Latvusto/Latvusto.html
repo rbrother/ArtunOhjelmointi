@@ -94,12 +94,20 @@ function buttonUp(event) {
 function NappiAlas(event) { 
 	if(event.keyCode == 68 || event.keyCode == 65) {
 		liikutusNappiAlas(event);
+        var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "hypynAloitus", pelaaja: omaId};
+        $.post(url, viesti, function() {
+            //funktio
+        } 
+        );
 	}
 
 	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
 		ampuminen(omaId);
 		var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
-		$.post(url, viesti, function () { } );	
+		$.post(url, viesti, function() { 
+            //funktio
+        } 
+        );	
 	}
 }
 
@@ -124,6 +132,11 @@ function ampuminen(pelaajaId){
 };
 
 function liikutusNappiAlas(event){
+    /*
+    Usko funktion toimivan seuraavalla tavalla.
+    
+    
+    */
 	var xVauhti = pelaajaTiedot[omaId].xVauhti;
 	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){

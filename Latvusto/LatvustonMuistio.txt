@@ -3,9 +3,6 @@
 TEHTÄVÄLISTA
 	#1 Tee hyppäämisestä yleistä kuten ampumisesta.	  
 
-	1. Ampumisviiva myös vasemmalle, jos ukko osoittaa vasemmalle
-	2. Ampumisviivan häipuminen pienen viiveen kuluittua
-
 	Kentän teko
 	Globaali serveri
 	Hahmon valinta
@@ -215,6 +212,8 @@ Alkuperäinen dokumentti
         Viidenteen lisäpomoon tarvitaan viisikymmentä avainta, joista 49 on pelimaailmassa ja viideskymmenes saadaan neljänneltä lisäpomolta.
     Välimuistiot
     Isän mökillä on eräänlanen piirretty hahmo, jonka nimi on Pilkku. Päähahmo ja Pilgut (Get it?) näyttävät tältä hahmolta.
+    
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     
 TF2-ideat
 Suunnitelmat
