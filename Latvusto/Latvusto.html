@@ -49,7 +49,7 @@ var pelaajaTiedot = {};
 
 window.onload = function() {
     omaId = prompt("Please, insert your gamer ID", "");
-    var alkuviesti = { GAMERID: omaId, viestityyppi: "aloitus"};
+    var alkuviesti = { pelaajanimi: omaId, viestityyppi: "aloitus"};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
     });
@@ -250,7 +250,7 @@ function liikuta(id) {
 function serverinKeskustelu (){
 	if( onkoVastausTullut ) {
         onkoVastausTullut = false;
-        viesti = {viestityyppi: "kysely"};
+        viesti = {viestityyppi: "kysely", pelaaja: omaId};
 		// L‰hetet‰‰n viesti serverille ja pyydet‰‰n kutsumaan
 		// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
         $.post(url, viesti, VastausViestinKasittely);

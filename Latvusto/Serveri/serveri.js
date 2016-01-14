@@ -3,7 +3,7 @@ var querystring = require('querystring');
 var aloitus = true;
 var jarjestys = 0;
 
-var tallennettuResponse;
+var serveripelaajaTiedot = {};
 
 /*
 
@@ -53,32 +53,41 @@ function respondToIncomingMessage(request, response) {
 
 // Yllä olevat funktiot tällä hetkellä irrelevantteja.
 
-function vastaaViestiin(data, response) {
-	var viestityyppi = data.viestityyppi;
+function vastaaViestiin(viestiClientilta, response) {
+	var viestityyppi = viestiClientilta.viestityyppi;
 	if(viestityyppi == "kysely"){
-		tallennaTapahtumakysely(data, response);
+		tallennaTapahtumakysely(viestiClientilta, response);
 	}else if (viestityyppi == "ilmoitus"){
-		vastaaTapahtumailmoitukseen(data, response);
+		vastaaTapahtumailmoitukseen(viestiClientilta, response);
 	}else if (viestityyppi == "aloitus"){
 		 // uusi pelaaja tullut mukaan
         jarjestys++;
         console.log ("Pelaajien lukumääränä " + jarjestys);
         var paluuviesti = {jarjestys: jarjestys};
 		lahetaVastaus(paluuviesti, response);
+		serveripelaajaTiedot[viestiClientilta.pelaajanimi] = {}; 
 	}else{
 		console.log("Tuntematon viestityyppi: ", viestityyppi);
 	}
 }
 
-function tallennaTapahtumakysely(data, response) {
+function tallennaTapahtumakysely(viestiClientilta, response) {
 	// TODO: Muuta tätä niin, että se voi tallentaa
 	// useilta eri clienteiltä tulevat response-objektit
-	tallennettuResponse = response;
+	var pelaaja = viestiClientilta.pelaaja;
+	serveripelaajaTiedot[pelaaja].tallennettuResponse = response; 
 }
 
-function vastaaTapahtumailmoitukseen(data, response) {
+// Esim. A: hyppäsin!   ->   lähetetään B, C ja D (mutta ei A:lle itselleen)
+function vastaaTapahtumailmoitukseen(ilmoitusViesti, response) {
 	// Vastaa aiempiin meiden clienttien kyselyihin
-	lahetaVastaus(paluuviesti, tallennettuResponse);
+	var pelaajanimet = Object.keys(serveripelaajaTiedot);
+	pelaajanimet.forEach (function (pelaajanimi){
+		if(pelaajanimi != ilmoitusViesti.pelaaja){
+			lahetaVastaus(ilmoitusViesti, serveripelaajaTiedot[pelaajanimi].tallennettuResponse);
+			serveripelaajaTiedot[pelaajanimi].tallennettuResponse = undefined;						
+		}
+	})
 	// Vastaa itse ilmoitukseen hyvin lyhyesti
 	lahetaVastaus( { vastaus: "ok"}, response );
 }
