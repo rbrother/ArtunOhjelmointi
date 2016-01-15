@@ -1,0 +1,19 @@
+Ideointi
+	
+	Suunnitelma
+
+		Peli
+			
+			Juoni
+
+			Käsikirjoitus
+
+			Musiikki
+
+			Rakennekaava (Miten peli etenee)
+
+			Sivuhahmotelma (Visualisointi)
+
+			Toiminnot (Mitä käyttäjä voi tehdä) 
+
+			Itsearviointi

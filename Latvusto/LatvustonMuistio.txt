@@ -1,43 +1,55 @@
-﻿Muistiinpanot Latvuston kehityksessä 
-
-TEHTÄVÄLISTA
+﻿TO-DO
+	
 	#1 Tee hyppäämisestä yleistä kuten ampumisesta.	  
 
 	Kentän teko
+
 	Globaali serveri
+
 	Hahmon valinta
+
 	Hahmoinformaation anto
 
-Client (Web Browser)                    Server (Node.js)
-$.POST(...)
-      OPTIONS            ->              
-                         <-             OPTIONS response
-      POST               ->             Processing the POST DATA.                                        
+PIENIÄ NOUTTEJA
+
+	Client (Web Browser)                    Server (Node.js)
+
+	$.post(...)
+
+      options            ->  
+            
+                         <-             options response
+
+      post              ->             Processing the post data.                                        
 
 
-CLIENT1 (Matti) -----
-                     SERVERI (Isä)
-CLIENT2 (Maija) -----
+	CLIENT1 (Matti) -----
+             	        SERVERI (Isä)
+	CLIENT2 (Maija) -----
 
-"The WebSocket protocol makes more interaction between a browser and a website possible, 
-facilitating live content and the creation of real-time games. This is made possible by 
-providing a standardized way for the server to send content to the browser without being 
-solicited by the client"
+	"The WebSocket protocol makes more interaction between a browser and a website possible, 
+	facilitating live content and the creation of real-time games. This is made possible by 
+	providing a standardized way for the server to send content to the browser without being 
+	solicited by the client"
 
-Ohje node.js + socket.io
-http://code.tutsplus.com/tutorials/using-nodejs-and-websockets-to-build-a-chat-service--net-34482
+	Ohje node.js + socket.io
+	http://code.tutsplus.com/tutorials/using-nodejs-and-websockets-to-build-a-chat-service--net-34482
 
+TARINA (KOULUDEMON ULKOPUOLELLA)
 
+    Yleistettynä
 
+        Alussa päähenkilön veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heidän esi-isänsä Pilgut tulivat heidän saarelleen
 
-_Tarina_
-    _Yleistettynä_
-        Alussa päähenkilön veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heidän esi-isänsä Pilgut tulivat heidän saarelleen tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren 
-        valtavan mangrovepuun mahlaa keräämiensä puunpalasten päälle. Tuolloin palasista muodoistui ilkeännäköinen maski, mikä teki sovinnon kauppiaan kanssa. Kauppias pitäisi maskia koko ajan päällä ja maski voisi 
-        vastapalveluksena muuttaa kauppiaan miksi vain hän haluaisi. Kauppiaasta tuli kuuluisa ja hän myi näitä maagisia naamioita lisää saaren asukkaille. Kuitenkin asukkaat alkoivat epäillä koko juttua, kun kului suunnattomasti 
-        aikaa eikä kauppias siltikään kuollut. 
-        Eräänä päivänä kuitenkin eräs maskinpitäjistä kuoli onnettomuudessa ja ruumiinavauksessa paljastui, että koko ruumis oli juurien vallassa eikä alkuperäisestä saarelaisesta ollut miltei mitään jäljellä. Tämä sai
-        kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitkä sota ja päähenkilön veli ei koskaan saanut tietää äidiltään miten sota päättyi.
+	tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren valtavan mangrovepuun mahlaa keräämiensä puunpalasten päälle. 
+
+	Tuolloin palasista muodoistui ilkeännäköinen maski, mikä teki sovinnon kauppiaan kanssa. Kauppias pitäisi maskia koko ajan päällä ja maski voisi 
+
+        vastapalveluksena muuttaa kauppiaan miksi vain hän haluaisi. Kauppiaasta tuli kuuluisa ja hän myi näitä maagisia naamioita lisää saaren asukkaille.
+ 
+	Kuitenkin asukkaat alkoivat epäillä koko juttua, kun kului suunnattomasti aikaa eikä kauppias siltikään kuollut. Eräänä päivänä kuitenkin eräs 
+	
+	maskinpitäjistä kuoli onnettomuudessa ja ruumiinavauksessa paljastui, että koko ruumis oli juurien vallassa eikä alkuperäisestä saarelaisesta ollut miltei mitään jäljellä. Tämä sai kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitkä sota ja päähenkilön veli ei koskaan saanut tietää äidiltään miten sota päättyi.
         Tarinan jälkeen ideana on se, että päähenkilön veli lähtee heidän äitinsä haudalle, mikä on ensimmäisen alueen lopussa. Päähenkilö hakee heidän talosta lahjoja haudalle samalla opettaen pelaajalle perusmekaniikat.
         Kun hän on saanut tavarat hankittua hän ei kuitenkaan pääse ulos talon pääovesta. Hän menee katon kautta jolloin hän näkee, että ovea pidättelee joukko maskeja. Näin alkaa tutoriaalitason maskitaistelu ja tästä 
         peli jatkuukin ihan tavallisesti ottaen.
