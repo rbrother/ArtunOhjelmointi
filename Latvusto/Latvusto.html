@@ -17,7 +17,6 @@ var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
-var onkoVastausTullut = true;
 var omaId;
 var url = "http://127.0.0.1:1337/";
 var extraHyppy = true;
@@ -49,7 +48,7 @@ var pelaajaTiedot = {};
 
 window.onload = function() {
     omaId = prompt("Please, insert your gamer ID", "");
-    var alkuviesti = { pelaajanimi: omaId, viestityyppi: "aloitus"};
+    var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
     });
@@ -77,6 +76,8 @@ window.onload = function() {
     window.onkeyup = buttonUp;
 	
     stage.update();
+	
+	kysyServeriltTapahtumia();
 }
 
 function buttonUp(event) {
@@ -94,11 +95,6 @@ function buttonUp(event) {
 function NappiAlas(event) { 
 	if(event.keyCode == 68 || event.keyCode == 65) {
 		liikutusNappiAlas(event);
-        var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "hypynAloitus", pelaaja: omaId};
-        $.post(url, viesti, function() {
-            //funktio
-        } 
-        );
 	}
 
 	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
@@ -243,18 +239,13 @@ function liikuta(id) {
 	}
 	
     stage.update();
-	
-	serverinKeskustelu();
 }
 
-function serverinKeskustelu (){
-	if( onkoVastausTullut ) {
-        onkoVastausTullut = false;
-        viesti = {viestityyppi: "kysely", pelaaja: omaId};
-		// L‰hetet‰‰n viesti serverille ja pyydet‰‰n kutsumaan
-		// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
-        $.post(url, viesti, VastausViestinKasittely);
-    }; 
+function kysyServeriltTapahtumia (){
+    viesti = {viestityyppi: "kysely", pelaaja: omaId};
+	// L‰hetet‰‰n viesti serverille ja pyydet‰‰n kutsumaan
+	// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
+    $.post(url, viesti, VastausViestinKasittely);
 }
 
 /*
@@ -264,28 +255,18 @@ Esimerkki serverilt‰ tulevasta viestist‰:
 		"Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
 } */   				
 function VastausViestinKasittely(data, status){
-	if (data != "{}" ){
-        var viestiServerilt = jQuery.parseJSON (data);
-        var pelaajanimet = Object.keys(viestiServerilt);
-
-		pelaajanimet.forEach (function (id) {
-			if (omaId == id){}
-			else if (pelaajaTiedot[id] == undefined){
-				// Jos tulee uusi pelaaja t‰nne p‰‰dyt‰‰n.     A  B     Mies,Nainen
-				var jarjestys = viestiServerilt[id].jarjestys;
-				var toinenHahmo = HahmoTyyppi(jarjestys);
-				hahmoBitmap = ukonVisuaalinenLuonti(toinenHahmo);
-				pelaajaTiedot[id] = { bitmap: hahmoBitmap};
-			}
-			else{
-				// Vanha muu pelaaja
-				var muidenBtmp = pelaajaTiedot[id].bitmap;
-				muidenBtmp.x = viestiServerilt[id].X;
-				muidenBtmp.y = viestiServerilt[id].Y;
-			}
-		});
-	};
-	setTimeout( function() { onkoVastausTullut = true; }, 20 );
+	var viestiServerilt = jQuery.parseJSON (data);
+	var toinenPelaaja = viestiServerilt.pelaaja;
+	if(viestiServerilt.viestityyppi == "aloitus"){
+		console.log("Aloitus, pelaajana " + toinenPelaaja);
+	}else if(viestiServerilt.viestityyppi == "ilmoitus"){
+		if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
+			console.log("Ampumisilmoitus, pelaajana " + toinenPelaaja);
+		}else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
+			console.log("Hyppyilmoitus, pelaajana " + toinenPelaaja);
+		}
+	}
+	kysyServeriltTapahtumia();
 };
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
