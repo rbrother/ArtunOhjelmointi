@@ -53,6 +53,7 @@ window.onload = function() {
       contentType: "application/json; charset=utf-8"
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
+		console.log("ALKUVIESTI RESPONSE SAATU");
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
 		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
 		pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
@@ -76,6 +77,7 @@ window.onload = function() {
     window.onkeyup = buttonUp;
 	
     stage.update();
+	console.log("STAGE.UPDATE suoritettu!")
 	
 	kysyServeriltTapahtumia();
 }
@@ -86,7 +88,7 @@ function buttonUp(event) {
 		var yVauhti = pelaajaTiedot[omaId].yVauhti;
 		if(xVauhti == 0 && yVauhti < 0.4){
 			var oikealle = ( event.keyCode == 68 );
-			hyppysuunta(oikealle, omaId);
+			hyppaaSuuntaan(oikealle, omaId);
 		}	
 	}
 
@@ -139,7 +141,7 @@ function liikutusNappiAlas(event){
         if(xVauhti != 0 && extraHyppy){
             hyppypituus = 2.5;
 			var oikealle = ( event.keyCode == 68 );
-            hyppysuunta(oikealle, omaId);
+            hyppaaSuuntaan(oikealle, omaId);
             extraHyppy = false;
         }
 	}
@@ -156,7 +158,7 @@ function liikutusNappiAlas(event){
 	}
 }
 
-function hyppysuunta(oikealle,id){
+function hyppaaSuuntaan(oikealle,id){
 	if(oikealle){ // D, ks. http://www.asciitable.com/
 		aloitaHyppy(hyppypituus,+1, id);
 	}
@@ -166,6 +168,8 @@ function hyppysuunta(oikealle,id){
 }
  
 function aloitaHyppy(pituus,suunta, id){ 
+	// TO-DO | Lähetä serverille tieto hyppäämisestä jolloin muutkin clientit saavat tietää tästä ja voivat toimia tämän mu-
+	// kaan.
 	if(suunta == +1){ // oikealle
 		pelaajaTiedot[id].oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
@@ -187,10 +191,10 @@ function YVauhti(id) {
 }
 
 function liikutuskutsu(){
-	liikuta(omaId);
-	//  TODO: Muuta tätä rutiinia niin, että
-	// liikuta-funktiota kutsutaan yksi kerrallaan
-	// kaikille pelaajille (myös omalle)
+	var pelaajanimet = Object.keys(pelaajaTiedot);
+	pelaajanimet.forEach (function (id){
+		liikuta(id);
+	})
 }
 
 function viivapoisto(pelaaja){
@@ -259,10 +263,15 @@ function VastausViestinKasittely(data, status){
 	var toinenPelaaja = viestiServerilt.pelaaja;
 	if(viestiServerilt.viestityyppi == "aloitus"){
 		console.log("Aloitus, pelaajana " + toinenPelaaja);
+		var hahmoTyyppi = HahmoTyyppi(viestiServerilt.jarjestys);
+		pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
+		oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+		
 	}else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
 			console.log("Ampumisilmoitus, pelaajana " + toinenPelaaja);
 		}else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
+		// TO-DO #2 | Koodaa niin, että yhden clientin hyppy tapahtuu kaikille clienteille.
 			console.log("Hyppyilmoitus, pelaajana " + toinenPelaaja);
 		}
 	}

@@ -65,7 +65,8 @@ function vastaaViestiin(viestiClientilta, response) {
         jarjestys++;
         console.log ("Pelaajien lukumääränä " + jarjestys);
         var vastausViesti = {jarjestys: jarjestys};
-		serveripelaajaTiedot[viestiClientilta.pelaaja] = {}; 
+		serveripelaajaTiedot[viestiClientilta.pelaaja] = {};
+		viestiClientilta.jarjestys = jarjestys;
 		vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
 	}else{
 		console.log("Tuntematon viestityyppi: ", viestityyppi);
@@ -73,8 +74,6 @@ function vastaaViestiin(viestiClientilta, response) {
 }
 
 function tallennaTapahtumakysely(viestiClientilta, response) {
-	// TODO: Muuta tätä niin, että se voi tallentaa
-	// useilta eri clienteiltä tulevat response-objektit
 	var pelaaja = viestiClientilta.pelaaja;
 	if(response == undefined){
 		console.log("ERROR! RESPONSE UNDEFINED");
