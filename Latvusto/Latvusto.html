@@ -179,6 +179,9 @@ function aloitaHyppy(pituus,suunta, id){
     pelaajaTiedot[id].xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
 	nappiPohjassa = false;
+	var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
+	$.post(url, viesti);
+	// TODO (EHKÄ): Jos ei tarvitse laittaa tähän funktiota, poista funktiot toisista $.post-funktioista (ei kaikista ja älä laita tähän.)
 	hyppypituus = 0;
 }
 
