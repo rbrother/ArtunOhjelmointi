@@ -58,6 +58,9 @@ window.onload = function() {
 		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
 		pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
 			hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+		// TODO: Luo t‰ss‰ muut hahmot, jotka ovat jo olemassa.
+		// Vinkki: Jos meid‰n oman hahmon j‰rjestys on esim. 3, niin pit‰‰
+		// t‰ss‰ luoda hahmot 1 ja 2.
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -102,10 +105,7 @@ function NappiAlas(event) {
 	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
 		ampuminen(omaId);
 		var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
-		$.post(url, viesti, function() { 
-            //funktio
-        } 
-        );	
+		$.post(url, viesti);	
 	}
 }
 
@@ -130,11 +130,6 @@ function ampuminen(pelaajaId){
 };
 
 function liikutusNappiAlas(event){
-    /*
-    Usko funktion toimivan seuraavalla tavalla.
-    
-    
-    */
 	var xVauhti = pelaajaTiedot[omaId].xVauhti;
 	var yVauhti = pelaajaTiedot[omaId].yVauhti;
 	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
@@ -168,8 +163,6 @@ function hyppaaSuuntaan(oikealle,id){
 }
  
 function aloitaHyppy(pituus,suunta, id){ 
-	// TO-DO | L‰het‰ serverille tieto hypp‰‰misest‰ jolloin muutkin clientit saavat tiet‰‰ t‰st‰ ja voivat toimia t‰m‰n mu-
-	// kaan.
 	if(suunta == +1){ // oikealle
 		pelaajaTiedot[id].oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
@@ -181,7 +174,6 @@ function aloitaHyppy(pituus,suunta, id){
 	nappiPohjassa = false;
 	var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
 	$.post(url, viesti);
-	// TODO (EHKƒ): Jos ei tarvitse laittaa t‰h‰n funktiota, poista funktiot toisista $.post-funktioista (ei kaikista ja ‰l‰ laita t‰h‰n.)
 	hyppypituus = 0;
 }
 
@@ -266,6 +258,7 @@ function VastausViestinKasittely(data, status){
 	var toinenPelaaja = viestiServerilt.pelaaja;
 	if(viestiServerilt.viestityyppi == "aloitus"){
 		console.log("Aloitus, pelaajana " + toinenPelaaja);
+		console.log(viestiServerilt.jarjestys);
 		var hahmoTyyppi = HahmoTyyppi(viestiServerilt.jarjestys);
 		pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
 		oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
