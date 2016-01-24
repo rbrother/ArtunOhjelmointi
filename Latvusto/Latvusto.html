@@ -46,6 +46,10 @@ var pelaajaTiedot = {};
 
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
 
+	//var pelaajanimet = Object.keys(pelaajaTiedot);
+	//pelaajanimet.forEach (function (id){
+	//	liikuta(id)
+
 window.onload = function() {
     omaId = prompt("Please, insert your gamer ID", "");
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
@@ -55,9 +59,19 @@ window.onload = function() {
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
 		console.log("ALKUVIESTI RESPONSE SAATU");
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
+		console.log(parsittuVastaus);
 		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
 		pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
 			hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+		
+		var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
+		var pelaajanimet = object.keys(muidenPelaajienTiedot);
+		pelaajanimet.forEach...
+		
+		
+			toisenHahmonLuonti(toisenHahmonJarjestys, ID-TÄHÄN);
+		
+		
 		// TODO: Luo tässä muut hahmot, jotka ovat jo olemassa.
 		// Vinkki: Jos meidän oman hahmon järjestys on esim. 3, niin pitää
 		// tässä luoda hahmot 1 ja 2.
@@ -259,9 +273,7 @@ function VastausViestinKasittely(data, status){
 	if(viestiServerilt.viestityyppi == "aloitus"){
 		console.log("Aloitus, pelaajana " + toinenPelaaja);
 		console.log(viestiServerilt.jarjestys);
-		var hahmoTyyppi = HahmoTyyppi(viestiServerilt.jarjestys);
-		pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
-		oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+		toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);
 		
 	}else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
@@ -273,6 +285,12 @@ function VastausViestinKasittely(data, status){
 	}
 	kysyServeriltTapahtumia();
 };
+
+function toisenHahmonLuonti(jarjestys, toinenPelaaja){
+	var hahmoTyyppi = HahmoTyyppi(jarjestys);
+	pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
+		oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+}
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
     result = false;

@@ -26,6 +26,13 @@ Viestien välitys clienttien ja serverin välillä
 							     (kysely2)  == reply ======>   VastausViestinKasittely
 								                               -> .... toteuta hyppy
 	
+	
+JÄRJESTYS       1       2     3       4
+                                      ^ MEIDÄN JÄRJESTYS
+                *       *     *
+									  
+	
+	
 
 TARINA (KOULUDEMON ULKOPUOLELLA)
 

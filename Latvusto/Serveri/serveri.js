@@ -64,7 +64,7 @@ function vastaaViestiin(viestiClientilta, response) {
 		 // uusi pelaaja tullut mukaan
         jarjestys++;
         console.log ("Pelaajien lukumääränä " + jarjestys);
-        var vastausViesti = {jarjestys: jarjestys};
+        var vastausViesti = {jarjestys: jarjestys, muidenPelaajienTiedot: serveripelaajaTiedot};
 		serveripelaajaTiedot[viestiClientilta.pelaaja] = {};
 		viestiClientilta.jarjestys = jarjestys;
 		vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
