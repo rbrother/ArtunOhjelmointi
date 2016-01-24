@@ -202,6 +202,15 @@ function liikutuskutsu(){
 	pelaajanimet.forEach (function (id){
 		liikuta(id);
 	})
+	if ( nappiPohjassa ) {
+       if(hyppypituus < 10){
+           hyppypituus = hyppypituus + 0.1;
+       }
+       hyppyPalkki.scaleX = hyppypituus * 0.13;
+	   var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
+	   var pelaaja = pelaajaTiedot[omaId];
+       hyppyPalkki.x = pelaaja.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
+    }
 }
 
 function viivapoisto(pelaaja){
@@ -219,14 +228,6 @@ function liikuta(id) {
 	var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return
 	viivapoisto(pelaaja);
-    if ( nappiPohjassa ) {
-        if(hyppypituus < 10){
-            hyppypituus = hyppypituus + 0.1;
-        }
-        hyppyPalkki.scaleX = hyppypituus * 0.13;
-        var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-        hyppyPalkki.x = pelaaja.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
-    }
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
