@@ -123,6 +123,8 @@ function NappiAlas(event) {
 
 function ampuminen(pelaajaId){
 
+	//saa ampuminen n‰kym‰‰n eri clienteill‰
+
 	// T‰nne tullaan, jos W-n‰pp‰int‰ painetaan.
 	laukausAudio.play();
 	var pelaaja = pelaajaTiedot[pelaajaId];
@@ -148,7 +150,7 @@ function liikutusNappiAlas(event){
         if(xVauhti != 0 && extraHyppy){
             hyppypituus = 2.5;
 			var oikealle = ( event.keyCode == 68 );
-            hyppaaSuuntaan(oikealle, omaId);
+            hyppaaSuuntaan(oikealle);
             extraHyppy = false;
         }
 	}
@@ -165,16 +167,15 @@ function liikutusNappiAlas(event){
 	}
 }
 
-function hyppaaSuuntaan(oikealle,id){
-	if(oikealle){ // D, ks. http://www.asciitable.com/
-		aloitaHyppy(hyppypituus,+1, id);
-	}
-	else{ // A
-		aloitaHyppy (hyppypituus, -1, id);
-	}
+function hyppaaSuuntaan(oikealle){
+    var suunta = -1;
+	if ( oikealle ) suunta = +1;
+	var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
+	$.post(url, viesti);	
+	aloitaHyppy(hyppypituus, suunta, omaId);
 }
  
-function aloitaHyppy(pituus,suunta, id){ 
+function aloitaHyppy(pituus, suunta, id){ 
 	if(suunta == +1){ // oikealle
 		pelaajaTiedot[id].oikealle = true;
 	}else if(suunta == -1){ // vasemmalle
@@ -184,8 +185,6 @@ function aloitaHyppy(pituus,suunta, id){
     pelaajaTiedot[id].xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
 	nappiPohjassa = false;
-	var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
-	$.post(url, viesti);
 	hyppypituus = 0;
 }
 
@@ -276,10 +275,12 @@ function VastausViestinKasittely(data, status){
 		
 	}else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
-			console.log("Ampumisilmoitus, pelaajana " + toinenPelaaja);
+			//To-do: Saa ampuminen n‰kym‰‰n eri clienteill‰.
 		}else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
-		// TO-DO #2 | Koodaa niin, ett‰ yhden clientin hyppy tapahtuu kaikille clienteille.
-			console.log("Hyppyilmoitus, pelaajana " + toinenPelaaja);
+			var hyppypituus = viestiServerilt.hyppypituus;
+			var suunta = viestiServerilt.suunta;
+			console.log(hyppypituus);
+			aloitaHyppy(hyppypituus ,suunta, viestiServerilt.pelaaja);
 		}
 	}
 	kysyServeriltTapahtumia();
