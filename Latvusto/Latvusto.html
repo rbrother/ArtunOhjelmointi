@@ -65,16 +65,14 @@ window.onload = function() {
 			hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
 		
 		var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
-		var pelaajanimet = object.keys(muidenPelaajienTiedot);
-		pelaajanimet.forEach...
-		
-		
-			toisenHahmonLuonti(toisenHahmonJarjestys, ID-TÄHÄN);
-		
-		
-		// TODO: Luo tässä muut hahmot, jotka ovat jo olemassa.
-		// Vinkki: Jos meidän oman hahmon järjestys on esim. 3, niin pitää
-		// tässä luoda hahmot 1 ja 2.
+		var pelaajanimet = Object.keys(muidenPelaajienTiedot);
+		var toisenHahmonJarjestys = 1;
+		pelaajanimet.forEach(function(pelaajanimi){
+			if(pelaajanimi != omaId){
+				toisenHahmonLuonti(toisenHahmonJarjestys, pelaajanimi);
+				toisenHahmonJarjestys++;
+			}
+		});
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
