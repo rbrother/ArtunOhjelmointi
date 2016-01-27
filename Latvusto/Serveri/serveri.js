@@ -54,68 +54,68 @@ function respondToIncomingMessage(request, response) {
 // Yllä olevat funktiot tällä hetkellä irrelevantteja.
 
 function vastaaViestiin(viestiClientilta, response) {
-	var viestityyppi = viestiClientilta.viestityyppi;
-	if(viestityyppi == "kysely"){
-		tallennaTapahtumakysely(viestiClientilta, response);
-	}else if (viestityyppi == "ilmoitus"){
-		console.log("ILMOITUS!");
-		vastaaTapahtumailmoitukseen(viestiClientilta, response, {vastaus: "ok"});
-	}else if (viestityyppi == "aloitus"){
-		 // uusi pelaaja tullut mukaan
+  var viestityyppi = viestiClientilta.viestityyppi;
+  if(viestityyppi == "kysely"){
+    tallennaTapahtumakysely(viestiClientilta, response);
+  }else if (viestityyppi == "ilmoitus"){
+    console.log("ILMOITUS!");
+    vastaaTapahtumailmoitukseen(viestiClientilta, response, {vastaus: "ok"});
+  }else if (viestityyppi == "aloitus"){
+     // uusi pelaaja tullut mukaan
         jarjestys++;
         console.log ("Pelaajien lukumääränä " + jarjestys);
         var vastausViesti = {jarjestys: jarjestys, muidenPelaajienTiedot: serveripelaajaTiedot};
-		serveripelaajaTiedot[viestiClientilta.pelaaja] = {};
-		viestiClientilta.jarjestys = jarjestys;
-		vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
-	}else{
-		console.log("Tuntematon viestityyppi: ", viestityyppi);
-	}
+    serveripelaajaTiedot[viestiClientilta.pelaaja] = {};
+    viestiClientilta.jarjestys = jarjestys;
+    vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
+  }else{
+    console.log("Tuntematon viestityyppi: ", viestityyppi);
+  }
 }
 
 function tallennaTapahtumakysely(viestiClientilta, response) {
-	var pelaaja = viestiClientilta.pelaaja;
-	if(response == undefined){
-		console.log("ERROR! RESPONSE UNDEFINED");
-	}else{
-		console.log("RESPONSE TALLENNETTU " + pelaaja);
-	}
-	
-	serveripelaajaTiedot[pelaaja].tallennettuResponse = response; 
+  var pelaaja = viestiClientilta.pelaaja;
+  if(response == undefined){
+    console.log("ERROR! RESPONSE UNDEFINED");
+  }else{
+    console.log("RESPONSE TALLENNETTU " + pelaaja);
+  }
+  
+  serveripelaajaTiedot[pelaaja].tallennettuResponse = response; 
 }
 
 // Esim. A: hyppäsin!   ->   lähetetään B, C ja D (mutta ei A:lle itselleen)
 function vastaaTapahtumailmoitukseen(ilmoitusViesti, response, paluuviesti) {
-	// Vastaa aiempiin meiden clienttien kyselyihin
-	var pelaajanimet = Object.keys(serveripelaajaTiedot);
-	pelaajanimet.forEach (function (pelaajanimi){
-		if(pelaajanimi != ilmoitusViesti.pelaaja){
-			var tallennettuResponse = serveripelaajaTiedot[pelaajanimi].tallennettuResponse;
-			if (tallennettuResponse == undefined){
-				console.log(serveripelaajaTiedot);
-			}else{
-				lahetaVastaus(ilmoitusViesti, tallennettuResponse);
-				serveripelaajaTiedot[pelaajanimi].tallennettuResponse = undefined;	
-			}
-		}
-	})
-	// Vastaa itse ilmoitukseen hyvin lyhyesti
-	lahetaVastaus(paluuviesti, response);
+  // Vastaa aiempiin meiden clienttien kyselyihin
+  var pelaajanimet = Object.keys(serveripelaajaTiedot);
+  pelaajanimet.forEach (function (pelaajanimi){
+    if(pelaajanimi != ilmoitusViesti.pelaaja){
+      var tallennettuResponse = serveripelaajaTiedot[pelaajanimi].tallennettuResponse;
+      if (tallennettuResponse == undefined){
+        console.log(serveripelaajaTiedot);
+      }else{
+        lahetaVastaus(ilmoitusViesti, tallennettuResponse);
+        serveripelaajaTiedot[pelaajanimi].tallennettuResponse = undefined;  
+      }
+    }
+  })
+  // Vastaa itse ilmoitukseen hyvin lyhyesti
+  lahetaVastaus(paluuviesti, response);
 }
 
 function lahetaVastaus(vastausViesti, response) {
-	var headers = {};
+  var headers = {};
     headers["Access-Control-Allow-Origin"] = "*";
     headers["Access-Control-Allow-Credentials"] = false;
     headers["Content-Type"] = 'text/plain';
     response.writeHead(200, headers); 
     var json = JSON.stringify(vastausViesti);
     response.write (json);
-    response.end();	
+    response.end();  
 }
 
-http.createServer(respondToIncomingMessage).listen(1337,'127.0.0.1');
+http.createServer(respondToIncomingMessage).listen(1331,'127.0.0.1');
 
-console.log('Server running at http://127.0.0.1:1337/');
+console.log('Server running...');
 
 

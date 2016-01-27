@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+  <meta charset="UTF-8">
     <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
     <script src="jquery.js"></script>
-	<script src="kentta.js"></script>
+  <script src="kentta.js"></script>
 
-	<script>
-	
-	// http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
+  <script>
+  
+  // http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
 var stage;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
@@ -18,13 +18,13 @@ var nappiPohjassa = false;
 var blokkienTiedot = [];
 var hyppyPalkki;
 var omaId;
-var url = "http://127.0.0.1:1337/";
+var url = "http://127.0.0.1:1331/";
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 
 // pelaajatiedot:
 // { 
-//	 id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
+//   id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
 //          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true,
 //          ampumisviiva: <bitmap>, ampumisLaskuri: 0 }, 
 //   id2: { hahmoTyyppi: "HP", ... }, 
@@ -46,9 +46,9 @@ var pelaajaTiedot = {};
 
 //Jollakin ohjelmointikerralla alhaalla esitetty tasonluomistapa pitäisi toteuttaa.
 
-	//var pelaajanimet = Object.keys(pelaajaTiedot);
-	//pelaajanimet.forEach (function (id){
-	//	liikuta(id)
+  //var pelaajanimet = Object.keys(pelaajaTiedot);
+  //pelaajanimet.forEach (function (id){
+  //  liikuta(id)
 
 window.onload = function() {
     omaId = prompt("Please, insert your gamer ID", "");
@@ -57,22 +57,22 @@ window.onload = function() {
       contentType: "application/json; charset=utf-8"
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
-		console.log("ALKUVIESTI RESPONSE SAATU");
-        var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-		console.log(parsittuVastaus);
-		omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
-		pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
-			hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
-		
-		var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
-		var pelaajanimet = Object.keys(muidenPelaajienTiedot);
-		var toisenHahmonJarjestys = 1;
-		pelaajanimet.forEach(function(pelaajanimi){
-			if(pelaajanimi != omaId){
-				toisenHahmonLuonti(toisenHahmonJarjestys, pelaajanimi);
-				toisenHahmonJarjestys++;
-			}
-		});
+        console.log("ALKUVIESTI RESPONSE SAATU");
+            var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
+        console.log(parsittuVastaus);
+        omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
+        pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
+          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+        
+        var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
+        var pelaajanimet = Object.keys(muidenPelaajienTiedot);
+        var toisenHahmonJarjestys = 1;
+        pelaajanimet.forEach(function(pelaajanimi){
+          if(pelaajanimi != omaId){
+            toisenHahmonLuonti(toisenHahmonJarjestys, pelaajanimi);
+            toisenHahmonJarjestys++;
+          }
+        });
     });
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -80,7 +80,7 @@ window.onload = function() {
     TestiTausta = new createjs.Shape();
     TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
     stage.addChild(TestiTausta);
-	makeStage();
+  makeStage();
             
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
@@ -90,143 +90,143 @@ window.onload = function() {
     window.onkeydown = NappiAlas;
     
     window.onkeyup = buttonUp;
-	
+  
     stage.update();
-	console.log("STAGE.UPDATE suoritettu!")
-	
-	kysyServeriltTapahtumia();
+  console.log("STAGE.UPDATE suoritettu!")
+  
+  kysyServeriltTapahtumia();
 }
 
 function buttonUp(event) {
-	if(event.keyCode == 68 || event.keyCode == 65) {
-	    var xVauhti = pelaajaTiedot[omaId].xVauhti;
-		var yVauhti = pelaajaTiedot[omaId].yVauhti;
-		if(xVauhti == 0 && yVauhti < 0.4){
-			var oikealle = ( event.keyCode == 68 );
-			hyppaaSuuntaan(oikealle, omaId);
-		}	
-	}
+  if(event.keyCode == 68 || event.keyCode == 65) {
+      var xVauhti = pelaajaTiedot[omaId].xVauhti;
+    var yVauhti = pelaajaTiedot[omaId].yVauhti;
+    if(xVauhti == 0 && yVauhti < 0.4){
+      var oikealle = ( event.keyCode == 68 );
+      hyppaaSuuntaan(oikealle, omaId);
+    }  
+  }
 
 }
 
 function NappiAlas(event) { 
-	if(event.keyCode == 68 || event.keyCode == 65) {
-		liikutusNappiAlas(event);
-	}
+  if(event.keyCode == 68 || event.keyCode == 65) {
+    liikutusNappiAlas(event);
+  }
 
-	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
-		ampuminen(omaId);
-		var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
-		$.post(url, viesti);	
-	}
+  if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
+    ampuminen(omaId);
+    var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
+    $.post(url, viesti);  
+  }
 }
 
 function ampuminen(pelaajaId){
 
-	//saa ampuminen näkymään eri clienteillä
+  //saa ampuminen näkymään eri clienteillä
 
-	// Tänne tullaan, jos W-näppäintä painetaan.
-	laukausAudio.play();
-	var pelaaja = pelaajaTiedot[pelaajaId];
-	pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
-	var shooting = pelaaja.ampumisviiva;
-	shooting.scaleY = 0.25;
-	shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
-	if(pelaaja.oikealle){
-		shooting.x = pelaaja.Vaaka + blokinKoko;
-		shooting.scaleX = 1000;
-	}else{
-		shooting.x = pelaaja.Vaaka;
-		shooting.scaleX = -1000;
-	};
-	stage.addChild(shooting);
-	pelaaja.ampumisLaskuri = 0;
+  // Tänne tullaan, jos W-näppäintä painetaan.
+  laukausAudio.play();
+  var pelaaja = pelaajaTiedot[pelaajaId];
+  pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
+  var shooting = pelaaja.ampumisviiva;
+  shooting.scaleY = 0.25;
+  shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
+  if(pelaaja.oikealle){
+    shooting.x = pelaaja.Vaaka + blokinKoko;
+    shooting.scaleX = 1000;
+  }else{
+    shooting.x = pelaaja.Vaaka;
+    shooting.scaleX = -1000;
+  };
+  stage.addChild(shooting);
+  pelaaja.ampumisLaskuri = 0;
 };
 
 function liikutusNappiAlas(event){
-	var xVauhti = pelaajaTiedot[omaId].xVauhti;
-	var yVauhti = pelaajaTiedot[omaId].yVauhti;
-	if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
+  var xVauhti = pelaajaTiedot[omaId].xVauhti;
+  var yVauhti = pelaajaTiedot[omaId].yVauhti;
+  if (omanHahmonTyyppi == "HP" || omanHahmonTyyppi == "Veteraani"){
         if(xVauhti != 0 && extraHyppy){
             hyppypituus = 2.5;
-			var oikealle = ( event.keyCode == 68 );
+      var oikealle = ( event.keyCode == 68 );
             hyppaaSuuntaan(oikealle);
             extraHyppy = false;
         }
-	}
-	if(xVauhti == 0 && yVauhti < 0.4){
-		extraHyppy = true;
-		if(nappiPohjassa == false){
-			hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
-			hyppyPalkki.scaleX = 0.33;
-			hyppyPalkki.scaleY = 0.33;
-			hyppyPalkki.y = pelaajaTiedot[omaId].Pysty + 50;
-			stage.addChild(hyppyPalkki);
-		}
-		nappiPohjassa = true;
-	}
+  }
+  if(xVauhti == 0 && yVauhti < 0.4){
+    extraHyppy = true;
+    if(nappiPohjassa == false){
+      hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
+      hyppyPalkki.scaleX = 0.33;
+      hyppyPalkki.scaleY = 0.33;
+      hyppyPalkki.y = pelaajaTiedot[omaId].Pysty + 50;
+      stage.addChild(hyppyPalkki);
+    }
+    nappiPohjassa = true;
+  }
 }
 
 function hyppaaSuuntaan(oikealle){
     var suunta = -1;
-	if ( oikealle ) suunta = +1;
-	var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
-	$.post(url, viesti);	
-	aloitaHyppy(hyppypituus, suunta, omaId);
+  if ( oikealle ) suunta = +1;
+  var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
+  $.post(url, viesti);  
+  aloitaHyppy(hyppypituus, suunta, omaId);
 }
  
 function aloitaHyppy(pituus, suunta, id){ 
-	if(suunta == +1){ // oikealle
-		pelaajaTiedot[id].oikealle = true;
-	}else if(suunta == -1){ // vasemmalle
-		pelaajaTiedot[id].oikealle = false;
-	};
+  if(suunta == +1){ // oikealle
+    pelaajaTiedot[id].oikealle = true;
+  }else if(suunta == -1){ // vasemmalle
+    pelaajaTiedot[id].oikealle = false;
+  };
     pelaajaTiedot[id].yVauhti = -pituus;
     pelaajaTiedot[id].xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
-	nappiPohjassa = false;
-	hyppypituus = 0;
+  nappiPohjassa = false;
+  hyppypituus = 0;
 }
 
 function XVauhti(id) {
-	return pelaajaTiedot[id].XVauhti;
+  return pelaajaTiedot[id].XVauhti;
 }
 
 function YVauhti(id) {
-	return pelaajaTiedot[id].YVauhti;
+  return pelaajaTiedot[id].YVauhti;
 }
 
 function liikutuskutsu(){
-	var pelaajanimet = Object.keys(pelaajaTiedot);
-	pelaajanimet.forEach (function (id){
-		liikuta(id);
-	})
-	if ( nappiPohjassa ) {
+  var pelaajanimet = Object.keys(pelaajaTiedot);
+  pelaajanimet.forEach (function (id){
+    liikuta(id);
+  })
+  if ( nappiPohjassa ) {
        if(hyppypituus < 10){
            hyppypituus = hyppypituus + 0.1;
        }
        hyppyPalkki.scaleX = hyppypituus * 0.13;
-	   var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-	   var pelaaja = pelaajaTiedot[omaId];
+     var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
+     var pelaaja = pelaajaTiedot[omaId];
        hyppyPalkki.x = pelaaja.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
     }
 }
 
 function viivapoisto(pelaaja){
-	if(pelaaja.ampumisviiva != undefined){
-		pelaaja.ampumisLaskuri++;
-		if(pelaaja.ampumisLaskuri == 12){
-			stage.removeChild(pelaaja.ampumisviiva);
-			pelaaja.ampumisviiva = undefined;
-			pelaaja.ampumisLaskuri = 0;
-		}
-	}
+  if(pelaaja.ampumisviiva != undefined){
+    pelaaja.ampumisLaskuri++;
+    if(pelaaja.ampumisLaskuri == 12){
+      stage.removeChild(pelaaja.ampumisviiva);
+      pelaaja.ampumisviiva = undefined;
+      pelaaja.ampumisLaskuri = 0;
+    }
+  }
 }
 
 function liikuta(id) {
-	var pelaaja = pelaajaTiedot[id];
+  var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return
-	viivapoisto(pelaaja);
+  viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
@@ -238,24 +238,24 @@ function liikuta(id) {
         pelaaja.yVauhti = pelaaja.yVauhti - painovoima;
     }
 
-	var bitmap = pelaaja.hahmoBitmap;
-	
-	bitmap.y = pelaaja.Pysty;
-	if ( pelaajaTiedot[id].oikealle ) {
-		bitmap.x = pelaaja.Vaaka;
-		bitmap.scaleX = skaalaus;
-	} else {
-		bitmap.x = pelaaja.Vaaka + blokinKoko;
-		bitmap.scaleX = -skaalaus;
-	}
-	
+  var bitmap = pelaaja.hahmoBitmap;
+  
+  bitmap.y = pelaaja.Pysty;
+  if ( pelaajaTiedot[id].oikealle ) {
+    bitmap.x = pelaaja.Vaaka;
+    bitmap.scaleX = skaalaus;
+  } else {
+    bitmap.x = pelaaja.Vaaka + blokinKoko;
+    bitmap.scaleX = -skaalaus;
+  }
+  
     stage.update();
 }
 
 function kysyServeriltTapahtumia (){
     viesti = {viestityyppi: "kysely", pelaaja: omaId};
-	// Lähetetään viesti serverille ja pyydetään kutsumaan
-	// "VastausViestinKasittely"-funktiota kun vastaus on tullut.
+  // Lähetetään viesti serverille ja pyydetään kutsumaan
+  // "VastausViestinKasittely"-funktiota kun vastaus on tullut.
     $.post(url, viesti, VastausViestinKasittely);
 }
 
@@ -263,33 +263,33 @@ function kysyServeriltTapahtumia (){
 Esimerkki serveriltä tulevasta viestistä:
 
 {     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
-		"Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
-} */   				
+    "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
+} */           
 function VastausViestinKasittely(data, status){
-	var viestiServerilt = jQuery.parseJSON (data);
-	var toinenPelaaja = viestiServerilt.pelaaja;
-	if(viestiServerilt.viestityyppi == "aloitus"){
-		console.log("Aloitus, pelaajana " + toinenPelaaja);
-		console.log(viestiServerilt.jarjestys);
-		toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);
-		
-	}else if(viestiServerilt.viestityyppi == "ilmoitus"){
-		if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
-			//To-do: Saa ampuminen näkymään eri clienteillä.
-		}else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
-			var hyppypituus = viestiServerilt.hyppypituus;
-			var suunta = viestiServerilt.suunta;
-			console.log(hyppypituus);
-			aloitaHyppy(hyppypituus ,suunta, viestiServerilt.pelaaja);
-		}
-	}
-	kysyServeriltTapahtumia();
+  var viestiServerilt = jQuery.parseJSON (data);
+  var toinenPelaaja = viestiServerilt.pelaaja;
+  if(viestiServerilt.viestityyppi == "aloitus"){
+    console.log("Aloitus, pelaajana " + toinenPelaaja);
+    console.log(viestiServerilt.jarjestys);
+    toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);
+    
+  }else if(viestiServerilt.viestityyppi == "ilmoitus"){
+    if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
+      //To-do: Saa ampuminen näkymään eri clienteillä.
+    }else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
+      var hyppypituus = viestiServerilt.hyppypituus;
+      var suunta = viestiServerilt.suunta;
+      console.log(hyppypituus);
+      aloitaHyppy(hyppypituus ,suunta, viestiServerilt.pelaaja);
+    }
+  }
+  kysyServeriltTapahtumia();
 };
 
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
-	var hahmoTyyppi = HahmoTyyppi(jarjestys);
-	pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
-		oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+  var hahmoTyyppi = HahmoTyyppi(jarjestys);
+  pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
+    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
 }
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
@@ -314,12 +314,12 @@ function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
 
 function HahmoTyyppi(jarjestys) {
     if (jarjestys == 1){
-		return "HP";
+    return "HP";
     } else if (jarjestys == 2){
-		return "Veteraani";
+    return "Veteraani";
     } else{
-		return "Humanoidi";
-	};
+    return "Humanoidi";
+  };
 }
 
 function ukonVisuaalinenLuonti(characterType){
@@ -328,8 +328,8 @@ function ukonVisuaalinenLuonti(characterType){
     }else if (characterType == "Veteraani"){
         pngNimi = "Veteraani.png";
     }else{
-		pngNimi = "Maskihumanoidi.png";
-	};
+    pngNimi = "Maskihumanoidi.png";
+  };
     var bitmap = new createjs.Bitmap("Kuva-aineisto/" + pngNimi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
