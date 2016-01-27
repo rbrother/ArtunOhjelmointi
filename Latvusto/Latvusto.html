@@ -170,12 +170,13 @@ function liikutusNappiAlas(event){
 function hyppaaSuuntaan(oikealle){
     var suunta = -1;
   if ( oikealle ) suunta = +1;
-  var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta};
+  var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, suunta: suunta,
+    hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
   $.post(url, viesti);  
   aloitaHyppy(hyppypituus, suunta, omaId);
 }
  
-function aloitaHyppy(pituus, suunta, id){ 
+function aloitaHyppy(pituus, suunta, id){
   if(suunta == +1){ // oikealle
     pelaajaTiedot[id].oikealle = true;
   }else if(suunta == -1){ // vasemmalle
@@ -277,10 +278,15 @@ function VastausViestinKasittely(data, status){
     if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
       //To-do: Saa ampuminen n‰kym‰‰n eri clienteill‰.
     }else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
+      var Vaaka = viestiServerilt.hahmonX;
+      console.log(Vaaka);
+      var Pysty = viestiServerilt.hahmonX;
       var hyppypituus = viestiServerilt.hyppypituus;
       var suunta = viestiServerilt.suunta;
-      console.log(hyppypituus);
-      aloitaHyppy(hyppypituus ,suunta, viestiServerilt.pelaaja);
+      var pelaajanNimi = viestiServerilt.pelaaja;
+      pelaajaTiedot[pelaajanNimi].Vaaka = Vaaka;
+      pelaajaTiedot[pelaajanNimi].Pysty = Pysty;
+      aloitaHyppy(hyppypituus ,suunta, pelaajanNimi);
     }
   }
   kysyServeriltTapahtumia();
