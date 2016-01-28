@@ -51,7 +51,17 @@ var pelaajaTiedot = {};
   //  liikuta(id)
 
 window.onload = function() {
-    omaId = prompt("Please, insert your gamer ID", "");
+    //Create a stage by getting a reference to the canvas
+    stage = new createjs.Stage("Pelialue");
+
+    TestiTausta = new createjs.Shape();
+    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
+    stage.addChild(TestiTausta);
+    makeStage();
+}
+
+function aloitaPeli(){
+    omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
@@ -74,13 +84,6 @@ window.onload = function() {
           }
         });
     });
-    //Create a stage by getting a reference to the canvas
-    stage = new createjs.Stage("Pelialue");
-
-    TestiTausta = new createjs.Shape();
-    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
-    stage.addChild(TestiTausta);
-  makeStage();
             
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
@@ -92,9 +95,9 @@ window.onload = function() {
     window.onkeyup = buttonUp;
   
     stage.update();
-  console.log("STAGE.UPDATE suoritettu!")
+    console.log("STAGE.UPDATE suoritettu!")
   
-  kysyServeriltTapahtumia();
+    kysyServeriltTapahtumia();
 }
 
 function buttonUp(event) {
@@ -267,22 +270,20 @@ Esimerkki serverilt‰ tulevasta viestist‰:
     "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
 } */           
 function VastausViestinKasittely(data, status){
+  console.log("Viesti vastaanotettu: " + data); 
   var viestiServerilt = jQuery.parseJSON (data);
   var toinenPelaaja = viestiServerilt.pelaaja;
   if(viestiServerilt.viestityyppi == "aloitus"){
-    console.log("Aloitus, pelaajana " + toinenPelaaja);
-    console.log(viestiServerilt.jarjestys);
-    toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);
-    
-  }else if(viestiServerilt.viestityyppi == "ilmoitus"){
+    console.log("Aloitus, pelaajana " + toinenPelaaja + "   J‰rjestys: " + viestiServerilt.jarjestys);
+    toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);    
+  } else if(viestiServerilt.viestityyppi == "ilmoitus"){
     if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
       //To-do: Saa ampuminen n‰kym‰‰n eri clienteill‰.
     }else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
-      var Vaaka = viestiServerilt.hahmonX;
-      console.log(Vaaka);
-      var Pysty = viestiServerilt.hahmonX;
-      var hyppypituus = viestiServerilt.hyppypituus;
-      var suunta = viestiServerilt.suunta;
+      var Vaaka = Number(viestiServerilt.hahmonX);
+      var Pysty = Number(viestiServerilt.hahmonY);
+      var hyppypituus = Number(viestiServerilt.hyppypituus);
+      var suunta = Number(viestiServerilt.suunta);
       var pelaajanNimi = viestiServerilt.pelaaja;
       pelaajaTiedot[pelaajanNimi].Vaaka = Vaaka;
       pelaajaTiedot[pelaajanNimi].Pysty = Pysty;
@@ -348,6 +349,8 @@ function ukonVisuaalinenLuonti(characterType){
  </script>
 </head>
 <body>
+Nimi <input type="text" id="pelaajaNimi"/>
+<button onClick = "aloitaPeli()">Aloita</button>
 <canvas id="Pelialue" width="1350" height="900">
 </canvas>
 </body>

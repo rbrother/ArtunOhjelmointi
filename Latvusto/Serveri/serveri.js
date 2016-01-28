@@ -58,19 +58,21 @@ function vastaaViestiin(viestiClientilta, response) {
   if(viestityyppi == "kysely"){
     tallennaTapahtumakysely(viestiClientilta, response);
   }else if (viestityyppi == "ilmoitus"){
-    console.log("ILMOITUS!");
+    console.log("Ilmoitus vastaanotettu pelaajalta: " + viestiClientilta.pelaaja);
     vastaaTapahtumailmoitukseen(viestiClientilta, response, {vastaus: "ok"});
   }else if (viestityyppi == "aloitus"){
-     // uusi pelaaja tullut mukaan
+       // uusi pelaaja tullut mukaan
+	    var pelaajaNimi = viestiClientilta.pelaaja;
         jarjestys++;
-        console.log ("Pelaajien lukumääränä " + jarjestys);
+		console.log('Uusi pelaaja, nimi: ' + pelaajaNimi + '    Järjestys: ' + jarjestys);
         var vastausViesti = {jarjestys: jarjestys, muidenPelaajienTiedot: serveripelaajaTiedot};
-    serveripelaajaTiedot[viestiClientilta.pelaaja] = {};
+    serveripelaajaTiedot[pelaajaNimi] = {};
     viestiClientilta.jarjestys = jarjestys;
     vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }
+  
 }
 
 function tallennaTapahtumakysely(viestiClientilta, response) {
@@ -79,8 +81,7 @@ function tallennaTapahtumakysely(viestiClientilta, response) {
     console.log("ERROR! RESPONSE UNDEFINED");
   }else{
     console.log("RESPONSE TALLENNETTU " + pelaaja);
-  }
-  
+  }  
   serveripelaajaTiedot[pelaaja].tallennettuResponse = response; 
 }
 
@@ -90,9 +91,10 @@ function vastaaTapahtumailmoitukseen(ilmoitusViesti, response, paluuviesti) {
   var pelaajanimet = Object.keys(serveripelaajaTiedot);
   pelaajanimet.forEach (function (pelaajanimi){
     if(pelaajanimi != ilmoitusViesti.pelaaja){
+      console.log('   Välitetään ilmoitus pelaajalle: "' + pelaajanimi + '"');		
       var tallennettuResponse = serveripelaajaTiedot[pelaajanimi].tallennettuResponse;
       if (tallennettuResponse == undefined){
-        console.log(serveripelaajaTiedot);
+        console.log('       Ongelma: pelaajan tapahtumakyselyä ei löydy!');
       }else{
         lahetaVastaus(ilmoitusViesti, tallennettuResponse);
         serveripelaajaTiedot[pelaajanimi].tallennettuResponse = undefined;  
