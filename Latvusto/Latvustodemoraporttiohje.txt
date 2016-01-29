@@ -10,7 +10,8 @@ Ideointi
 
 			Musiikki
 
-			Rakennekaava (Miten peli etenee)
+			Rakennekaava (Miten peli etenee | Miten ser-
+			verin ja Clientin konversaatio toimii)
 
 			Sivuhahmotelma (Visualisointi)
 
