@@ -278,20 +278,29 @@ function VastausViestinKasittely(data, status){
     toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);    
   } else if(viestiServerilt.viestityyppi == "ilmoitus"){
     if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
-      //To-do: Saa ampuminen n‰kym‰‰n eri clienteill‰.
+        asetus(viestiServerilt, hyppypituus, suunta);
     }else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
-      var Vaaka = Number(viestiServerilt.hahmonX);
-      var Pysty = Number(viestiServerilt.hahmonY);
-      var hyppypituus = Number(viestiServerilt.hyppypituus);
-      var suunta = Number(viestiServerilt.suunta);
-      var pelaajanNimi = viestiServerilt.pelaaja;
-      pelaajaTiedot[pelaajanNimi].Vaaka = Vaaka;
-      pelaajaTiedot[pelaajanNimi].Pysty = Pysty;
-      aloitaHyppy(hyppypituus ,suunta, pelaajanNimi);
+        var hyppypituus = Number(viestiServerilt.hyppypituus);
+        var suunta = Number(viestiServerilt.suunta);
+        asetus(viestiServerilt, hyppypituus, suunta);
     }
   }
   kysyServeriltTapahtumia();
 };
+
+function asetus(vS, hyppypituus, suunta){
+    var Vaaka = Number(viestiServerilt.hahmonX);
+    var Pysty = Number(viestiServerilt.hahmonY);
+    var pelaajanNimi = viestiServerilt.pelaaja;
+    pelaajaTiedot[pelaajanNimi].Vaaka = Vaaka;
+    pelaajaTiedot[pelaajanNimi].Pysty = Pysty;
+    if(hyppypituus != undefined){
+        aloitaHyppy(hyppypituus, suunta, pelaajanNimi);
+    }else{
+        //var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
+        ampuminen(pelaajanNimi);
+    }
+}
 
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
   var hahmoTyyppi = HahmoTyyppi(jarjestys);
