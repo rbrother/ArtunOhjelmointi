@@ -144,6 +144,19 @@ function ampuminen(pelaajaId){
   };
   stage.addChild(shooting);
   pelaaja.ampumisLaskuri = 0;
+  var pelaajanimet = Object.keys(pelaajaTiedot);
+  pelaajanimet.forEach(function(ammuttava){
+	if(ammuttava != pelaajaId){
+		var uhri = pelaajaTiedot[ammuttava];
+		if(pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || pelaaja.oikealle == false && 
+		shooting.x > uhri.Vaaka){
+			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Vaaka - 1){
+				console.log("HIT! Uhrin nimenä " + ammuttava)
+			}
+		}
+		// shooting.y < uhri.Pysty + 1
+	}
+  })
 };
 
 function liikutusNappiAlas(event){
