@@ -119,14 +119,14 @@ function NappiAlas(event) {
 
   if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
     ampuminen(omaId);
-    var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
+    var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId, 
+		hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
     $.post(url, viesti);  
   }
 }
 
 function ampuminen(pelaajaId){
 
-  //saa ampuminen n‰kym‰‰n eri clienteill‰
 
   // T‰nne tullaan, jos W-n‰pp‰int‰ painetaan.
   laukausAudio.play();
@@ -277,25 +277,21 @@ function VastausViestinKasittely(data, status){
     console.log("Aloitus, pelaajana " + toinenPelaaja + "   J‰rjestys: " + viestiServerilt.jarjestys);
     toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);    
   } else if(viestiServerilt.viestityyppi == "ilmoitus"){
-    if(viestiServerilt.ilmoitustyyppi == "ampuminen"){
-        asetus(viestiServerilt, hyppypituus, suunta);
-    }else if(viestiServerilt.ilmoitustyyppi == "hyppy"){
-        var hyppypituus = Number(viestiServerilt.hyppypituus);
-        var suunta = Number(viestiServerilt.suunta);
-        asetus(viestiServerilt, hyppypituus, suunta);
+    if(viestiServerilt.ilmoitustyyppi == "ampuminen" || viestiServerilt.ilmoitustyyppi == "hyppy"){
+        alieeniclientinHyppyJaAmpuminen(viestiServerilt);
     }
   }
   kysyServeriltTapahtumia();
 };
 
-function asetus(vS, hyppypituus, suunta){
-    var Vaaka = Number(viestiServerilt.hahmonX);
-    var Pysty = Number(viestiServerilt.hahmonY);
-    var pelaajanNimi = viestiServerilt.pelaaja;
+function alieeniclientinHyppyJaAmpuminen(vS){
+    var Vaaka = Number(vS.hahmonX);
+    var Pysty = Number(vS.hahmonY);
+    var pelaajanNimi = vS.pelaaja;
     pelaajaTiedot[pelaajanNimi].Vaaka = Vaaka;
     pelaajaTiedot[pelaajanNimi].Pysty = Pysty;
-    if(hyppypituus != undefined){
-        aloitaHyppy(hyppypituus, suunta, pelaajanNimi);
+    if(vS.hyppypituus != undefined){
+        aloitaHyppy(vS.hyppypituus, vS.suunta, pelaajanNimi);
     }else{
         //var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId};
         ampuminen(pelaajanNimi);
