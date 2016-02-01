@@ -60,6 +60,10 @@ window.onload = function() {
     makeStage();
 }
 
+function selviytymispisteasetus(){
+	$("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
+}
+
 function aloitaPeli(){
     omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
@@ -72,7 +76,8 @@ function aloitaPeli(){
         console.log(parsittuVastaus);
         omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
         pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
-          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100};
+		selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
         var pelaajanimet = Object.keys(muidenPelaajienTiedot);
@@ -151,10 +156,10 @@ function ampuminen(pelaajaId){
 		if(pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || pelaaja.oikealle == false && 
 		shooting.x > uhri.Vaaka){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
-				console.log("HIT! Uhrin nimenä " + ammuttava)
+				uhri.selviytyminen = uhri.selviytyminen - 15;
+				selviytymispisteasetus();
 			}
 		}
-		// shooting.y < uhri.Pysty + 1
 	}
   })
 };
@@ -314,7 +319,7 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
   var hahmoTyyppi = HahmoTyyppi(jarjestys);
   pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
-    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0};
+    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100};
 }
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
@@ -369,6 +374,7 @@ function ukonVisuaalinenLuonti(characterType){
 <body>
 Nimi <input type="text" id="pelaajaNimi"/>
 <button onClick = "aloitaPeli()">Aloita</button>
+<span id = "Survivability"></span>
 <canvas id="Pelialue" width="1350" height="900">
 </canvas>
 </body>
