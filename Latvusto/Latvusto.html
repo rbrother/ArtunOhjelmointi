@@ -21,6 +21,7 @@ var omaId;
 var url = "http://127.0.0.1:1331/";
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
+var random1to100;
 
 // pelaajatiedot:
 // { 
@@ -62,6 +63,9 @@ window.onload = function() {
 
 function selviytymispisteasetus(){
 	$("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
+    if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
+        console.log(omaId + " on kaatunut!");
+    }
 }
 
 function aloitaPeli(){
@@ -157,6 +161,7 @@ function ampuminen(pelaajaId){
 		shooting.x > uhri.Vaaka){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
 				uhri.selviytyminen = uhri.selviytyminen - 15;
+                random1to100 = Math.floor(Math.random() * 100);
 				selviytymispisteasetus();
 			}
 		}
