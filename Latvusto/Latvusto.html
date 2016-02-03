@@ -21,7 +21,6 @@ var omaId;
 var url = "http://127.0.0.1:1331/";
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
-var random1to100;
 
 // pelaajatiedot:
 // { 
@@ -63,8 +62,10 @@ window.onload = function() {
 
 function selviytymispisteasetus(){
 	$("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
+    var random1to100 = Math.floor(Math.random() * 100);
     if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
-        console.log(omaId + " on kaatunut!");
+		$("#Survivability").text(omaId + " neutralisoitu!");
+		var viesti = {pelaaja: omaId, viestityyppi: "neutraloituminen"};
     }
 }
 
@@ -80,7 +81,8 @@ function aloitaPeli(){
         console.log(parsittuVastaus);
         omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
         pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
-          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100};
+          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+		  elossa: true};
 		selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
@@ -161,7 +163,6 @@ function ampuminen(pelaajaId){
 		shooting.x > uhri.Vaaka){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
 				uhri.selviytyminen = uhri.selviytyminen - 15;
-                random1to100 = Math.floor(Math.random() * 100);
 				selviytymispisteasetus();
 			}
 		}
@@ -324,7 +325,8 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
   var hahmoTyyppi = HahmoTyyppi(jarjestys);
   pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
-    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100};
+    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+	elossa: true};
 }
 
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
