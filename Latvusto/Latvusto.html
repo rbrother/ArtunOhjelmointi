@@ -246,7 +246,7 @@ function viivapoisto(pelaaja){
     if(pelaaja.ampumisLaskuri == 6){
       stage.removeChild(pelaaja.ampumisviiva);
     }
-    if(pelaaja.ampumisLaskuri = 12){
+    if(pelaaja.ampumisLaskuri == 12){
       pelaaja.ampumisviiva = undefined;
       pelaaja.ampumisLaskuri = 0;    
     }
@@ -255,8 +255,9 @@ function viivapoisto(pelaaja){
 
 function liikuta(id) {
   var pelaaja = pelaajaTiedot[id];
-    if (pelaaja == undefined) return
-  viivapoisto(pelaaja);
+    if (pelaaja == undefined) return;
+
+	viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
     if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
