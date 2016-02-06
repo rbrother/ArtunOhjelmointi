@@ -116,7 +116,7 @@ function lahetaVastaus(vastausViesti, response) {
     response.end();  
 }
 
-http.createServer(respondToIncomingMessage).listen(1331,'127.0.0.1');
+http.createServer(respondToIncomingMessage).listen(8086);
 
 console.log('Server running...');
 
