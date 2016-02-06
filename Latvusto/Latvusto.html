@@ -203,6 +203,8 @@ function hyppaaSuuntaan(oikealle){
     suunta: suunta, hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
   $.post(url, viesti);  
   aloitaHyppy(hyppypituus, suunta, omaId);
+  nappiPohjassa = false;
+  hyppypituus = 0;
 }
  
 function aloitaHyppy(pituus, suunta, id){
@@ -214,8 +216,6 @@ function aloitaHyppy(pituus, suunta, id){
     pelaajaTiedot[id].yVauhti = -pituus;
     pelaajaTiedot[id].xVauhti = pituus * suunta;
     stage.removeChild(hyppyPalkki);
-  nappiPohjassa = false;
-  hyppypituus = 0;
 }
 
 function XVauhti(id) {

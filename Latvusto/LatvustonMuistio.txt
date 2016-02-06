@@ -1,6 +1,4 @@
 ﻿TO-DO
-	
-	#1 Tee hyppäämisestä yleistä kuten ampumisesta.	  
 
 	Kentän teko
 
