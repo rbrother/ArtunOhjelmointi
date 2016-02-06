@@ -26,7 +26,7 @@ var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 // { 
 //   id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
 //          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true,
-//          ampumisviiva: <bitmap>, ampumisLaskuri: 0 }, 
+//          ampumisviiva: <bitmap>, ampumisLaskuri: 0, elossa: true }, 
 //   id2: { hahmoTyyppi: "HP", ... }, 
 //   ...    
 // } 
@@ -66,6 +66,8 @@ function selviytymispisteasetus(){
     if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
 		$("#Survivability").text(omaId + " neutralisoitu!");
 		var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "neutralisoituminen"};
+		pelaajaTiedot[omaId].elossa = false;
+		$.post(url, viesti);
     }
 }
 
@@ -124,6 +126,7 @@ function buttonUp(event) {
 }
 
 function NappiAlas(event) { 
+	if(pelaajaTiedot[omaId].elossa == false) return;
   if(event.keyCode == 68 || event.keyCode == 65) {
     liikutusNappiAlas(event);
   }
@@ -137,7 +140,6 @@ function NappiAlas(event) {
 }
 
 function ampuminen(pelaajaId){
-
 
   // Tänne tullaan, jos W-näppäintä painetaan.
   laukausAudio.play();
@@ -243,7 +245,7 @@ function liikutuskutsu(){
 function viivapoisto(pelaaja){
   if(pelaaja.ampumisviiva != undefined){
     pelaaja.ampumisLaskuri++;
-    if(pelaaja.ampumisLaskuri == 6){
+    if(pelaaja.ampumisLaskuri == 3){
       stage.removeChild(pelaaja.ampumisviiva);
     }
     if(pelaaja.ampumisLaskuri == 12){
@@ -256,11 +258,10 @@ function viivapoisto(pelaaja){
 function liikuta(id) {
   var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return;
-
 	viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
-    if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) ) {
+    if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) && pelaaja.elossa ) {
         pelaaja.xVauhti = 0;
         pelaaja.yVauhti = 0;
     } else {
@@ -279,7 +280,9 @@ function liikuta(id) {
     bitmap.x = pelaaja.Vaaka + blokinKoko;
     bitmap.scaleX = -skaalaus;
   }
-  
+  if(pelaaja.elossa == false){
+		bitmap.scaleY = -skaalaus;
+  }
     stage.update();
 }
 
@@ -313,8 +316,9 @@ function VastausViestinKasittely(data, status){
   kysyServeriltTapahtumia();
 };
 
-function neutralisoituminen(vs){
-    var pelaajannimi = vs.pelaaja;
+function neutralisoituminen(viestiServerilt){
+    var pelaajannimi = viestiServerilt.pelaaja;
+	pelaajaTiedot[pelaajannimi].elossa = false;
 }
 
 function alieeniclientinHyppyJaAmpuminen(vS){
