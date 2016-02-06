@@ -69,6 +69,11 @@ function vastaaViestiin(viestiClientilta, response) {
     serveripelaajaTiedot[pelaajaNimi] = {};
     viestiClientilta.jarjestys = jarjestys;
     vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
+	}else if(viestityyppi == "resetointi"){
+		aloitus = true;
+		jarjestys = 0;
+		serveripelaajaTiedot = {};
+		console.log("Serveri resetoitu!")
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }

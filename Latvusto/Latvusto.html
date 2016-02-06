@@ -388,12 +388,18 @@ function ukonVisuaalinenLuonti(characterType){
     stage.addChild(bitmap);
     return bitmap;
 };
+
+function resetointi(){
+	var viesti = {viestityyppi: "resetointi"};
+	$.post(url, viesti);
+}
     
  </script>
 </head>
 <body>
 Nimi <input type="text" id="pelaajaNimi"/>
 <button onClick = "aloitaPeli()">Aloita</button>
+<button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
 <canvas id="Pelialue" width="1350" height="900">
 </canvas>
