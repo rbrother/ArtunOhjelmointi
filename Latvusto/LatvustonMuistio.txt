@@ -1,8 +1,8 @@
 ﻿TO-DO
 
-	Kentän teko
+	Debuggaus: Seinäliu'un jälkeen ilmahyppy ei toimi.
 
-	Globaali serveri
+	Kentän teko
 
 	Hahmon valinta
 
