@@ -80,7 +80,6 @@ function aloitaPeli(){
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         console.log("ALKUVIESTI RESPONSE SAATU");
             var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        console.log(parsittuVastaus);
         omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
         pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
           hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
@@ -261,9 +260,16 @@ function liikuta(id) {
 	viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
-    if( KoskettaakoHahmoMitaanBlokkia( newX, newY ) && pelaaja.elossa ) {
-        pelaaja.xVauhti = 0;
-        pelaaja.yVauhti = 0;
+	var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, pelaaja.Vaaka, pelaaja.Pysty );
+    if(pelaaja.elossa && kosketustsekkaus != "") {
+	    if (kosketustsekkaus == "x") {
+			// sivuseinäkosketus
+			pelaaja.xVauhti = 0;
+		} else {
+			// lattiakosketus
+			pelaaja.xVauhti = 0;
+			pelaaja.yVauhti = 0;		
+		}
     } else {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
@@ -285,6 +291,32 @@ function liikuta(id) {
   }
     stage.update();
 }
+
+// KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
+function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, viimeX, viimeY ) {
+	var kosketus = "";
+    blokkienTiedot.forEach( function(blokki) {
+		if(kosketus != "y" && kosketus != "x")
+			kosketus = KoskettaakoHahmoBlokkia( ukkoX, ukkoY, blokki.x, blokki.y, viimeX, viimeY);
+    } )
+	
+    return kosketus;
+}
+
+// KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
+function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1, viimeX, viimeY ) {
+    var ux2 = ux1 + blokinKoko;
+    var uy2 = uy1 + blokinKoko;
+    var bx2 = bx1 + blokinKoko;
+    var by2 = by1 + blokinKoko;
+    if ( ux1 > bx2 ) return "";
+	if (ux2 < bx1) return "";
+	if(uy1 > by2) return "";
+	if(uy2 < by1) return "";
+	if(viimeX + blokinKoko < bx1 || viimeX > bx2) return "x";
+	return "y";
+}
+
 
 function kysyServeriltTapahtumia (){
     viesti = {viestityyppi: "kysely", pelaaja: omaId};
@@ -340,26 +372,6 @@ function toisenHahmonLuonti(jarjestys, toinenPelaaja){
   pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
     oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
 	elossa: true};
-}
-
-function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY ) {
-    result = false;
-    blokkienTiedot.forEach( function(blokki) {
-        if ( KoskettaakoHahmoBlokkia( ukkoX, ukkoY, blokki.x, blokki.y) ) result = true;
-    } )
-    return result;
-}
-
-function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1 ) {
-    var ux2 = ux1 + blokinKoko;
-    var uy2 = uy1 + blokinKoko;
-    var bx2 = bx1 + blokinKoko;
-    var by2 = by1 + blokinKoko;
-    if ( ux1 > bx2 ) return false; // Ukko on kokonaan blokin oikealla puolella
-    if ( ux2 < bx1 ) return false; // Ukko on kokonaan blokin vasemmalla puolella
-    if ( uy1 > by2 ) return false; // Ukko on kokonaan blokin alapuolella
-    if ( uy2 < by1 ) return false; // Ukko on kokonaan blokin yläpuolella
-    return true; // Ukko koskettaa blokkia
 }
 
 function HahmoTyyppi(jarjestys) {
