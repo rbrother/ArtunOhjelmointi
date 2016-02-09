@@ -605,3 +605,11 @@ Team Fortress 2 Weapon | Heavy | Secondary ("Shotgun")
  | Secondary ammo amount lowered by 81%
  | The weapon's a light machine gun
  | Stats not yet complete
+
+
+Kentän luonnostelua
+
+	| Keskellä (K) Komentokeskus
+	  Vasemmalla (V) Oleskelutila kannella - K Keittiö - Oikealla (O) Välinekansi
+	  V Lastenhuone - K Keittiö - O Parin makuuhuone
+	  V Kylpyhuone - K Päävarasto - O Työhuone |
