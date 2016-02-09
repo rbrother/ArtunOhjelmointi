@@ -139,14 +139,23 @@ function NappiAlas(event) {
 }
 
 function ampuminen(pelaajaId){
+    var pelaaja = pelaajaTiedot[pelaajaId];
+	pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
+	var shooting = pelaaja.ampumisviiva;
+	shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
+	var viivatsekkausX = pelaaja.Vaaka + 0.5 * blokinKoko;
+	var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
 
+	console.log(viivatsekkausX + " " + shooting.y);
+	console.log (KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0));
+	
+	while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0) == ""){
+		viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
+		console.log("Projektiili liikkuu!");
+	}
   // Tänne tullaan, jos W-näppäintä painetaan.
   laukausAudio.play();
-  var pelaaja = pelaajaTiedot[pelaajaId];
-  pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
-  var shooting = pelaaja.ampumisviiva;
   shooting.scaleY = 0.25;
-  shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
   if(pelaaja.oikealle){
     shooting.x = pelaaja.Vaaka + blokinKoko;
     shooting.scaleX = 1000;
@@ -260,7 +269,7 @@ function liikuta(id) {
 	viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
-	var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, pelaaja.Vaaka, pelaaja.Pysty );
+	var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty );
     if(pelaaja.elossa && kosketustsekkaus != "") {
 	    if (kosketustsekkaus == "x") {
 			// sivuseinäkosketus
@@ -293,30 +302,29 @@ function liikuta(id) {
 }
 
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
-function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, viimeX, viimeY ) {
+function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, viimeY ) {
 	var kosketus = "";
     blokkienTiedot.forEach( function(blokki) {
 		if(kosketus != "y" && kosketus != "x")
-			kosketus = KoskettaakoHahmoBlokkia( ukkoX, ukkoY, blokki.x, blokki.y, viimeX, viimeY);
+			kosketus = KoskettaakoHahmoBlokkia( ukkoX, ukkoY, leveys, korkeus, blokki.x, blokki.y, viimeX, viimeY);
     } )
 	
     return kosketus;
 }
 
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
-function KoskettaakoHahmoBlokkia( ux1, uy1, bx1, by1, viimeX, viimeY ) {
-    var ux2 = ux1 + blokinKoko;
-    var uy2 = uy1 + blokinKoko;
+function KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, bx1, by1, viimeX, viimeY ) {
+    var ux2 = ux1 + leveys;
+    var uy2 = uy1 + korkeus;
     var bx2 = bx1 + blokinKoko;
     var by2 = by1 + blokinKoko;
     if ( ux1 > bx2 ) return "";
 	if (ux2 < bx1) return "";
 	if(uy1 > by2) return "";
 	if(uy2 < by1) return "";
-	if(viimeX + blokinKoko < bx1 || viimeX > bx2) return "x";
+	if(viimeX + leveys < bx1 || viimeX > bx2) return "x";
 	return "y";
 }
-
 
 function kysyServeriltTapahtumia (){
     viesti = {viestityyppi: "kysely", pelaaja: omaId};
