@@ -82,7 +82,7 @@ function aloitaPeli(){
             var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
         omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
         pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
-          hahmotyppi: omanHahmonTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+          hahmotyppi: omanHahmonTyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
 		  elossa: true};
 		selviytymispisteasetus();
         
@@ -151,17 +151,17 @@ function ampuminen(pelaajaId){
     // Muokattuani alla olevaa koodia peli ei en‰‰ toimi, virheit‰ konsolissa.
 	while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0) == ""){
 		viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
-		ampumisskaalaus = ampumisskaalaus + 15;
+		ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
 	}
     console.log(ampumisskaalaus);
   laukausAudio.play();
   shooting.scaleY = 0.25;
   if(pelaaja.oikealle){
     shooting.x = pelaaja.Vaaka + blokinKoko;
-    shooting.scaleX = ampumisskaalaus;
+    shooting.scaleX = ampumisskaalaus * 0.5;
   }else{
     shooting.x = pelaaja.Vaaka;
-    shooting.scaleX = -ampumisskaalaus;
+    shooting.scaleX = -ampumisskaalaus * 0.5;
   };
   stage.addChild(shooting);
   pelaaja.ampumisLaskuri = 0;
@@ -253,7 +253,7 @@ function liikutuskutsu(){
 function viivapoisto(pelaaja){
   if(pelaaja.ampumisviiva != undefined){
     pelaaja.ampumisLaskuri++;
-    if(pelaaja.ampumisLaskuri == 3){
+    if(pelaaja.ampumisLaskuri == 6){
       stage.removeChild(pelaaja.ampumisviiva);
     }
     if(pelaaja.ampumisLaskuri == 12){
