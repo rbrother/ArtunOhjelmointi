@@ -139,29 +139,29 @@ function NappiAlas(event) {
 }
 
 function ampuminen(pelaajaId){
+    // T‰nne tullaan, jos W-n‰pp‰int‰ painetaan.
     var pelaaja = pelaajaTiedot[pelaajaId];
 	pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
 	var shooting = pelaaja.ampumisviiva;
 	shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
 	var viivatsekkausX = pelaaja.Vaaka + 0.5 * blokinKoko;
 	var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
-
-	console.log(viivatsekkausX + " " + shooting.y);
-	console.log (KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0));
+    var ampumisskaalaus = 0;
 	
+    // Muokattuani alla olevaa koodia peli ei en‰‰ toimi, virheit‰ konsolissa.
 	while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0) == ""){
 		viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
-		console.log("Projektiili liikkuu!");
+		ampumisskaalaus = ampumisskaalaus + 15;
 	}
-  // T‰nne tullaan, jos W-n‰pp‰int‰ painetaan.
+    console.log(ampumisskaalaus);
   laukausAudio.play();
   shooting.scaleY = 0.25;
   if(pelaaja.oikealle){
     shooting.x = pelaaja.Vaaka + blokinKoko;
-    shooting.scaleX = 1000;
+    shooting.scaleX = ampumisskaalaus;
   }else{
     shooting.x = pelaaja.Vaaka;
-    shooting.scaleX = -1000;
+    shooting.scaleX = -ampumisskaalaus;
   };
   stage.addChild(shooting);
   pelaaja.ampumisLaskuri = 0;
