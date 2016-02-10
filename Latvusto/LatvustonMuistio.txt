@@ -1,8 +1,8 @@
 ﻿TO-DO
 
-	Kotitehtävä: Lyhennä ampumisviivaa, jos ammus osuu seinään ja aloita damage-fall-off -tekniikan teko. 
+	Kotitehtävä: aloita damage-fall-off -tekniikan teko. 
 
-	Debuggaus: Seinäliu'un jälkeen ilmahyppy ei toimi. Hahmon alkusijainnin muutto näyttävästi mahdotonta. 
+	Debuggaus: Seinäliu'un jälkeen ilmahyppy ei toimi. 
 
 	Kentän teko
 

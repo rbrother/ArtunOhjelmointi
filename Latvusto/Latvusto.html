@@ -153,7 +153,6 @@ function ampuminen(pelaajaId){
 		viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
 		ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
 	}
-    console.log(ampumisskaalaus);
   laukausAudio.play();
   shooting.scaleY = 0.25;
   if(pelaaja.oikealle){
@@ -169,16 +168,24 @@ function ampuminen(pelaajaId){
   pelaajanimet.forEach(function(ammuttava){
 	if(ammuttava != pelaajaId){
 		var uhri = pelaajaTiedot[ammuttava];
-		if(pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || pelaaja.oikealle == false && 
-		shooting.x > uhri.Vaaka){
+		var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
+		if((pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && shooting.x > uhri.Vaaka) && distance < ampumisskaalaus){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
-				uhri.selviytyminen = uhri.selviytyminen - 15;
+				// Seuraavalla rivillä falloffin teko. Korjaa paremmaksi.
+				var falloff = Math.round(distance / 400);
+				var vahinko = 10 - falloff;
+				vahinko = vahinko > 6 ? vahinko : 7;
+				uhri.selviytyminen = uhri.selviytyminen - vahinko;
 				selviytymispisteasetus();
 			}
 		}
 	}
   })
 };
+
+// a & b || c & b
+// b & (a || c)
+
 
 function liikutusNappiAlas(event){
   var xVauhti = pelaajaTiedot[omaId].xVauhti;
