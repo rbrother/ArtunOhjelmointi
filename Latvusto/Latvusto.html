@@ -171,11 +171,12 @@ function ampuminen(pelaajaId){
 		var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
 		if((pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && shooting.x > uhri.Vaaka) && distance < ampumisskaalaus){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
-				// Seuraavalla rivillä falloffin teko. Korjaa paremmaksi.
-				var falloff = Math.round(distance / 400);
-				var vahinko = 10 - falloff;
-				vahinko = vahinko > 6 ? vahinko : 7;
-				uhri.selviytyminen = uhri.selviytyminen - vahinko;
+				var falloff = 0;
+                while(distance > 0 && falloff != 3){
+                    distance = distance - 150;
+                    falloff++;
+                };
+				uhri.selviytyminen = uhri.selviytyminen - (10 - falloff);
 				selviytymispisteasetus();
 			}
 		}
