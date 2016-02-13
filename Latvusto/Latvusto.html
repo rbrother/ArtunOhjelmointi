@@ -171,11 +171,8 @@ function ampuminen(pelaajaId){
 		var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
 		if((pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && shooting.x > uhri.Vaaka) && distance < ampumisskaalaus){
 			if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
-				var falloff = 0;
-                while(distance > 0 && falloff != 3){
-                    distance = distance - 150;
-                    falloff++;
-                };
+				var distanceDivided = Math.floor(distance / blokinKoko);
+				var falloff = distanceDivided > 3 ? 3 : distanceDivided;
 				uhri.selviytyminen = uhri.selviytyminen - (10 - falloff);
 				selviytymispisteasetus();
 			}
