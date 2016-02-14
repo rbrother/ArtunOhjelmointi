@@ -21,6 +21,7 @@ var omaId;
 var url = "http://www.brotherus.net:8086/";
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
+var pelaajaMaassa = false;
 
 // pelaajatiedot:
 // { 
@@ -112,6 +113,20 @@ function aloitaPeli(){
     kysyServeriltTapahtumia();
 }
 
+function NappiAlas(event) { 
+	if(pelaajaTiedot[omaId].elossa == false) return;
+	if(event.keyCode == 68 || event.keyCode == 65) {
+		liikutusNappiAlas(event);
+	}
+
+	if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
+		ampuminen(omaId);
+		var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId, 
+			hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
+		$.post(url, viesti);  
+	}
+}
+
 function buttonUp(event) {
   if(event.keyCode == 68 || event.keyCode == 65) {
       var xVauhti = pelaajaTiedot[omaId].xVauhti;
@@ -122,20 +137,6 @@ function buttonUp(event) {
     }  
   }
 
-}
-
-function NappiAlas(event) { 
-	if(pelaajaTiedot[omaId].elossa == false) return;
-  if(event.keyCode == 68 || event.keyCode == 65) {
-    liikutusNappiAlas(event);
-  }
-
-  if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
-    ampuminen(omaId);
-    var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId, 
-		hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
-    $.post(url, viesti);  
-  }
 }
 
 function ampuminen(pelaajaId){
@@ -196,7 +197,7 @@ function liikutusNappiAlas(event){
             extraHyppy = false;
         }
   }
-  if(xVauhti == 0 && yVauhti < 0.4){
+  if( pelaajaMaassa ){
     extraHyppy = true;
     if(nappiPohjassa == false){
       hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
@@ -222,6 +223,7 @@ function hyppaaSuuntaan(oikealle){
   nappiPohjassa = false;
   hyppypituus = 0;
   stage.removeChild(hyppyPalkki);
+  pelaajaMaassa = false;
 }
  
 function aloitaHyppy(pituus, suunta, id){
@@ -292,7 +294,8 @@ function liikuta(id) {
 		} else {
 			// lattiakosketus
 			pelaaja.xVauhti = 0;
-			pelaaja.yVauhti = 0;		
+			pelaaja.yVauhti = 0;	
+			pelaajaMaassa = true;
 		}
     } else {
         pelaaja.Vaaka = newX;
@@ -436,6 +439,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <button onClick = "aloitaPeli()">Aloita</button>
 <button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
+<br>
 <canvas id="Pelialue" width="1350" height="900">
 </canvas>
 </body>
