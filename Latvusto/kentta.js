@@ -77,12 +77,12 @@ var cruiser = [
     '........................X................X..........................................................',
     '........................X............A...X..........................................................',
     '........................X....k....XXXXXXXX..........................................................',
-    '........................X................X..........................................................',
-    '........................X.................O.........................................................',
-    '........................X.................O.........X...............................................',
+    '.....h..................X................X..........oooo.................................oo.........',
+    '........................X.................O.........oooo.......oo........................oo.........',
+    '.........UUUUUU.........X.................O.........oooo.......oo...........MMMMMMM......oo...H.....',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'X.................................................................................................X.',
-    'X................................................................................................X..',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..',
     //Ylhäällä kansikerros (3)
     'X...............................................................................................X...',
     'X..............................................................................................X....',
@@ -123,6 +123,11 @@ var cruiser = [
     I = ikkuna
     k = keittiöalue (laita background -koristeita tänne)
     O = Oven osa (ei blokkaa)
+    o = konttiblokki
+    M = Magneetinaktivointialusta, jonka päällä seisominen nopeuttaa ajan kulumista Veteraanin tapauksessa.
+    H = Humanoidin spawn -piste
+    h = HP:n spawn -piste
+    U = uima-altaan osa
     */
 ];
 
