@@ -22,13 +22,14 @@ var url = "http://www.brotherus.net:8086/";
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
+var aloitusSuoritettu = false; 
 
-// pelaajatiedot:
+// pelaajaTiedot:
 // { 
-//   id1: { hahmoTyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
+//   id1: { pelaajaTiedot[omaId].hahmotyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
 //          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true,
 //          ampumisviiva: <bitmap>, ampumisLaskuri: 0, elossa: true }, 
-//   id2: { hahmoTyyppi: "HP", ... }, 
+//   id2: { pelaajaTiedot[omaId].hahmotyyppi: "HP", ... }, 
 //   ...    
 // } 
 var pelaajaTiedot = {};     
@@ -36,8 +37,8 @@ var pelaajaTiedot = {};
 
 
 
-// hae pelaajan "mikko" tiedot ->   pelaajatiedot.mikko
-// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     pelaajatiedot[n] 
+// hae pelaajan "mikko" tiedot ->   pelaajaTiedot.mikko
+// hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     pelaajaTiedot[n] 
 
 // Lue itse:
 // JQuery ajax: http://www.w3schools.com/jquery/jquery_ajax_intro.asp
@@ -80,10 +81,10 @@ function aloitaPeli(){
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         console.log("ALKUVIESTI RESPONSE SAATU");
-            var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        omanHahmonTyyppi = HahmoTyyppi(parsittuVastaus.jarjestys);
-        pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(omanHahmonTyyppi), oikealle: true, 
-          hahmotyppi: omanHahmonTyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+        var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
+        var hahmotyyppi = hahmotyypinValinta(parsittuVastaus.jarjestys);
+        pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi), oikealle: true, 
+          hahmotyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
 		  elossa: true};
 		selviytymispisteasetus();
         
@@ -96,6 +97,7 @@ function aloitaPeli(){
             toisenHahmonJarjestys++;
           }
         });
+		aloitusSuoritettu = true;
     });
             
     // state.update() needs to be called continuously.
@@ -111,9 +113,11 @@ function aloitaPeli(){
     console.log("STAGE.UPDATE suoritettu!")
   
     kysyServeriltTapahtumia();
+	
 }
 
 function NappiAlas(event) { 
+	if(aloitusSuoritettu == false)return;
 	if(pelaajaTiedot[omaId].elossa == false) return;
 	if(event.keyCode == 68 || event.keyCode == 65) {
 		liikutusNappiAlas(event);
@@ -129,11 +133,12 @@ function NappiAlas(event) {
 
 function buttonUp(event) {
   if(event.keyCode == 68 || event.keyCode == 65) {
-      var xVauhti = pelaajaTiedot[omaId].xVauhti;
+	var xVauhti = pelaajaTiedot[omaId].xVauhti;
     var yVauhti = pelaajaTiedot[omaId].yVauhti;
-    if(xVauhti == 0 && yVauhti < 0.4){
+    if(pelaajaMaassa){
       var oikealle = ( event.keyCode == 68 );
       hyppaaSuuntaan(oikealle, omaId);
+	  pelaajaMaassa = false;
     }  
   }
 
@@ -187,9 +192,10 @@ function ampuminen(pelaajaId){
 
 
 function liikutusNappiAlas(event){
+
   var xVauhti = pelaajaTiedot[omaId].xVauhti;
   var yVauhti = pelaajaTiedot[omaId].yVauhti;
-  if (omanHahmonTyyppi == "Veteraani"){
+  if (pelaajaTiedot[omaId].hahmotyyppi == "Veteraani"){
         if(xVauhti != 0 && extraHyppy){
             hyppypituus = 2.5;
       var oikealle = ( event.keyCode == 68 );
@@ -197,7 +203,8 @@ function liikutusNappiAlas(event){
             extraHyppy = false;
         }
   }
-  if( pelaajaMaassa ){
+  if(pelaajaMaassa){
+    console.log("pelaaja maassa!");
     extraHyppy = true;
     if(nappiPohjassa == false){
       hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
@@ -213,7 +220,7 @@ function liikutusNappiAlas(event){
 function hyppaaSuuntaan(oikealle){
     var suunta = -1;
   if ( oikealle ) suunta = +1;
-  if(omanHahmonTyyppi == "Humanoidi"){
+  if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi"){
 		hyppypituus = hyppypituus / 10 * 15;
   };
   var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, 
@@ -223,7 +230,7 @@ function hyppaaSuuntaan(oikealle){
   nappiPohjassa = false;
   hyppypituus = 0;
   stage.removeChild(hyppyPalkki);
-  pelaajaMaassa = false;
+
 }
  
 function aloitaHyppy(pituus, suunta, id){
@@ -245,14 +252,16 @@ function YVauhti(id) {
 }
 
 function liikutuskutsu(){
+
+	if(aloitusSuoritettu == false)return;
   var pelaajanimet = Object.keys(pelaajaTiedot);
   pelaajanimet.forEach (function (id){
     liikuta(id);
   })
   var latauskerroin = 1;
-  if(omanHahmonTyyppi == "HP"){
+  if(pelaajaTiedot[omaId].hahmotyyppi == "HP"){
 		latauskerroin = 1.25;
-  }else if(omanHahmonTyyppi == "Humanoidi"){
+  }else if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi"){
 		latauskerroin = 0.666;
   }
   
@@ -290,17 +299,17 @@ function liikuta(id) {
     if(pelaaja.elossa && kosketustsekkaus != "") {
 	    if (kosketustsekkaus == "x") {
 			// sivuseinäkosketus
-			pelaaja.xVauhti = 0;
+			pelaaja.xVauhti = 0;			
 		} else {
 			// lattiakosketus
 			pelaaja.xVauhti = 0;
 			pelaaja.yVauhti = 0;	
-			pelaajaMaassa = true;
+			if ( omaId == id ) pelaajaMaassa = true;
 		}
     } else {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
-        pelaaja.yVauhti = pelaaja.yVauhti - painovoima;
+        pelaaja.yVauhti = pelaaja.yVauhti - painovoima;		
     }
 
   var bitmap = pelaaja.hahmoBitmap;
@@ -394,13 +403,13 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 }
 
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
-  var hahmoTyyppi = HahmoTyyppi(jarjestys);
-  pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmoTyyppi),
-    oikealle: true, hahmotyppi: hahmoTyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+  var hahmotyyppi = hahmotyypinValinta(jarjestys);
+  pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
+    oikealle: true, hahmotyppi: hahmotyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
 	elossa: true};
 }
 
-function HahmoTyyppi(jarjestys) {
+function hahmotyypinValinta(jarjestys) {
     if (jarjestys == 1){
     return "HP";
     } else if (jarjestys == 2){
