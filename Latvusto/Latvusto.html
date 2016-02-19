@@ -195,7 +195,7 @@ function liikutusNappiAlas(event){
   var xVauhti = pelaajaTiedot[omaId].xVauhti;
   var yVauhti = pelaajaTiedot[omaId].yVauhti;
   if (pelaajaTiedot[omaId].hahmotyyppi == "Veteraani"){
-        if(xVauhti != 0 && extraHyppy){
+        if(!pelaajaMaassa && extraHyppy){
             hyppypituus = 2.5;
       var oikealle = ( event.keyCode == 68 );
             hyppaaSuuntaan(oikealle);

@@ -1,8 +1,6 @@
 ﻿TO-DO
 
-	Kotitehtävä: aloita damage-fall-off -tekniikan teko. 
-
-	Debuggaus: Seinäliu'un jälkeen ilmahyppy ei toimi. 
+	Debuggaus: ...
 
 	Kentän teko
 
