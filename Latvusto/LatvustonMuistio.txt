@@ -1,6 +1,8 @@
 ﻿TO-DO
 
 	Debuggaus: ...
+	
+	Skrollaava maailma, hahmo ei niinkään liiku vaan maailma hänen ympärillään.
 
 	Kentän teko
 

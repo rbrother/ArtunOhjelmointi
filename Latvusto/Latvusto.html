@@ -250,7 +250,9 @@ function YVauhti(id) {
 }
 
 function liikutuskutsu(){
-
+	blokkienTiedot.forEach(function (blokki){
+		blokki.x = blokki.x + 0.25; 
+	})
 	if(aloitusSuoritettu == false)return;
   var pelaajanimet = Object.keys(pelaajaTiedot);
   pelaajanimet.forEach (function (id){
