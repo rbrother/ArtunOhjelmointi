@@ -84,7 +84,7 @@ function aloitaPeli(){
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
         var hahmotyyppi = hahmotyypinValinta(parsittuVastaus.jarjestys);
         pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi), oikealle: true, 
-          hahmotyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+          hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
 		  elossa: true};
 		selviytymispisteasetus();
         
@@ -192,7 +192,6 @@ function ampuminen(pelaajaId){
 
 
 function liikutusNappiAlas(event){
-
   var xVauhti = pelaajaTiedot[omaId].xVauhti;
   var yVauhti = pelaajaTiedot[omaId].yVauhti;
   if (pelaajaTiedot[omaId].hahmotyyppi == "Veteraani"){
@@ -204,7 +203,6 @@ function liikutusNappiAlas(event){
         }
   }
   if(pelaajaMaassa){
-    console.log("pelaaja maassa!");
     extraHyppy = true;
     if(nappiPohjassa == false){
       hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
