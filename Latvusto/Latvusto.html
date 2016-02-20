@@ -10,6 +10,8 @@
   
   // http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
 var stage;
+var pelileveys = 1024;
+var pelikorkeus = 768;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
 var painovoima = -0.3;
@@ -34,6 +36,8 @@ var aloitusSuoritettu = false;
 // } 
 var pelaajaTiedot = {};     
 
+
+// 1024 x 768
 // hae pelaajan "mikko" tiedot ->   pelaajaTiedot.mikko
 // hae sen pelaajan tiedot, jonka nimi on muuttujassa n ->     pelaajaTiedot[n] 
 
@@ -54,7 +58,9 @@ window.onload = function() {
     stage = new createjs.Stage("Pelialue");
 
     TestiTausta = new createjs.Shape();
-    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, 1350, 900);
+    
+    
+    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, pelileveys, pelikorkeus);
     stage.addChild(TestiTausta);
     makeStage();
 }
@@ -303,17 +309,21 @@ function liikuta(id) {
     }
 
     var bitmap = pelaaja.hahmoBitmap;
-  
-    bitmap.y = pelaaja.Pysty;
-    if ( pelaajaTiedot[id].oikealle ) {
-        bitmap.x = pelaaja.Vaaka;
-        bitmap.scaleX = skaalaus;
-    } else {
-        bitmap.x = pelaaja.Vaaka + blokinKoko;
-        bitmap.scaleX = -skaalaus;
-    }
-    if(pelaaja.elossa == false){
-        bitmap.scaleY = -skaalaus;
+    if(id == omaId){
+        bitmap.x = pelileveys * 0.5;
+        bitmap.y = pelikorkeus * 0.5;
+    }else{
+        bitmap.y = pelaaja.Pysty;
+        if ( pelaajaTiedot[id].oikealle ) {
+            bitmap.x = pelaaja.Vaaka;
+            bitmap.scaleX = skaalaus;
+        } else {
+            bitmap.x = pelaaja.Vaaka + blokinKoko;
+            bitmap.scaleX = -skaalaus;
+        }
+        if(pelaaja.elossa == false){
+            bitmap.scaleY = -skaalaus;
+        }
     }
 }
 
@@ -437,7 +447,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
 <br>
-<canvas id="Pelialue" width="1350" height="900">
+<canvas id="Pelialue" width="1024" height="768">
 </canvas>
 </body>
 </html>
