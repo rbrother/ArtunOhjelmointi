@@ -156,21 +156,22 @@ function ampuminen(pelaajaId){
     var pelaaja = pelaajaTiedot[pelaajaId];
     pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
     var shooting = pelaaja.ampumisviiva;
-    shooting.y = pelaaja.Pysty + 0.5*blokinKoko;
-    var viivatsekkausX = pelaaja.Vaaka + 0.5 * blokinKoko;
+    shooting.y = pelaajaId == omaId ? 0.5 * pelikorkeus + 0.5 * blokinKoko : pelaaja.Pysty; //Korjaa myöhemmin.
+    var viivatsekkausX = pelileveys + 0.5 * blokinKoko;
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var ampumisskaalaus = 0;
     while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0) == ""){
         viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
         ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
+        console.log(ampumisskaalaus);
     }
     laukausAudio.play();
     shooting.scaleY = 0.25;
     if(pelaaja.oikealle){
-        shooting.x = pelaaja.Vaaka + blokinKoko;
+        shooting.x = pelaajaId == omaId ? 0.5 * pelileveys + blokinKoko : pelaaja.Vaaka + blokinKoko;//Korjaa m...
         shooting.scaleX = ampumisskaalaus * 0.5;
     } else {
-        shooting.x = pelaaja.Vaaka;
+        shooting.x = pelaajaId == omaId ? 0.5 * pelileveys : pelaaja.Vaaka;
         shooting.scaleX = -ampumisskaalaus * 0.5;
     }
     stage.addChild(shooting);
@@ -262,11 +263,6 @@ function liikutuskutsu(){
 
     // Alussa: blokkienX = blokkienX + (visuaalinenUkkoX - peliTiedot[omaId].Vaaka)
         //blokkienY = blokkienY + (visuaalinenUkkoY - peliTiedot[omaId].Pysty)
-
-    blokkienTiedot.forEach(function (blokki){
-        blokki.x = blokki.x - pelaajaTiedot[omaId].xVauhti;
-        blokki.y = blokki.y - pelaajaTiedot[omaId].yVauhti;
-    })
     if(aloitusSuoritettu == false)return;
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
@@ -324,26 +320,27 @@ function liikuta(id) {
     } else {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
-        pelaaja.yVauhti = pelaaja.yVauhti - painovoima;        
+        pelaaja.yVauhti = pelaaja.yVauhti - painovoima; 
+        if(omaId == id){
+            blokkienTiedot.forEach(function (blokki){
+                blokki.x = blokki.x - pelaaja.xVauhti;
+                blokki.y = blokki.y - pelaaja.yVauhti;
+            }) 
+        }
     }
 
     var bitmap = pelaaja.hahmoBitmap;
     if(id == omaId){
-        bitmap.x = pelileveys * 0.5;
+        bitmap.x = pelaajaTiedot[id].oikealle ? pelileveys * 0.5 : pelileveys * 0.5 + blokinKoko;
         bitmap.y = pelikorkeus * 0.5;
-    }else{
+    } else {
+        bitmap.x = pelaajaTiedot[id].oikealle ? pelaaja.Vaaka : pelaaja.Vaaka + blokinKoko;
         bitmap.y = pelaaja.Pysty;
-        if ( pelaajaTiedot[id].oikealle ) {
-            bitmap.x = pelaaja.Vaaka;
-            bitmap.scaleX = skaalaus;
-        } else {
-            bitmap.x = pelaaja.Vaaka + blokinKoko;
-            bitmap.scaleX = -skaalaus;
-        }
-        if(pelaaja.elossa == false){
-            bitmap.scaleY = -skaalaus;
-        }
     }
+    bitmap.scaleX = pelaajaTiedot[id].oikealle ? skaalaus : -skaalaus; 
+    if(pelaaja.elossa == false){
+        bitmap.scaleY = -skaalaus;
+    }   
 }
 
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
