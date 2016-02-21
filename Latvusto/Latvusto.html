@@ -11,7 +11,7 @@
   // http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
 var stage;
 var pelileveys = 1024;
-var pelikorkeus = 768;
+var pelikorkeus = 650;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
 var painovoima = -0.3;
@@ -90,6 +90,10 @@ function aloitaPeli(){
           hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
           elossa: true};
         selviytymispisteasetus();
+        
+        blokkienTiedot.forEach(function (blokki){
+            blokki.x = blokki.x - 0.5 * pelileveys; 
+        })
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
         var pelaajanimet = Object.keys(muidenPelaajienTiedot);
@@ -305,6 +309,9 @@ function liikuta(id) {
     } else {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
+        //blokkienTiedot.forEach(function (blokki){
+            //blokki.x = blokki.x + pelaaja.XVauhti; 
+        //})
         pelaaja.yVauhti = pelaaja.yVauhti - painovoima;        
     }
 
@@ -447,7 +454,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
 <br>
-<canvas id="Pelialue" width="1024" height="768">
+<canvas id="Pelialue" width="1024" height="650">
 </canvas>
 </body>
 </html>
