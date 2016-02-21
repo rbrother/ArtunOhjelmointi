@@ -91,10 +91,6 @@ function aloitaPeli(){
           elossa: true};
         selviytymispisteasetus();
         
-        blokkienTiedot.forEach(function (blokki){
-            blokki.x = blokki.x - 0.5 * pelileveys; 
-        })
-        
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
         var pelaajanimet = Object.keys(muidenPelaajienTiedot);
         var toisenHahmonJarjestys = 1;
@@ -104,6 +100,11 @@ function aloitaPeli(){
             toisenHahmonJarjestys++;
           }
         });
+        blokkienTiedot.forEach(function(blokki){
+            // muunnetaan blokkien maailma-koordinaatit visuaalisiksi koordinaateiksi
+            blokki.x = blokki.x + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+            blokki.y = blokki.y + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+        })
         aloitusSuoritettu = true;
     });
             
@@ -208,7 +209,7 @@ function liikutusNappiAlas(event){
             hyppyPalkki = new createjs.Bitmap("Kuva-aineisto/hyppy-palkki.png");
             hyppyPalkki.scaleX = 0.33;
             hyppyPalkki.scaleY = 0.33;
-            hyppyPalkki.y = pelaajaTiedot[omaId].Pysty + 50;
+            hyppyPalkki.y = pelikorkeus * 0.5 + blokinKoko;
             stage.addChild(hyppyPalkki);
         }
         nappiPohjassa = true;
@@ -249,9 +250,23 @@ function YVauhti(id) {
 }
 
 function liikutuskutsu(){
-    //blokkienTiedot.forEach(function (blokki){
-        //blokki.x = blokki.x + 0.25; 
-    //})
+    // Maailmakoordinaateissa:
+    // * ukkoX, ukkoY
+    // * blokkiX, blokkiY
+    // * muiden pelaajien: x ja y
+    
+    // Visuaalisissa koordinaateissa:
+    // * ukko: peliLeveys * 0.5, peliKorkeus * 0.5
+    // * blokki: ?
+    // * muille pelaajille: ?
+
+    // Alussa: blokkienX = blokkienX + (visuaalinenUkkoX - peliTiedot[omaId].Vaaka)
+        //blokkienY = blokkienY + (visuaalinenUkkoY - peliTiedot[omaId].Pysty)
+
+    blokkienTiedot.forEach(function (blokki){
+        blokki.x = blokki.x - pelaajaTiedot[omaId].xVauhti;
+        blokki.y = blokki.y - pelaajaTiedot[omaId].yVauhti;
+    })
     if(aloitusSuoritettu == false)return;
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
@@ -271,7 +286,7 @@ function liikutuskutsu(){
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
         var pelaaja = pelaajaTiedot[omaId];
-        hyppyPalkki.x = pelaaja.Vaaka - 0.5 * hyppyPalkkiLeveys + 25.5;
+        hyppyPalkki.x = pelileveys * 0.5 + blokinKoko * 0.5 - hyppyPalkkiLeveys * 0.5;
     }
     stage.update();
 }
@@ -309,9 +324,6 @@ function liikuta(id) {
     } else {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
-        //blokkienTiedot.forEach(function (blokki){
-            //blokki.x = blokki.x + pelaaja.XVauhti; 
-        //})
         pelaaja.yVauhti = pelaaja.yVauhti - painovoima;        
     }
 
@@ -346,15 +358,19 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
 
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
 function KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, bx1, by1, viimeX, viimeY ) {
+
+    var blokinMaailmaX = bx1 - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+    var blokinMaailmaY = by1 - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+
     var ux2 = ux1 + leveys;
     var uy2 = uy1 + korkeus;
-    var bx2 = bx1 + blokinKoko;
-    var by2 = by1 + blokinKoko;
+    var bx2 = blokinMaailmaX + blokinKoko;
+    var by2 = blokinMaailmaY + blokinKoko;
     if ( ux1 > bx2 ) return "";
-    if (ux2 < bx1) return "";
+    if (ux2 < blokinMaailmaX) return "";
     if(uy1 > by2) return "";
-    if(uy2 < by1) return "";
-    if(viimeX + leveys < bx1 || viimeX > bx2) return "x";
+    if(uy2 < blokinMaailmaY) return "";
+    if(viimeX + leveys < blokinMaailmaX || viimeX > bx2) return "x";
     return "y";
 }
 
