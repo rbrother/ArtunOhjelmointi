@@ -156,14 +156,21 @@ function ampuminen(pelaajaId){
     var pelaaja = pelaajaTiedot[pelaajaId];
     pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
     var shooting = pelaaja.ampumisviiva;
-    shooting.y = pelaajaId == omaId ? 0.5 * pelikorkeus + 0.5 * blokinKoko : pelaaja.Pysty; //Korjaa myöhemmin.
-    var viivatsekkausX = pelileveys + 0.5 * blokinKoko;
+	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
+    shooting.y = viivatsekkausY + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty); 
+	
+	//var maailmaX = visuaalinenX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+	//var maailmaY = visuaalinenY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	//var visuaalinenX = maailmaX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+	//var visuallinenY = maailmaY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+
+	//pelaaja.Pysty + 0.5 * blokinKoko; 
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
+    var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
     var ampumisskaalaus = 0;
-    while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, shooting.y, 1, 1, 0, 0) == ""){
+    while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0) == ""){
         viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
         ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
-        console.log(ampumisskaalaus);
     }
     laukausAudio.play();
     shooting.scaleY = 0.25;
@@ -385,7 +392,7 @@ Esimerkki serveriltä tulevasta viestistä:
     "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
 } */           
 function VastausViestinKasittely(data, status){
-    console.log("Viesti vastaanotettu: " + data); 
+    //console.log("Viesti vastaanotettu: " + data); 
     var viestiServerilt = jQuery.parseJSON (data);
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
