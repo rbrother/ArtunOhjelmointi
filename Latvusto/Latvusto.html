@@ -25,6 +25,7 @@ var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
 var aloitusSuoritettu = false; 
+var armori = 0;
 
 // pelaajaTiedot:
 // { 
@@ -161,8 +162,8 @@ function maailmastaVisuaaliseen(maailmaX, maailmaY){
 }
 
 function visuaalisestaMaailmaan(visX, visY){
-	var maailmaX = visuaalinenX - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-	var maailmaY = visuaalinenY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	var maailmaX = visX - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+	var maailmaY = visY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
 	return [maailmaX, maailmaY];
 }
 
@@ -206,7 +207,7 @@ function ampuminen(pelaajaId){
                 if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
                     var distanceDivided = Math.floor(distance / blokinKoko);
                     var falloff = distanceDivided > 3 ? 3 : distanceDivided;
-                    uhri.selviytyminen = uhri.selviytyminen - (10 - falloff);
+                    uhri.selviytyminen = uhri.selviytyminen - (10 - falloff - armori);
                     selviytymispisteasetus();
                 }
             }
@@ -366,8 +367,9 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
 function KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, bx1, by1, viimeX, viimeY ) {
 
-    var blokinMaailmaX = bx1 - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-    var blokinMaailmaY = by1 - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+    var vis = visuaalisestaMaailmaan(bx1,by1);
+    var blokinMaailmaX = vis[0];
+    var blokinMaailmaY = vis[1];
 
     var ux2 = ux1 + leveys;
     var uy2 = uy1 + korkeus;
@@ -443,6 +445,7 @@ function hahmotyypinValinta(jarjestys) {
     } else if (jarjestys == 2){
         return "Veteraani";
     } else{
+        armori = 3;
         return "Humanoidi";
     }
 }
