@@ -102,8 +102,11 @@ function aloitaPeli(){
         });
         blokkienTiedot.forEach(function(blokki){
             // muunnetaan blokkien maailma-koordinaatit visuaalisiksi koordinaateiksi
-            blokki.x = blokki.x + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-            blokki.y = blokki.y + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+			var vis = maailmastaVisuaaliseen(blokki.x, blokki.y);
+			blokki.x = vis[0];
+			blokki.y = vis[1];
+            //blokki.x = blokki.x + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+            //blokki.y = blokki.y + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
         })
         aloitusSuoritettu = true;
     });
@@ -151,20 +154,24 @@ function buttonUp(event) {
     }
 }
 
+function maailmastaVisuaaliseen(maailmaX, maailmaY){
+	var visX = maailmaX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+	var visY = maailmaY + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	return [visX, visY];
+}
+
+function visuaalisestaMaailmaan(visX, visY){
+	var maailmaX = visuaalinenX - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
+	var maailmaY = visuaalinenY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	return [maailmaX, maailmaY];
+}
+
 function ampuminen(pelaajaId){
     // Tänne tullaan, jos W-näppäintä painetaan.
-    var pelaaja = pelaajaTiedot[pelaajaId];
-    pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
-    var shooting = pelaaja.ampumisviiva;
-	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
-    shooting.y = viivatsekkausY + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty); 
-	
-	//var maailmaX = visuaalinenX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-	//var maailmaY = visuaalinenY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
-	//var visuaalinenX = maailmaX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-	//var visuallinenY = maailmaY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+    laukausAudio.play();
 
-	//pelaaja.Pysty + 0.5 * blokinKoko; 
+    var pelaaja = pelaajaTiedot[pelaajaId];
+	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
     var ampumisskaalaus = 0;
@@ -172,15 +179,22 @@ function ampuminen(pelaajaId){
         viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
         ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
     }
-    laukausAudio.play();
+
+    pelaaja.ampumisviiva = new createjs.Bitmap("Kuva-aineisto/valkoViiva.png")
+    var shooting = pelaaja.ampumisviiva;
     shooting.scaleY = 0.25;
     if(pelaaja.oikealle){
-        shooting.x = pelaajaId == omaId ? 0.5 * pelileveys + blokinKoko : pelaaja.Vaaka + blokinKoko;//Korjaa m...
+        shooting.x = pelaaja.Vaaka + blokinKoko;
         shooting.scaleX = ampumisskaalaus * 0.5;
     } else {
-        shooting.x = pelaajaId == omaId ? 0.5 * pelileveys : pelaaja.Vaaka;
+        shooting.x = pelaaja.Vaaka;
         shooting.scaleX = -ampumisskaalaus * 0.5;
     }
+	var shootingVis = maailmastaVisuaaliseen(
+		pelaaja.oikealle ? pelaaja.Vaaka + blokinKoko : pelaaja.Vaaka, 
+		viivatsekkausY);
+	shooting.x = shootingVis[0];
+	shooting.y = shootingVis[1]; 	
     stage.addChild(shooting);
     pelaaja.ampumisLaskuri = 0;
     var pelaajanimet = Object.keys(pelaajaTiedot);
@@ -258,18 +272,6 @@ function YVauhti(id) {
 }
 
 function liikutuskutsu(){
-    // Maailmakoordinaateissa:
-    // * ukkoX, ukkoY
-    // * blokkiX, blokkiY
-    // * muiden pelaajien: x ja y
-    
-    // Visuaalisissa koordinaateissa:
-    // * ukko: peliLeveys * 0.5, peliKorkeus * 0.5
-    // * blokki: ?
-    // * muille pelaajille: ?
-
-    // Alussa: blokkienX = blokkienX + (visuaalinenUkkoX - peliTiedot[omaId].Vaaka)
-        //blokkienY = blokkienY + (visuaalinenUkkoY - peliTiedot[omaId].Pysty)
     if(aloitusSuoritettu == false)return;
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
@@ -338,6 +340,7 @@ function liikuta(id) {
 
     var bitmap = pelaaja.hahmoBitmap;
     if(id == omaId){
+		//Seuraava rivi ehkä muutettava?
         bitmap.x = pelaajaTiedot[id].oikealle ? pelileveys * 0.5 : pelileveys * 0.5 + blokinKoko;
         bitmap.y = pelikorkeus * 0.5;
     } else {
@@ -350,7 +353,7 @@ function liikuta(id) {
     }   
 }
 
-// KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
+//KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, viimeY ) {
     var kosketus = "";
     blokkienTiedot.forEach( function(blokki) {
