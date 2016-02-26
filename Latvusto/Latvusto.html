@@ -25,7 +25,6 @@ var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
 var aloitusSuoritettu = false; 
-var armori = 0;
 
 // pelaajaTiedot:
 // { 
@@ -101,14 +100,6 @@ function aloitaPeli(){
             toisenHahmonJarjestys++;
           }
         });
-        blokkienTiedot.forEach(function(blokki){
-            // muunnetaan blokkien maailma-koordinaatit visuaalisiksi koordinaateiksi
-			var vis = maailmastaVisuaaliseen(blokki.x, blokki.y);
-			blokki.x = vis[0];
-			blokki.y = vis[1];
-            //blokki.x = blokki.x + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-            //blokki.y = blokki.y + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
-        })
         aloitusSuoritettu = true;
     });
             
@@ -207,6 +198,7 @@ function ampuminen(pelaajaId){
                 if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
                     var distanceDivided = Math.floor(distance / blokinKoko);
                     var falloff = distanceDivided > 3 ? 3 : distanceDivided;
+					var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
                     uhri.selviytyminen = uhri.selviytyminen - (10 - falloff - armori);
                     selviytymispisteasetus();
                 }
@@ -333,22 +325,26 @@ function liikuta(id) {
         pelaaja.yVauhti = pelaaja.yVauhti - painovoima; 
         if(omaId == id){
             blokkienTiedot.forEach(function (blokki){
-                blokki.x = blokki.x - pelaaja.xVauhti;
-                blokki.y = blokki.y - pelaaja.yVauhti;
+				var vis = maailmastaVisuaaliseen(blokki.x, blokki.y);
+                blokki.bitmap.x = vis[0];
+                blokki.bitmap.y = vis[1];
             }) 
         }
     }
 
     var bitmap = pelaaja.hahmoBitmap;
     if(id == omaId){
-		//Seuraava rivi ehkä muutettava?
-        bitmap.x = pelaajaTiedot[id].oikealle ? pelileveys * 0.5 : pelileveys * 0.5 + blokinKoko;
+        bitmap.x = pelileveys * 0.5;
         bitmap.y = pelikorkeus * 0.5;
     } else {
-        bitmap.x = pelaajaTiedot[id].oikealle ? pelaaja.Vaaka : pelaaja.Vaaka + blokinKoko;
-        bitmap.y = pelaaja.Pysty;
-    }
-    bitmap.scaleX = pelaajaTiedot[id].oikealle ? skaalaus : -skaalaus; 
+		var vis = maailmastaVisuaaliseen(pelaaja.Vaaka, pelaaja.Pysty)
+        bitmap.x = vis[0];
+        bitmap.y = vis[1];
+    }	
+    bitmap.scaleX = pelaaja.oikealle ? skaalaus : -skaalaus; 
+	if(!pelaaja.oikealle){
+		bitmap.x = bitmap.x + blokinKoko;
+	}
     if(pelaaja.elossa == false){
         bitmap.scaleY = -skaalaus;
     }   
@@ -367,19 +363,15 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
 // KoskettaakoHahmoBlokkia: "x-kosketus", "y-kosketus", "ei-kosketusta"
 function KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, bx1, by1, viimeX, viimeY ) {
 
-    var vis = visuaalisestaMaailmaan(bx1,by1);
-    var blokinMaailmaX = vis[0];
-    var blokinMaailmaY = vis[1];
-
     var ux2 = ux1 + leveys;
     var uy2 = uy1 + korkeus;
-    var bx2 = blokinMaailmaX + blokinKoko;
-    var by2 = blokinMaailmaY + blokinKoko;
+    var bx2 = bx1 + blokinKoko;
+    var by2 = by1 + blokinKoko;
     if ( ux1 > bx2 ) return "";
-    if (ux2 < blokinMaailmaX) return "";
+    if (ux2 < bx1) return "";
     if(uy1 > by2) return "";
-    if(uy2 < blokinMaailmaY) return "";
-    if(viimeX + leveys < blokinMaailmaX || viimeX > bx2) return "x";
+    if(uy2 < by1) return "";
+    if(viimeX + leveys < bx1 || viimeX > bx2) return "x";
     return "y";
 }
 
@@ -435,7 +427,7 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
     var hahmotyyppi = hahmotyypinValinta(jarjestys);
     pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
-        oikealle: true, hahmotyppi: hahmotyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
         elossa: true};
 }
 
@@ -445,7 +437,6 @@ function hahmotyypinValinta(jarjestys) {
     } else if (jarjestys == 2){
         return "Veteraani";
     } else{
-        armori = 3;
         return "Humanoidi";
     }
 }
