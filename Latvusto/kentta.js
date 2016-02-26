@@ -17,7 +17,7 @@ function BlokkiaLisaa(x,y) {
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
-    blokkienTiedot.push( bitmap );
+    blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap} );
 
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
