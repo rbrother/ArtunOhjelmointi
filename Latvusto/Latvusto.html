@@ -134,6 +134,10 @@ function NappiAlas(event) {
     }
 
     if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
+		latauksenKronologinenProsessi = 0;
+		if(kuteja < 1)return;
+		kuteja = kuteja - 1;
+		kutiIlmoitus();
         ampuminen(omaId);
         var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId, 
             hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
@@ -166,10 +170,6 @@ function visuaalisestaMaailmaan(visX, visY){
 }
 
 function ampuminen(pelaajaId){
-	latauksenKronologinenProsessi = 0;
-	if(kuteja < 1)return;
-	kuteja = kuteja - 1;
-	kutiIlmoitus();
     // Tänne tullaan, jos W-näppäintä painetaan.
     laukausAudio.play();
 
