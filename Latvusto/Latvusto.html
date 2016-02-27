@@ -182,9 +182,9 @@ function ampuminen(pelaajaId){
         shooting.x = pelaaja.Vaaka;
         shooting.scaleX = -ampumisskaalaus * 0.5;
     }
+	var ampuminenMaailmassa = [pelaaja.oikealle ? pelaaja.Vaaka + blokinKoko : pelaaja.Vaaka, viivatsekkausY];
 	var shootingVis = maailmastaVisuaaliseen(
-		pelaaja.oikealle ? pelaaja.Vaaka + blokinKoko : pelaaja.Vaaka, 
-		viivatsekkausY);
+		ampuminenMaailmassa[0], ampuminenMaailmassa[1]);
 	shooting.x = shootingVis[0];
 	shooting.y = shootingVis[1]; 	
     stage.addChild(shooting);
@@ -194,8 +194,10 @@ function ampuminen(pelaajaId){
         if(ammuttava != pelaajaId){
             var uhri = pelaajaTiedot[ammuttava];
             var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
-            if((pelaaja.oikealle && shooting.x < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && shooting.x > uhri.Vaaka) && distance < ampumisskaalaus){
-                if(shooting.y < uhri.Pysty + blokinKoko + 1 && shooting.y > uhri.Pysty - 1){
+            if((pelaaja.oikealle && ampuminenMaailmassa[0] < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && ampuminenMaailmassa[0] > uhri.Vaaka) && distance < ampumisskaalaus){
+				console.log("X-suunnassa onnistuu!");
+                if(ampuminenMaailmassa[1] < uhri.Pysty + blokinKoko + 1 && ampuminenMaailmassa[1] > uhri.Pysty - 1){
+					console.log("Y-suunnassa onnistuu");
                     var distanceDivided = Math.floor(distance / blokinKoko);
                     var falloff = distanceDivided > 3 ? 3 : distanceDivided;
 					var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
@@ -393,7 +395,7 @@ function VastausViestinKasittely(data, status){
     var viestiServerilt = jQuery.parseJSON (data);
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
-        console.log("Aloitus, pelaajana " + toinenPelaaja + "   Järjestys: " + viestiServerilt.jarjestys);
+        //console.log("Aloitus, pelaajana " + toinenPelaaja + "   Järjestys: " + viestiServerilt.jarjestys);
         toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);    
     } else if(viestiServerilt.viestityyppi == "ilmoitus"){
         if(viestiServerilt.ilmoitustyyppi == "ampuminen" || viestiServerilt.ilmoitustyyppi == "hyppy"){
