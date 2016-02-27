@@ -25,6 +25,9 @@ var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
 var aloitusSuoritettu = false; 
+var kuteja = 6;
+var latauksenKronologinenProsessi = 0;
+var paivitysvali = 20;
 
 // pelaajaTiedot:
 // { 
@@ -76,6 +79,10 @@ function selviytymispisteasetus(){
     }
 }
 
+function kutiIlmoitus(){
+	$("#Kudit").text("Kuteja: " + kuteja);
+}
+
 function aloitaPeli(){
     omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
@@ -106,7 +113,7 @@ function aloitaPeli(){
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
-    setInterval( liikutuskutsu, 20 ); // 20 ms = 50 FPS
+    setInterval( liikutuskutsu, paivitysvali ); // 20 ms = 50 FPS
 
     window.onkeydown = NappiAlas;
     
@@ -159,6 +166,10 @@ function visuaalisestaMaailmaan(visX, visY){
 }
 
 function ampuminen(pelaajaId){
+	latauksenKronologinenProsessi = 0;
+	if(kuteja < 1)return;
+	kuteja = kuteja - 1;
+	kutiIlmoitus();
     // Tänne tullaan, jos W-näppäintä painetaan.
     laukausAudio.play();
 
@@ -266,8 +277,18 @@ function YVauhti(id) {
     return pelaajaTiedot[id].YVauhti;
 }
 
+function lataaminen(){
+	latauksenKronologinenProsessi = latauksenKronologinenProsessi + paivitysvali / 1000.0;
+	if(latauksenKronologinenProsessi > 3){
+		kuteja = 6;
+		latauksenKronologinenProsessi = 0;
+		kutiIlmoitus();
+	}
+}
+
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
+	lataaminen();
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
         liikuta(id);
@@ -472,6 +493,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <button onClick = "aloitaPeli()">Aloita</button>
 <button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
+<span id = "Kudit"></span>
 <br>
 <canvas id="Pelialue" width="1024" height="650">
 </canvas>
