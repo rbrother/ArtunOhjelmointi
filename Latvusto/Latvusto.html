@@ -419,13 +419,24 @@ function VastausViestinKasittely(data, status){
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
         //console.log("Aloitus, pelaajana " + toinenPelaaja + "   Järjestys: " + viestiServerilt.jarjestys);
-        toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja);    
+        toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja); 
+		var oma = pelaajaTiedot[omaId];
+		var viesti = {pelaaja: omaId, Vaaka: oma.Vaaka, Pysty: oma.Pysty, xVauhti: oma.xVauhti, yVauhti: oma.yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
+		$.post(url, viesti);
     } else if(viestiServerilt.viestityyppi == "ilmoitus"){
-        if(viestiServerilt.ilmoitustyyppi == "ampuminen" || viestiServerilt.ilmoitustyyppi == "hyppy"){
+		var tyyppi = viestiServerilt.ilmoitustyyppi;
+        if(tyyppi == "ampuminen" || tyyppi == "hyppy"){
             alieeniclientinHyppyJaAmpuminen(viestiServerilt);
-        }else if(viestiServerilt.ilmoitustyyppi == "neutralisoituminen"){
+        }else if(tyyppi == "neutralisoituminen"){
             neutralisoituminen(viestiServerilt);
-        }
+        }else if(tyyppi == "sijainti"){
+			var id = viestiServerilt.pelaaja;
+			var pelaaja = pelaajaTiedot[id];
+			pelaaja.Vaaka = Number(viestiServerilt.Vaaka);
+			pelaaja.Pysty = Number(viestiServerilt.Pysty);
+			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
+			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
+		}
     }else if(viestiServerilt.viestityyppi == "resetointi"){
 		alert("Resetoidaan...");
 		location.reload();

@@ -58,7 +58,7 @@ function vastaaViestiin(viestiClientilta, response) {
   if(viestityyppi == "kysely"){
     tallennaTapahtumakysely(viestiClientilta, response);
   }else if (viestityyppi == "ilmoitus"){
-    console.log("Ilmoitus vastaanotettu pelaajalta: " + viestiClientilta.pelaaja);
+    //console.log("Ilmoitus vastaanotettu pelaajalta: " + viestiClientilta.pelaaja);
     vastaaTapahtumailmoitukseen(viestiClientilta, response, {vastaus: "ok"});
   }else if (viestityyppi == "aloitus"){
        // uusi pelaaja tullut mukaan
