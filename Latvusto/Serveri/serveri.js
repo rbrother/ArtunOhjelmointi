@@ -70,24 +70,29 @@ function vastaaViestiin(viestiClientilta, response) {
     viestiClientilta.jarjestys = jarjestys;
     vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
 	}else if(viestityyppi == "resetointi"){
+		vastaaTapahtumailmoitukseen(viestiClientilta, response, {jaa: "GG"});
 		aloitus = true;
 		jarjestys = 0;
 		serveripelaajaTiedot = {};
-		console.log("Serveri resetoitu!")
+		console.log("Serveri resetoitu!");
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }
-  
 }
 
 function tallennaTapahtumakysely(viestiClientilta, response) {
   var pelaaja = viestiClientilta.pelaaja;
   if(response == undefined){
-    console.log("ERROR! RESPONSE UNDEFINED");
-  }else{
-    console.log("RESPONSE TALLENNETTU " + pelaaja);
+    console.log("Virhe! Response undefined");
+	return;
   }  
-  serveripelaajaTiedot[pelaaja].tallennettuResponse = response; 
+  var pelaajaTiedot = serveripelaajaTiedot[pelaaja];
+  if ( pelaajaTiedot == undefined) {
+    console.log("Virhe! Pelaajatietoja ei löydy pelaajalle: " + pelaaja);
+	return;
+  }
+  pelaajaTiedot.tallennettuResponse = response; 
+  console.log("RESPONSE TALLENNETTU " + pelaaja);
 }
 
 // Esim. A: hyppäsin!   ->   lähetetään B, C ja D (mutta ei A:lle itselleen)
