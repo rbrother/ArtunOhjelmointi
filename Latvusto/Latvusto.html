@@ -414,7 +414,7 @@ Esimerkki serveriltä tulevasta viestistä:
     "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
 } */           
 function VastausViestinKasittely(data, status){
-    //console.log("Viesti vastaanotettu: " + data); 
+    console.log("Viesti vastaanotettu: " + data); 
     var viestiServerilt = jQuery.parseJSON (data);
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
@@ -426,7 +426,10 @@ function VastausViestinKasittely(data, status){
         }else if(viestiServerilt.ilmoitustyyppi == "neutralisoituminen"){
             neutralisoituminen(viestiServerilt);
         }
-    }
+    }else if(viestiServerilt.viestityyppi == "resetointi"){
+		alert("Resetoidaan...");
+		location.reload();
+	}
     kysyServeriltTapahtumia();
 }
 
@@ -486,6 +489,7 @@ function ukonVisuaalinenLuonti(characterType){
 function resetointi(){
     var viesti = {viestityyppi: "resetointi"};
     $.post(url, viesti);
+	location.reload();
 }
     
  </script>
