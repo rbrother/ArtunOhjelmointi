@@ -289,9 +289,12 @@ function lataaminen(){
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
 	lataaminen();
+	liikuta(omaId);
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
-        liikuta(id);
+		if(id != omaId){
+			liikuta(id);
+		}
     })
     var latauskerroin = 1;
     if(pelaajaTiedot[omaId].hahmotyyppi == "HP"){
@@ -309,6 +312,12 @@ function liikutuskutsu(){
         var pelaaja = pelaajaTiedot[omaId];
         hyppyPalkki.x = pelileveys * 0.5 + blokinKoko * 0.5 - hyppyPalkkiLeveys * 0.5;
     }
+    blokkienTiedot.forEach(function (blokki){
+		var vis = maailmastaVisuaaliseen(blokki.x, blokki.y);
+         blokki.bitmap.x = vis[0];
+         blokki.bitmap.y = vis[1];
+    });
+        
     stage.update();
 }
 
@@ -346,13 +355,6 @@ function liikuta(id) {
         pelaaja.Vaaka = newX;
         pelaaja.Pysty = newY;
         pelaaja.yVauhti = pelaaja.yVauhti - painovoima; 
-        if(omaId == id){
-            blokkienTiedot.forEach(function (blokki){
-				var vis = maailmastaVisuaaliseen(blokki.x, blokki.y);
-                blokki.bitmap.x = vis[0];
-                blokki.bitmap.y = vis[1];
-            }) 
-        }
     }
 
     var bitmap = pelaaja.hahmoBitmap;
