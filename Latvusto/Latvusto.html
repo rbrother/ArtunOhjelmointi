@@ -178,9 +178,7 @@ function ampuminen(pelaajaId){
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
     var ampumisskaalaus = 0;
-    console.log("Ampumisskaaluausasetuksen jälkeiselle riville tullaan!"); //Tänne tultiin!
-    while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0, pelaajaId) == ""){
-        //console.log(ampumisskaalaus); Tänne ei tulla.
+    while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0, pelaajaId)[0] == ""){
         viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
         ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
     }
@@ -202,24 +200,15 @@ function ampuminen(pelaajaId){
 	shooting.y = shootingVis[1]; 	
     stage.addChild(shooting);
     pelaaja.ampumisLaskuri = 0;
-    var pelaajanimet = Object.keys(pelaajaTiedot);
-    pelaajanimet.forEach(function(ammuttava){
-        if(ammuttava != pelaajaId){
-            var uhri = pelaajaTiedot[ammuttava];
-            var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
-            if((pelaaja.oikealle && ampuminenMaailmassa[0] < uhri.Vaaka + blokinKoko || !pelaaja.oikealle && ampuminenMaailmassa[0] > uhri.Vaaka) && distance < ampumisskaalaus){
-				console.log("X-suunnassa onnistuu!");
-                if(ampuminenMaailmassa[1] < uhri.Pysty + blokinKoko + 1 && ampuminenMaailmassa[1] > uhri.Pysty - 1){
-					console.log("Y-suunnassa onnistuu");
-                    var distanceDivided = Math.floor(distance / blokinKoko);
-                    var falloff = distanceDivided > 3 ? 3 : distanceDivided;
-					var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
-                    uhri.selviytyminen = uhri.selviytyminen - (10 - falloff - armori);
-                    selviytymispisteasetus();
-                }
-            }
-        }
-    })
+    var uhriId = KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0, pelaajaId)[1];
+    if(uhriId == "")return;
+    var uhri = pelaajaTiedot[uhriId];
+    var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
+    var distanceDivided = Math.floor(distance / blokinKoko);
+    var falloff = distanceDivided > 3 ? 3 : distanceDivided;
+	var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
+    uhri.selviytyminen = uhri.selviytyminen - (10 - falloff - armori);
+    selviytymispisteasetus();
 }
 
 function liikutusNappiAlas(event){
