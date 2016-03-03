@@ -424,7 +424,8 @@ function VastausViestinKasittely(data, status){
         //console.log("Aloitus, pelaajana " + toinenPelaaja + "   Järjestys: " + viestiServerilt.jarjestys);
         toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja); 
 		var oma = pelaajaTiedot[omaId];
-		var viesti = {pelaaja: omaId, Vaaka: oma.Vaaka, Pysty: oma.Pysty, xVauhti: oma.xVauhti, yVauhti: oma.yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
+		var viesti = {pelaaja: omaId, Vaaka: oma.Vaaka, Pysty: oma.Pysty, 
+                xVauhti: oma.xVauhti, yVauhti: oma.yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
 		$.post(url, viesti);
     } else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		var tyyppi = viestiServerilt.ilmoitustyyppi;
@@ -469,7 +470,7 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
     var hahmotyyppi = hahmotyypinValinta(jarjestys);
     pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
-        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: 0, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
         elossa: true};
 }
 
