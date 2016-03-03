@@ -178,7 +178,9 @@ function ampuminen(pelaajaId){
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
     var ampumisskaalaus = 0;
+    console.log("Ampumisskaaluausasetuksen jälkeiselle riville tullaan!"); //Tänne tultiin!
     while(KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0, pelaajaId) == ""){
+        //console.log(ampumisskaalaus); Tänne ei tulla.
         viivatsekkausX = viivatsekkausX + suuntanumero * blokinKoko;
         ampumisskaalaus = ampumisskaalaus + 0.5 * blokinKoko;
     }

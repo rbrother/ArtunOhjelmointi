@@ -576,26 +576,6 @@ Engineer | Secondary | For the Army
  | Increases health given by the Dispenser by 100%
  | Drops accuracy by 20%
  | Drops ammo rate from dispenser by 50%
- 
-Dirty Bomb Character | Recon | Thunder
-Ablility of Q (Blackout) | Cooldown (Cldwn): 30s
-Thunder plays dead and looks exatly like that being grey and all. He can wake up in the following 5 seconds after he
-has to wake up. Even though he seems dead, he still receives damage but the attacker isn't informed that he hits so-
-mething. If Thunder is Blackouting he dies off right away after having no health left.
-Ability of E (Magnet Device) | Cldwn: 20s
-Thinder pulls out a Magnet Gun and for a second he pulls targets to him the more they have ammo. At the same time he
-steals ammo from pulled targets and can replenish ammo of his own if the pulled ammo matches his own. During the pull
-he steals 20% max ammo from the pulled target.
-
-Dirty Bomb Character | Engineer | Turtle
-Ability of Q (Turtle Wall) | Cldwn: 35s
-Turtle places a big wall in front of him that deploys 1.5 seconds after it's placement. It lowers it's horizontal size
-if an ally tries to go through it's non-middle point. The wall has 500 health and only one wall per Turtle can be
-placed on the field.
-Ability of E (Blast Mine) | One non-carried mine regenerated every 12 seconds
-Turtle throws a mine onto the ground. He can plant up to 4 ones of these. They are reclaimable. They function almost 
-identically to the Proximity mine of Proxy. When mine is triggered via shooting or enemy coming close to it, it will
-create a pushback blast that can push enemies with a force of around 1000 distance units per second.
 
 Team Fortress 2 Weapon | Heavy | Secondary ("Shotgun")
  | 60% faster fire rate
