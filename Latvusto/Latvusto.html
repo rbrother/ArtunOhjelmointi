@@ -93,9 +93,7 @@ function aloitaPeli(){
         console.log("ALKUVIESTI RESPONSE SAATU");
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
         var hahmotyyppi = hahmotyypinValinta(parsittuVastaus.jarjestys);
-        pelaajaTiedot[omaId] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi), oikealle: true, 
-          hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
-          elossa: true};
+        pelaajaTiedot[omaId] =  luoHahmo(hahmotyyppi);  
         selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
@@ -469,7 +467,11 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 
 function toisenHahmonLuonti(jarjestys, toinenPelaaja){
     var hahmotyyppi = hahmotyypinValinta(jarjestys);
-    pelaajaTiedot[toinenPelaaja] = { hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
+    pelaajaTiedot[toinenPelaaja] = luoHahmo(hahmotyyppi);
+}
+
+function luoHahmo(hahmotyyppi){
+    return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
         elossa: true};
 }
