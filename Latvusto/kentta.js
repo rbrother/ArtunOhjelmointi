@@ -6,12 +6,13 @@ function makeStage(){
         for(x = 0;x < rivi.length;x++){
             var merkki = rivi.charAt(x);
             if(merkki == 'X') { BlokkiaLisaa(x,y); }
+            //Tässä kohdassa voidaan tehdä muita blokkeja / kohtatyyppejä.
         }
     });
 }
 
 function BlokkiaLisaa(x,y) {
-    var bitmap = new createjs.Bitmap("Kuva-aineisto/150x150/0002 150_TestihuoneenMateriaaliPng.png");
+    var bitmap = new createjs.Bitmap("Kuva-aineisto/LopullinenKouludemo/ShipEngineToMaybeBeRotated.png");
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = x*blokinKoko;
@@ -78,14 +79,14 @@ var cruiser = [
     '........................X............A...X..........................................................',
     '........................X....k....XXXXXXXX..........................................................',
     '.....h..................X................X..........oooo.................................oo.........',
-    '........................X.................O.........oooo.......oo........................oo.........',
+    '..................Y.....X.................O.........oooo.......oo........................oo.........',
     '.........UUUUUU.........X.................O.........oooo.......oo...........MMMMMMM......oo...H.....',
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.',
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXX.............XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX.........XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..',
     //Ylhäällä kansikerros (3)
-    'X...............................................................................................X...',
-    'X..............................................................................................X....',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX...',
+    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX....',
     'X.............................................................................................X.....',
     'X............................................................................................X......',
     'X...........................................................................................X.......',
@@ -128,6 +129,7 @@ var cruiser = [
     H = Humanoidin spawn -piste
     h = HP:n spawn -piste
     U = uima-altaan osa
+    Y = hypppytorni (3 blokkia korkea)
     */
 ];
 

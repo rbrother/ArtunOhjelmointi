@@ -1,6 +1,6 @@
 ﻿TO-DO
 
-	Debuggaus: ...
+	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
 
 	Kentän teko
 
