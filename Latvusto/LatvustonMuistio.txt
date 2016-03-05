@@ -1,8 +1,10 @@
 ﻿TO-DO
 
 	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
+    
+    Jos hahmo pelattavan kentän ulkopuolella, ei voi mennä kentäsät poispäin pattitilanteessa.
 
-	Kentän teko
+	Kentän teko, spawn -pisteiden teko, koristeblokit, taustakuva
 
 	Hahmon valinta
 

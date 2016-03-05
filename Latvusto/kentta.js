@@ -1,18 +1,20 @@
 function makeStage(){
     var y = 0;
     //vaitse seuraavalla rivillä kenttä.
-    battlefield.forEach(function(rivi){
+    cruiser.forEach(function(rivi){
         y++;
         for(x = 0;x < rivi.length;x++){
             var merkki = rivi.charAt(x);
-            if(merkki == 'X') { BlokkiaLisaa(x,y); }
+            if(merkki == 'X') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipEngineToMaybeBeRotated.png"); }
             //Tässä kohdassa voidaan tehdä muita blokkeja / kohtatyyppejä.
+            if(merkki == 'Y') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipCovering.png");}
+            if(merkki == 'K') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png");}
         }
     });
 }
 
-function BlokkiaLisaa(x,y) {
-    var bitmap = new createjs.Bitmap("Kuva-aineisto/LopullinenKouludemo/ShipEngineToMaybeBeRotated.png");
+function BlokkiaLisaa(x,y,blokkityyppi) {
+    var bitmap = new createjs.Bitmap(blokkityyppi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = x*blokinKoko;
@@ -73,12 +75,12 @@ var cruiser = [
     '..................................X......X..........................................................',
     '..................................X......X..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................XXXXXXXXXXXXXX...X..........................................................',
-    '........................X................X..........................................................',
+    '........................XXXXXXXXXXX......X..........................................................',
+    '........................X.........XX.....X..........................................................',
     '........................X................X..........................................................',
     '........................X............A...X..........................................................',
-    '........................X....k....XXXXXXXX..........................................................',
-    '.....h..................X................X..........oooo.................................oo.........',
+    '........................X....k......XXXXXX..........................................................',
+    '.....h..................X.........XXXXXXXX..........oooo.................................oo.........',
     '..................Y.......................O.........oooo.......oo........................oo.........',
     '.........UUUUUU...........................O.........oooo.......oo...........MMMMMMM......oo...H.....',
     'XXXXXXXXXXXXXXXXXXXXXXXXXXX.............XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
