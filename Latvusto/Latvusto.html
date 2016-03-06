@@ -478,8 +478,17 @@ function toisenHahmonLuonti(jarjestys, toinenPelaaja){
 }
 
 function luoHahmo(hahmotyyppi){
+    var X = 3 * blokinKoko;
+    var Y = 18 * blokinKoko;
+    if(hahmotyyppi == "Veteraani"){
+        X = 34 * blokinKoko;
+        Y = 7 * blokinKoko;
+    }else if(hahmotyyppi == "Humanoidi"){
+        X = 95 * blokinKoko;
+        Y = 18 * blokinKoko;
+    }
     return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
-        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: 3 * blokinKoko, Pysty: 0, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
+        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: X, Pysty: Y, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
         elossa: true};
 }
 
