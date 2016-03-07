@@ -28,12 +28,6 @@ var aloitusSuoritettu = false;
 var kuteja = 6;
 var latauksenKronologinenProsessi = 0;
 var paivitysvali = 20;
-var hpX;
-var hpY;
-var vX;
-var vY;
-var hX;
-var hY;
 
 // pelaajaTiedot:
 // { 
@@ -484,19 +478,16 @@ function toisenHahmonLuonti(jarjestys, toinenPelaaja){
 }
 
 function luoHahmo(hahmotyyppi){
-    var X = hpX * blokinKoko;
-    var Y = hpY * blokinKoko;
-    if(hahmotyyppi == "Veteraani"){
-        X = vX * blokinKoko;
-        Y = vY * blokinKoko;
-    }else if(hahmotyyppi == "Humanoidi"){
-        X = hX * blokinKoko;
-        Y = hY * blokinKoko;
-    }
     return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
-        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: X, Pysty: Y, xVauhti: 0, yVauhti: 0, selviytyminen: 100,
-        elossa: true};
+        oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
+        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true};
 }
+
+/*
+    { "HP": { x: ..., y: ... },
+      "Veteraani" : ... }    
+
+*/
 
 function hahmotyypinValinta(jarjestys) {
     if (jarjestys == 1){
