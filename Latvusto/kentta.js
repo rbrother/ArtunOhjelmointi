@@ -10,6 +10,19 @@ function makeStage(){
             if(merkki == 'C') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipCovering.png");}
             if(merkki == 'K') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png");}
             if(merkki == 'o') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
+            if(merkki == 'h') {
+                hpX = x;
+                hpY = y;
+            }
+            if(merkki == 'V') {
+                vX = x;
+                vY = y;
+            }
+            if(merkki == "H"){
+                hX = x;
+                hy = y;
+            }
+            //if(merkki == 'h' || merkki == "A" || merkki == "H") { KoristeJaHahmot(x,y,merkki);}
         }
     });
 }
