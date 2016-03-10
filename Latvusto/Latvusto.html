@@ -330,15 +330,13 @@ function liikuta(id) {
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
     var pattitilanne = KoskettaakoHahmoMitaanBlokkia( pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id)[0];
-    if(pattitilanne == "x" || pattitilanne == "y"){
-        var suuntaX = (Math.random() * 2.0 - 1.0) * 0.5 * blokinKoko;
-        var suuntaY = (Math.random() * 2.0 - 1.0) * 0.5 * blokinKoko;
-        pelaaja.Vaaka = pelaaja.Vaaka + suuntaX;
-        pelaaja.Pysty = pelaaja.Pysty + suuntaY;
+    var spritesOverflapping = true;
+    if(pattitilanne == ""){
+        var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
+        spritesOverflapping = false;
+        var kosketustsekkausTeksti = kosketustsekkaus[0];
     }
-    var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
-    var kosketustsekkausTeksti = kosketustsekkaus[0];
-    if(pelaaja.elossa && kosketustsekkausTeksti != "") {
+    if(pelaaja.elossa && kosketustsekkausTeksti != "" && spritesOverflapping == false) {
         if (kosketustsekkausTeksti == "x") {
             // sivuseinäkosketus
             pelaaja.xVauhti = 0;            
