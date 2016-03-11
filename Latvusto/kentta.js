@@ -11,11 +11,12 @@ function makeStage(){
             //Tässä kohdassa voidaan tehdä muita blokkeja / kohtatyyppejä.
             if(merkki == 'C') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipCovering.png");}
             if(merkki == 'K') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png");}
-            if(merkki == 'o') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
+            if(merkki == 'o') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi2.png");}
             if(merkki == 'h' || merkki == 'V' || merkki == 'H') {
                 var tyyppi = merkki == 'h' ? "HP" : merkki == 'V' ? "Veteraani" : "Humanoidi";
                 spawnPointit[tyyppi] = {x: x, y: y};
             }
+            if(merkki == 'O'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ovi.png");}
         }
     });
 }
@@ -35,7 +36,7 @@ var kentta2 = [
    '..........X...................',
    '..........X...................',
    '..........X...................',
-   '..........X...................',
+   '..........X...................', 
    'XXX.......X...................',
    '..XXXXX...X...................',
    '..........X...................',
@@ -88,7 +89,7 @@ var cruiser = [
     '........................C....k......CCCCCC..........................................................',
     '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo.........',
     '..................Y.......................O.........oooo.......oo........................oo.........',
-    '.........UUUUUU...Y.......................O.........oooo.......oo...........MMMMMMM......oo...H.....',
+    '.........UUUUUU...Y.................................oooo.......oo...........MMMMMMM......oo...H.....',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
