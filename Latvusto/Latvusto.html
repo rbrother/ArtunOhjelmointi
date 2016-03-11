@@ -330,22 +330,28 @@ function liikuta(id) {
     viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
-    var pattitilanne = KoskettaakoHahmoMitaanBlokkia( pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id)[0];
-    var spritesOverflapping = true;
-    if(pattitilanne == ""){
-        var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
-        spritesOverflapping = false;
-        var kosketustsekkausTeksti = kosketustsekkaus[0];
-    }
-    if(pelaaja.elossa && kosketustsekkausTeksti != "" && spritesOverflapping == false) {
-        if (kosketustsekkausTeksti == "x") {
+    var pattitilanne = KoskettaakoHahmoMitaanBlokkia( pelaaja.Vaaka, pelaaja.Pysty, 
+        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
+    var pattitilannePelaaja = (pattitilanne[0] ==  "x" || pattitilanne[0] == "y") && pattitilanne[1] != ""; 
+    var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, 
+        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
+    var kosketuspelaaja = kosketustsekkaus[1] != "";
+    
+    if(pelaaja.elossa && kosketustsekkaus[0] != "" && !( pattitilannePelaaja && kosketuspelaaja ) ) {
+        if (kosketustsekkaus[0] == "x") {
             // sivuseinäkosketus
             pelaaja.xVauhti = 0;            
         } else {
-            // lattiakosketus
-            pelaaja.xVauhti = 0;
-            pelaaja.yVauhti = 0;    
-            if ( omaId == id ) pelaajaMaassa = true;
+            //kattokosketus
+            if(pelaaja.yVauhti < 0){
+                pelaaja.xVauhti = 0.5 * pelaaja.xVauhti;
+                pelaaja.yVauhti = 0;           
+            }else{
+                //lattiakosketus
+                pelaaja.xVauhti = 0;
+                pelaaja.yVauhti = 0;    
+                if ( omaId == id ) pelaajaMaassa = true;            
+            }
         }
     } else {
         pelaaja.Vaaka = newX;
