@@ -393,7 +393,7 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
         }
     });
     blokkienTiedot.forEach( function(blokki) {
-        if(blokki.blokkityyppi != "Kuva-aineisto/LopullinenKouludemo/Ovi.png"){
+        if(!blokki.through){
         if(kosketus != "y" && kosketus != "x")
             kosketus = KoskettaakoHahmoBlokkia( ukkoX, ukkoY, leveys, korkeus, blokki.x, blokki.y, viimeX, viimeY);
     } } )

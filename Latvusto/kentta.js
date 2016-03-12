@@ -28,7 +28,9 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
-    blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap} );
+	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" ? true : false;
+    blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
+		through: through } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
 
