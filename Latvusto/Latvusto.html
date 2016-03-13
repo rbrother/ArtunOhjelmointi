@@ -59,13 +59,6 @@ var pelaajaTiedot = {};
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
-
-    TestiTausta = new createjs.Shape();
-    
-    
-    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, pelileveys, pelikorkeus);
-    stage.addChild(TestiTausta);
-    makeStage();
 }
 
 function selviytymispisteasetus(){
@@ -84,6 +77,11 @@ function kutiIlmoitus(){
 }
 
 function aloitaPeli(){
+	var TestiTausta = new createjs.Shape();
+    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, pelileveys, pelikorkeus);
+    stage.addChild(TestiTausta);
+    makeStage();
+	
     omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
     $.ajaxSetup({
