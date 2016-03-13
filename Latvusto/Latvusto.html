@@ -28,6 +28,7 @@ var aloitusSuoritettu = false;
 var kuteja = 6;
 var latauksenKronologinenProsessi = 0;
 var paivitysvali = 20;
+var hahmovalintanappulat = [{x: 92, y: 94, tyyppi: "HP"}, {x: 92, y: 279, tyyppi: "Veteraani"}, {x: 92, y: 453, tyyppi: "Humanoidi"}];
 
 // pelaajaTiedot:
 // { 
@@ -56,9 +57,39 @@ var pelaajaTiedot = {};
   //pelaajanimet.forEach (function (id){
   //  liikuta(id)
 
+function getMousePos(canvas, evt) {
+	var rect = canvas.getBoundingClientRect();
+    return {
+		x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+	};
+}
+
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
+	var aloituskuva = "Kuva-aineisto/LopullinenKouludemo/Aloitusruutu.png"
+	var bitmap = new createjs.Bitmap(aloituskuva);	
+	stage.addChild(bitmap);
+	var canvas = document.getElementById('Pelialue');
+	canvas.addEventListener('mousemove', function(evt){
+	    var mousePos = getMousePos(canvas, evt);
+        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+        mouseOverCharacter(mousePos.x, mousePos.y);
+	});
+	setTimeout(function(){ stage.update(); }, 1000);
+}
+
+function mouseOverCharacter(x, y){
+	hahmovalintanappulat.forEach(function(nappi){
+		if(x > nappi.x - 5 && x < nappi.x + 113 && y > nappi.y - 5 && y < nappi.y + 113){
+			console.log("Hiiri hahmon " + nappi.tyyppi + " yläpuolella.")
+			var mouseOverRectangle = new createjs.Shape();
+			mouseOverRectangle.graphics.beginStroke("red").drawRect(nappi.x - 14, nappi.y - 14, 132, 132);
+			stage.addChild(mouseOverRectangle);
+			stage.update();
+		}
+	});
 }
 
 function selviytymispisteasetus(){
@@ -526,6 +557,7 @@ function resetointi(){
     $.post(url, viesti);
 	location.reload();
 }
+
     
  </script>
 </head>
