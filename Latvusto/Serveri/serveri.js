@@ -1,7 +1,6 @@
 var http = require('http');
 var querystring = require('querystring');
 var aloitus = true;
-var jarjestys = 0;
 
 var serveripelaajaTiedot = {};
 
@@ -11,8 +10,8 @@ Näin voitaisiin muodostaa javascript-objekti, jos kaikki tiedot heti tiedossa:
 
 pelaajienKoordinaatit:
     {
-        "Mikko" : { Vaaka: 50, Pysty 80 , jarjestys: 2},
-        "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 3}
+        "Mikko" : { Vaaka: 50, Pysty 80 , hahmotyyppi: "HP"},
+        "Matti" : { Vaaka: 30, Pysty: 100, ....}
     }
 
     
@@ -63,16 +62,13 @@ function vastaaViestiin(viestiClientilta, response) {
   }else if (viestityyppi == "aloitus"){
        // uusi pelaaja tullut mukaan
 	    var pelaajaNimi = viestiClientilta.pelaaja;
-        jarjestys++;
-		console.log('Uusi pelaaja, nimi: ' + pelaajaNimi + '    Järjestys: ' + jarjestys);
-        var vastausViesti = {jarjestys: jarjestys, muidenPelaajienTiedot: serveripelaajaTiedot};
-    serveripelaajaTiedot[pelaajaNimi] = {};
-    viestiClientilta.jarjestys = jarjestys;
-    vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
+		console.log('Uusi pelaaja, nimi: ' + pelaajaNimi + '    Hahmotyyppi: ' + viestiClientilta.valittuHahmo);
+        var vastausViesti = {muidenPelaajienTiedot: serveripelaajaTiedot};
+        serveripelaajaTiedot[pelaajaNimi] = { hahmotyyppi : viestiClientilta.valittuHahmo};
+        vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
 	}else if(viestityyppi == "resetointi"){
 		vastaaTapahtumailmoitukseen(viestiClientilta, response, {jaa: "GG"});
 		aloitus = true;
-		jarjestys = 0;
 		serveripelaajaTiedot = {};
 		console.log("Serveri resetoitu!");
   }else{

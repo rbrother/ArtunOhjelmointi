@@ -29,6 +29,8 @@ var kuteja = 6;
 var latauksenKronologinenProsessi = 0;
 var paivitysvali = 20;
 var hahmovalintanappulat = [{x: 92, y: 94, tyyppi: "HP"}, {x: 92, y: 279, tyyppi: "Veteraani"}, {x: 92, y: 453, tyyppi: "Humanoidi"}];
+var mouseOverRectangle;
+var valittuHahmo;
 
 // pelaajaTiedot:
 // { 
@@ -84,11 +86,17 @@ function mouseOverCharacter(x, y){
 	hahmovalintanappulat.forEach(function(nappi){
 		if(x > nappi.x - 5 && x < nappi.x + 113 && y > nappi.y - 5 && y < nappi.y + 113){
 			console.log("Hiiri hahmon " + nappi.tyyppi + " yläpuolella.")
-			var mouseOverRectangle = new createjs.Shape();
-			mouseOverRectangle.graphics.beginStroke("red").drawRect(nappi.x - 14, nappi.y - 14, 132, 132);
-			stage.addChild(mouseOverRectangle);
-			stage.update();
-		}
+            if(mouseOverRectangle == undefined){
+                mouseOverRectangle = new createjs.Shape();
+                mouseOverRectangle.graphics.beginStroke("red").drawRect(nappi.x - 8, nappi.y - 8, 116, 116);
+                stage.addChild(mouseOverRectangle);
+                stage.update();
+            }
+            valittuHahmo = nappi.tyyppi;
+		}else if(mouseOverRectangle != undefined){
+            stage.removeChild(mouseOverRectangle);
+            mouseOverRectangle = undefined;
+        }
 	});
 }
 
@@ -114,24 +122,22 @@ function aloitaPeli(){
     makeStage();
 	
     omaId = $("#pelaajaNimi").val();
-    var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus"};
+    var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus", valittuHahmo: valittuHahmo};
     $.ajaxSetup({
       contentType: "application/json; charset=utf-8"
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         console.log("ALKUVIESTI RESPONSE SAATU");
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        var hahmotyyppi = hahmotyypinValinta(parsittuVastaus.jarjestys);
-        pelaajaTiedot[omaId] =  luoHahmo(hahmotyyppi);  
+        pelaajaTiedot[omaId] =  luoHahmo(valittuHahmo);  
         selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
         var pelaajanimet = Object.keys(muidenPelaajienTiedot);
-        var toisenHahmonJarjestys = 1;
         pelaajanimet.forEach(function(pelaajanimi){
           if(pelaajanimi != omaId){
-            toisenHahmonLuonti(toisenHahmonJarjestys, pelaajanimi);
-            toisenHahmonJarjestys++;
+            var tyyppi = muidenPelaajienTiedot[pelaajanimi].hahmotyyppi;
+            toisenHahmonLuonti(tyyppi, pelaajanimi);
           }
         });
         aloitusSuoritettu = true;
@@ -454,16 +460,15 @@ function kysyServeriltTapahtumia (){
 /*
 Esimerkki serveriltä tulevasta viestistä:
 
-{     "Mikko" : { Vaaka: 50, Pysty 80, jarjestys: 2 },
-    "Matti" : { Vaaka: 30, Pysty: 100, jarjestys: 1 } 
+{     "Mikko" : { Vaaka: 50, Pysty 80, },
+    "Matti" : { Vaaka: 30, Pysty: 100, } 
 } */           
 function VastausViestinKasittely(data, status){
     console.log("Viesti vastaanotettu: " + data); 
     var viestiServerilt = jQuery.parseJSON (data);
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
-        //console.log("Aloitus, pelaajana " + toinenPelaaja + "   Järjestys: " + viestiServerilt.jarjestys);
-        toisenHahmonLuonti(viestiServerilt.jarjestys, toinenPelaaja); 
+        toisenHahmonLuonti(viestiServerilt.valittuHahmo, toinenPelaaja); 
 		var oma = pelaajaTiedot[omaId];
 		var viesti = {pelaaja: omaId, Vaaka: oma.Vaaka, Pysty: oma.Pysty, 
                 xVauhti: oma.xVauhti, yVauhti: oma.yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
@@ -508,31 +513,15 @@ function alieeniclientinHyppyJaAmpuminen(vS){
     }
 }
 
-function toisenHahmonLuonti(jarjestys, toinenPelaaja){
-    var hahmotyyppi = hahmotyypinValinta(jarjestys);
-    pelaajaTiedot[toinenPelaaja] = luoHahmo(hahmotyyppi);
+function toisenHahmonLuonti(valittuHahmo, toinenPelaaja){
+    pelaajaTiedot[toinenPelaaja] = luoHahmo(valittuHahmo);
 }
 
 function luoHahmo(hahmotyyppi){
+    console.log("hahmotyyppi: " + hahmotyyppi);
     return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
         Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true};
-}
-
-/*
-    { "HP": { x: ..., y: ... },
-      "Veteraani" : ... }    
-
-*/
-
-function hahmotyypinValinta(jarjestys) {
-    if (jarjestys == 1){
-        return "HP";
-    } else if (jarjestys == 2){
-        return "Veteraani";
-    } else{
-        return "Humanoidi";
-    }
 }
 
 function ukonVisuaalinenLuonti(characterType){
