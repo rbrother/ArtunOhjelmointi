@@ -1,6 +1,8 @@
 ﻿TO-DO
 
 	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
+    
+    Hahmon lähteminen pelistä.
 	
 	Kentän teko, taustakuva
 
