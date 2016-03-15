@@ -74,12 +74,15 @@ window.onload = function() {
 	var bitmap = new createjs.Bitmap(aloituskuva);	
 	stage.addChild(bitmap);
 	var canvas = document.getElementById('Pelialue');
-	canvas.addEventListener('mousemove', function(evt){
-	    var mousePos = getMousePos(canvas, evt);
-        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-        mouseOverCharacter(mousePos.x, mousePos.y);
-	});
+	canvas.addEventListener('mousemove', hiirisijainti);
 	setTimeout(function(){ stage.update(); }, 1000);
+}
+
+function hiirisijainti(evt){
+    var canvas = document.getElementById('Pelialue');
+	var mousePos = getMousePos(canvas, evt);
+    var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+    mouseOverCharacter(mousePos.x, mousePos.y);
 }
 
 function mouseOverCharacter(x, y){
@@ -116,6 +119,8 @@ function kutiIlmoitus(){
 }
 
 function aloitaPeli(){
+	var canvas = document.getElementById('Pelialue');
+    canvas.removeEventListener('mousemove', hiirisijainti);
 	var TestiTausta = new createjs.Shape();
     TestiTausta.graphics.beginFill("blue").drawRect(0, 0, pelileveys, pelikorkeus);
     stage.addChild(TestiTausta);
