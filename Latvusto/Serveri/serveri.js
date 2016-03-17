@@ -71,6 +71,8 @@ function vastaaViestiin(viestiClientilta, response) {
 		aloitus = true;
 		serveripelaajaTiedot = {};
 		console.log("Serveri resetoitu!");
+  }else if(viestityyppi == "hahmosaatavuus"){
+      lahetaVastaus(serveripelaajaTiedot, response);
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }

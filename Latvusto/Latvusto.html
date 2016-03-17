@@ -67,6 +67,25 @@ function getMousePos(canvas, evt) {
 	};
 }
 
+function joVaratutPelaajat(serverinVastausTeksti, status){
+    var serveripelaajaTiedot = jQuery.parseJSON (serverinVastausTeksti);
+    var pelaajanimet = Object.keys(serveripelaajaTiedot);
+    var varatutHahmot = [];
+    pelaajanimet.forEach(function(pelaajanimi){
+        var hahmonTyyppi = serveripelaajaTiedot[pelaajanimi].hahmotyyppi;
+        hahmovalintanappulat.forEach(function(nappi){
+            if(nappi.tyyppi == hahmonTyyppi){
+                var y = nappi.y;
+            }
+        }) 
+        varatutHahmot.push(hahmonTyyppi);
+        hahmoValittu = new createjs.Shape();
+        hahmoValittu.graphics.beginStroke("red").drawRect(81, y - 11, 130, 130);
+        stage.addChild(hahmoValittu);
+        stage.update();         
+    })  
+}
+
 window.onload = function() {
     //Create a stage by getting a reference to the canvas
     stage = new createjs.Stage("Pelialue");
@@ -76,6 +95,8 @@ window.onload = function() {
 	var canvas = document.getElementById('Pelialue');
 	canvas.addEventListener('mousemove', hiirisijainti);
 	setTimeout(function(){ stage.update(); }, 1000);
+    var hahmosaatavuusviesti = {viestityyppi: "hahmosaatavuus"};
+    $.post (url, hahmosaatavuusviesti, joVaratutPelaajat);
 }
 
 function hiirisijainti(evt){
