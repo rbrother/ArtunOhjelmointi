@@ -71,17 +71,6 @@ _Visuaalisuus_
     
         _Kouludemo-
             
-            HAHMONVALINTATEKSTIT
-            
-                "HP"
-                
-                    Madder
-                    
-                    Madder has been swimming around Veteran's ship for a while. 
-                
-                "Veteraani"
-                
-                "Humanoidi"
             
             _Aseet_
                 Lemonade-revolveri koostuu keltaisesta kädensijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja jälleen kerran hopeisesta 
