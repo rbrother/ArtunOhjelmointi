@@ -1,6 +1,8 @@
 ﻿TO-DO
 
 	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
+	
+	Käytä serverin muuttujafunktioita clientillä.
     
     Hahmon lähteminen pelistä.
 	
