@@ -68,19 +68,16 @@ function getMousePos(canvas, evt) {
 }
 
 function joVaratutPelaajat(serverinVastausTeksti, status){
-    var serveripelaajaTiedot = jQuery.parseJSON (serverinVastausTeksti);
-    var pelaajanimet = Object.keys(serveripelaajaTiedot);
-    var varatutHahmot = [];
-    pelaajanimet.forEach(function(pelaajanimi){
-        var hahmonTyyppi = serveripelaajaTiedot[pelaajanimi].hahmotyyppi;
+    var varatutHahmot = jQuery.parseJSON (serverinVastausTeksti);
+    varatutHahmot.forEach(function(hahmonTyyppi){
+		var y;
         hahmovalintanappulat.forEach(function(nappi){
             if(nappi.tyyppi == hahmonTyyppi){
-                var y = nappi.y;
+                y = nappi.y;
             }
         }) 
-        varatutHahmot.push(hahmonTyyppi);
         hahmoValittu = new createjs.Shape();
-        hahmoValittu.graphics.beginStroke("red").drawRect(81, y - 11, 130, 130);
+        hahmoValittu.graphics.beginStroke("blue").drawRect(81, y - 11, 130, 130);
         stage.addChild(hahmoValittu);
         stage.update();         
     })  
