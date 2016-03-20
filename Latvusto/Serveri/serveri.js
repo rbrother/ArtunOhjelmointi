@@ -8,7 +8,7 @@ var serveripelaajaTiedot = {};
 
 Näin voitaisiin muodostaa javascript-objekti, jos kaikki tiedot heti tiedossa:
 
-pelaajienKoordinaatit:
+serveripelaajaTiedot:
     {
         "Mikko" : { Vaaka: 50, Pysty 80 , hahmotyyppi: "HP"},
         "Matti" : { Vaaka: 30, Pysty: 100, ....}
@@ -17,6 +17,9 @@ pelaajienKoordinaatit:
     
 */
 
+/*
+
+*/
 
 function processPost(request, response, callback) {
     var queryData = "";
@@ -65,6 +68,7 @@ function vastaaViestiin(viestiClientilta, response) {
 		console.log('Uusi pelaaja, nimi: ' + pelaajaNimi + '    Hahmotyyppi: ' + viestiClientilta.valittuHahmo);
         var vastausViesti = {muidenPelaajienTiedot: serveripelaajaTiedot};
         serveripelaajaTiedot[pelaajaNimi] = { hahmotyyppi : viestiClientilta.valittuHahmo};
+		console.log(viestiClientilta.valittuHahmo);
         vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
 	}else if(viestityyppi == "resetointi"){
 		vastaaTapahtumailmoitukseen(viestiClientilta, response, {jaa: "GG"});
@@ -72,10 +76,28 @@ function vastaaViestiin(viestiClientilta, response) {
 		serveripelaajaTiedot = {};
 		console.log("Serveri resetoitu!");
   }else if(viestityyppi == "hahmosaatavuus"){
-      lahetaVastaus(serveripelaajaTiedot, response);
+	  var valuesOfObject = objectValues(serveripelaajaTiedot);
+	  var viesti = objectsAttributeValues(valuesOfObject, "hahmotyyppi");
+      lahetaVastaus(viesti, response);
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }
+}
+
+function objectsAttributeValues(array,attribute){
+	var newArray = array.map(function(unit){
+		return unit[attribute];
+	})
+	return newArray;
+}
+
+function objectValues(object){
+	var values = [];
+	var attributes = Object.keys(object);	
+	attributes.forEach(function(attribute){
+		values.push(object[attribute]);	
+	})
+	return values;
 }
 
 function tallennaTapahtumakysely(viestiClientilta, response) {
