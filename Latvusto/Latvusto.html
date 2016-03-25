@@ -14,7 +14,6 @@ var pelileveys = 1024;
 var pelikorkeus = 650;
 var blokinKoko = 50;
 var skaalaus = blokinKoko/150;
-var painovoima = -0.3;
 var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
@@ -236,6 +235,7 @@ function NappiAlas(event) {
 
 function buttonUp(event) {
     if(event.keyCode == 68 || event.keyCode == 65) {
+		pelaajaTiedot[omaId].liito = false;
         var xVauhti = pelaajaTiedot[omaId].xVauhti;
         var yVauhti = pelaajaTiedot[omaId].yVauhti;
         if(pelaajaMaassa){
@@ -302,16 +302,32 @@ function ampuminen(pelaajaId){
 }
 
 function liikutusNappiAlas(event){
-    var xVauhti = pelaajaTiedot[omaId].xVauhti;
-    var yVauhti = pelaajaTiedot[omaId].yVauhti;
-    if (pelaajaTiedot[omaId].hahmotyyppi == "Veteraani"){
+	var pelaaja = pelaajaTiedot[omaId];
+    var xVauhti = pelaaja.xVauhti;
+    var yVauhti = pelaaja.yVauhti;
+    if (pelaaja.hahmotyyppi == "Veteraani"){
         if(!pelaajaMaassa && extraHyppy){
             hyppypituus = 2.5;
             var oikealle = ( event.keyCode == 68 );
             hyppaaSuuntaan(oikealle);
             extraHyppy = false;
         }
-    }
+    }else if(pelaaja.hahmotyyppi == "HP"){
+		if(!pelaajaMaassa){
+			var oikealle = ( event.keyCode == 68 );
+			if(oikealle && xVauhti < 0 || !oikealle && xVauhti > 0){
+				pelaaja.xVauhti = -xVauhti;
+			}
+			pelaaja.liito = true;
+			/*
+			var bitmap = pelaaja.hahmoBitmap;
+			bitmap.scaleX = pelaaja.oikealle ? skaalaus : -skaalaus; 
+			if(!pelaaja.oikealle){
+				bitmap.x = bitmap.x + blokinKoko;
+			}
+			*/
+		}
+	}
     if(pelaajaMaassa){
         extraHyppy = true;
         if(nappiPohjassa == false){
@@ -418,6 +434,10 @@ function viivapoisto(pelaaja){
 function liikuta(id) {
     var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return;
+	var painovoima = -0.3;
+	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
+		painovoima = painovoima * 0.25;
+	}
     viivapoisto(pelaaja);
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
@@ -577,7 +597,8 @@ function luoHahmo(hahmotyyppi){
     console.log("hahmotyyppi: " + hahmotyyppi);
     return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
-        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true};
+        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
+		liito: false};
 }
 
 function ukonVisuaalinenLuonti(characterType){

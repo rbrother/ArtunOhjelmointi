@@ -17,6 +17,7 @@ function makeStage(){
                 spawnPointit[tyyppi] = {x: x, y: y};
             }
             if(merkki == 'O'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ovi.png");}
+			if(merkki == 'v'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vesiKuplilla.png");}
         }
     });
 }
