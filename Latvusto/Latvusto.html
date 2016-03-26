@@ -563,7 +563,7 @@ function VastausViestinKasittely(data, status){
 			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
 			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
 		}else if(tyyppi == "liito"){
-            pelaaja.liito = viestiServerilt.liito;
+            pelaaja.liito = viestiServerilt.liito == "true";
         }
     }else if(viestiServerilt.viestityyppi == "resetointi"){
 		alert("Resetoidaan...");
