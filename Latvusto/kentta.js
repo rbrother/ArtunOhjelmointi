@@ -18,6 +18,9 @@ function makeStage(){
             }
             if(merkki == 'O'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ovi.png");}
 			if(merkki == 'v'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vesiKuplilla.png");}
+            if(merkki == 'E'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VedenPinta.png");}
+            if(merkki == 'L'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/lamppu.png");}
+            if(merkki == 'a'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/valkoinen.png");}
         }
     });
 }
@@ -29,7 +32,9 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
-	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" ? true : false;
+	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
+    blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png"
+    ? true : false;
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
 		through: through } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
@@ -95,20 +100,20 @@ var cruiser = [
     '.........UUUUUU...Y.................................oooo.......oo...........MMMMMMM......oo...H.....',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
-    'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
+    'CCCCCCCCCCCCCCCCCCCCXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
-    'C..............................................................................................CC...',
-    'C.............................................................................................CC....',
-    'CCCC..........CCCCC...CCCCCCCC...CCCCCCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..CCCCCCCC.....',
-    'C..C..........C...CCCCC......CCCCC....C.............C.......................................CC......',
-    'C..C..........C.......................C.............C......................................CC.......',
-    'C..C..........CCCCCCCCCCCCCCCCC.......C....CCCCC....C.....................................CC........',
-    'C..C..........................C.......C.............C....................................CC.........',
-    'C..C..........................C.......CC.....k.....CC...................................CC..........',
-    'C..C..........................C.......C.............C..................................CCvvvvvvvvvvv',
-    'C..CCCCCCCC...................C.......C....CCCCC....C.................................CCvvvvvvvvvvvv',
-    'C.........CCCCCCCCCCCCCCCCCCCCC.......C....C...C....C................................CCvvvvvvvvvvvvv',
-    'C.....................................CCCCCC...CCCCCC...............................CCvvvvvvvvvvvvvv',
+    'C.................CCCCCCCCC................aaaaa...............................................CC...',
+    'C.................CC.....CC................aaaaa..............................................CC....',
+    'C..............................CCCCC.......LLLLL.............................................CC.....',
+    'C.............CC..............CC...CCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
+    'C.............CCCCCCCCCCCCCCCCC.......C.............C......................................CC.......',
+    'C.............CCCCCCCCCCCCCCCCC.......C....CCCCC....C.....................................CC........',
+    'C.............................C.......C.............C....................................CC.........',
+    'C.............................C..CCCCCCC.....k.....CCCCCCC..............................CC..........',
+    'C.............................C..C.......................C.............................CCEEEEEEEEEEE',
+    'CCCCCCCCCCCC.......A..........C..C.........CCCCC.........C............................CCvvvvvvvvvvvv',
+    'C.........CCCCCCCCCCCCCCCCCCCCC..C.........C...C.........C...........................CCvvvvvvvvvvvvv',
+    'C................................C....CCCCCC...CCCCCC....C..........................CCvvvvvvvvvvvvvv',
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
     'C..................................................................................CCvvvvvvvvvvvvvvv',
@@ -142,7 +147,10 @@ var cruiser = [
     h = HP:n spawn -piste
     U = uima-altaan osa
     Y = hypppytorni (3 blokkia korkea)
-    v = blokkien kohdalla oleva vesi
+    v = pinnanalainen vesi
+    E = veden pinta
+    a = valkoinen ruutu
+    L = lamppu
     */
 ];
 
