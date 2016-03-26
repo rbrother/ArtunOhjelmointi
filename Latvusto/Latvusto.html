@@ -234,8 +234,12 @@ function NappiAlas(event) {
 }
 
 function buttonUp(event) {
-    if(event.keyCode == 68 || event.keyCode == 65) {
-		pelaajaTiedot[omaId].liito = false;
+    if(event.keyCode == 68 || event.keyCode == 65) {   
+        if(pelaajaTiedot[omaId].liito){
+            pelaajaTiedot[omaId].liito = false;
+            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, liito: pelaajaTiedot[omaId].liito};
+            $.post(url,viesti);
+        }
         var xVauhti = pelaajaTiedot[omaId].xVauhti;
         var yVauhti = pelaajaTiedot[omaId].yVauhti;
         if(pelaajaMaassa){
@@ -315,17 +319,13 @@ function liikutusNappiAlas(event){
     }else if(pelaaja.hahmotyyppi == "HP"){
 		if(!pelaajaMaassa){
 			var oikealle = ( event.keyCode == 68 );
+            pelaaja.oikealle = oikealle;
 			if(oikealle && xVauhti < 0 || !oikealle && xVauhti > 0){
 				pelaaja.xVauhti = -xVauhti;
 			}
 			pelaaja.liito = true;
-			/*
-			var bitmap = pelaaja.hahmoBitmap;
-			bitmap.scaleX = pelaaja.oikealle ? skaalaus : -skaalaus; 
-			if(!pelaaja.oikealle){
-				bitmap.x = bitmap.x + blokinKoko;
-			}
-			*/
+            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, liito: pelaaja.liito};
+            $.post(url,viesti);
 		}
 	}
     if(pelaajaMaassa){
@@ -551,18 +551,20 @@ function VastausViestinKasittely(data, status){
 		$.post(url, viesti);
     } else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		var tyyppi = viestiServerilt.ilmoitustyyppi;
+        var id = viestiServerilt.pelaaja;
+		var pelaaja = pelaajaTiedot[id];
         if(tyyppi == "ampuminen" || tyyppi == "hyppy"){
             alieeniclientinHyppyJaAmpuminen(viestiServerilt);
         }else if(tyyppi == "neutralisoituminen"){
             neutralisoituminen(viestiServerilt);
         }else if(tyyppi == "sijainti"){
-			var id = viestiServerilt.pelaaja;
-			var pelaaja = pelaajaTiedot[id];
 			pelaaja.Vaaka = Number(viestiServerilt.Vaaka);
 			pelaaja.Pysty = Number(viestiServerilt.Pysty);
 			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
 			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
-		}
+		}else if(tyyppi == "liito"){
+            pelaaja.liito = viestiServerilt.liito;
+        }
     }else if(viestiServerilt.viestityyppi == "resetointi"){
 		alert("Resetoidaan...");
 		location.reload();
