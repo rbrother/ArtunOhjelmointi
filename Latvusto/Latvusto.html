@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+    <!-- Alhaalla käyttämämme JS-kirjastot (easeljs, jquery, kentta) -->
     <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
     <script src="jquery.js"></script>
   <script src="kentta.js"></script>
@@ -597,21 +598,26 @@ function toisenHahmonLuonti(valittuHahmo, toinenPelaaja){
 
 function luoHahmo(hahmotyyppi){
     console.log("hahmotyyppi: " + hahmotyyppi);
-    return {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
+    var hahmo = {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
         Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
 		liito: false};
+    blokkienTiedot.forEach(function(blokki){
+        if(blokki.inFront){
+            stage.setChildIndex( blokki.bitmap, stage.getNumChildren()-1);
+        }});
+    return hahmo;
 }
 
 function ukonVisuaalinenLuonti(characterType){
     if (characterType == "HP"){
         pngNimi = "HulluPilgu.png";
     }else if (characterType == "Veteraani"){
-        pngNimi = "Veteraani.png";
+        pngNimi = "VeteraaniAsuineen.png";
     }else{
-        pngNimi = "Maskihumanoidi.png";
+        pngNimi = "Puuhumanoidi.png";
     }
-    var bitmap = new createjs.Bitmap("Kuva-aineisto/" + pngNimi);
+    var bitmap = new createjs.Bitmap("Kuva-aineisto/LopullinenKouludemo/" + pngNimi);
     bitmap.scaleX = skaalaus;
     bitmap.scaleY = skaalaus;
     bitmap.x = 0*blokinKoko;

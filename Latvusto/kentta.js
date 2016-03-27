@@ -21,6 +21,11 @@ function makeStage(){
             if(merkki == 'E'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VedenPinta.png");}
             if(merkki == 'L'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/lamppu.png");}
             if(merkki == 'a'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/valkoinen.png");}
+            if(merkki == 'u'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaVasen.png");}
+            if(merkki == 'i'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaoikea.png");}
+            if(merkki == 'U'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png");}
+            if(merkki == 'R'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png");}
+            if(merkki == 'b'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
         }
     });
 }
@@ -33,10 +38,15 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
 	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
-    blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png"
-    ? true : false;
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaVasen.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaoikea.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png";
+    var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png";
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
-		through: through } );
+		through: through, inFront: inFront } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
 
@@ -96,14 +106,14 @@ var cruiser = [
     '........................C............A...C..........................................................',
     '........................C....k......CCCCCC..........................................................',
     '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo.........',
-    '..................Y.......................O.........oooo.......oo........................oo.........',
-    '.........UUUUUU...Y.................................oooo.......oo...........MMMMMMM......oo...H.....',
+    '..................Y....O..................O.........oooo.......oo........................oo.........',
+    '...R..R..uUUUUi...Y.................................oooo.......oo...........MMMMMMM......oo...H.b...',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
-    'CCCCCCCCCCCCCCCCCCCCXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
+    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
     'C.................CCCCCCCCC................aaaaa...............................................CC...',
-    'C.................CC.....CC................aaaaa..............................................CC....',
+    'C.................C.......C................aaaaa..............................................CC....',
     'C..............................CCCCC.......LLLLL.............................................CC.....',
     'C.............CC..............CC...CCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
     'C.............CCCCCCCCCCCCCCCCC.......C.............C......................................CC.......',
@@ -145,12 +155,16 @@ var cruiser = [
     M = Magneetinaktivointialusta, jonka päällä seisominen nopeuttaa ajan kulumista Veteraanin tapauksessa.
     H = Humanoidin spawn -piste
     h = HP:n spawn -piste
-    U = uima-altaan osa
+    U = uima-altaan osa (ei-reuna-osa)
     Y = hypppytorni (3 blokkia korkea)
     v = pinnanalainen vesi
     E = veden pinta
     a = valkoinen ruutu
     L = lamppu
+    u = uima-altaan vasen reuna 
+    i = uima-altaan oikea reuna
+    R = auringoonottotuoli
+    b = boxi
     */
 ];
 
