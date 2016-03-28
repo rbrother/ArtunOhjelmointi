@@ -31,6 +31,7 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
+            if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
         }
     });
 }
@@ -50,12 +51,15 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png";
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
     var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
 		through: through, inFront: inFront } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
 }
+
+//Uudenlaisen blokin lisäys: Tee Gimpissä (Skaalaa oikein), lisää kentän struktuutiin, lisää iffittelyyn, määrittele ominaisuudet (through...)
 
 var kentta2 = [
    '..........X...................',
@@ -100,37 +104,37 @@ var cruiser = [
     '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC...............C......................................................',
-    '.............................C.V...I...I.....C......................................................',
-    '.............................C...A.........KKC......................................................',
-    '............................mCCCCCC......CCCCC......................................................',
-    '............................O...........CC..........................................................',
-    '.........................................C..........................................................',
+    '............................sC---------------C......................................................',
+    '.............................C-V---I---I-----C......................................................',
+    '.............................C---A---------KKC......................................................',
+    '............................mCCCCCC------CCCCC......................................................',
+    '............................O-----------CC..........................................................',
+    '.............................------------C..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................CCCCCCCCCCC......C..........................................................',
-    '........................C.........CC.....C..........................................................',
-    '.......................sC................C..........................................................',
-    '........................C............A...C..........................................................',
-    '........................C....k......CCCCCC..........................................................',
-    '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo.........',
-    '..................y....O..................O.........oooo.......oo........................oo.........',
-    '...R..R..uUUUUi.....................................oooo.......oo...........MMMMMMM......oo...H.b...',
-    'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
-    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
+    '........................CCCCCCCCCCC------C..........................................................',
+    '........................C---------CC-----C..........................................................',
+    '.......................sC----------------C..........................................................',
+    '........................C------------A---C..........................................................',
+    '........................C----k------CCCCCC..........................................................',
+    '.....h............Y.....C---------CCCCCCCC..........oooo.................................oo.........',
+    '..................y....O------------------O.........oooo.......oo........................oo.........',
+    '...R..R..uUUUUi.........------------------..........oooo.......oo...........MMMMMMM......oo...H.b...',
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCC-------------CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC---------CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
+    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
-    'C.................CCCCCCCCC................aaaaa...............................................CC...',
-    'C.................C.......C................aaaaa..............................................CC....',
-    'C..............................CCCCC.......LLLLL.............................................CC.....',
-    'C..............C..............CC...CCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
-    'C..............CCCCCCCCCCCCCCCC.......C.............C......................................CC.......',
-    'C.............................C.......C....CCCCC....C.....................................CC........',
-    'C.............................C.......C.............C....................................CC.........',
-    'C.............................C..CCCCCCC.....k.....CCCCCCC..............................CC..........',
-    'C.............................C..C.......................C.............................CCEEEEEEEEEEE',
-    'CCCCCCCCCCCC.......A..........C..C.........CCCCC.........C............................CCvvvvvvvvvvvv',
-    'C.........CCCCCCCCCCCCCCCCCCCCC..C.........C...C.........C...........................CCvvvvvvvvvvvvv',
-    'C................................C....CCCCCC...CCCCCC....C..........................CCvvvvvvvvvvvvvv',
+    'C-----------------CCCCCCCCC----------------aaaaa-----------------------------------------------CC...',
+    'C-----------------C-------C----------------aaaaa----------------------------------------------CC....',
+    'C------------------------------CCCCC-------LLLLL---------------------------------------------CC.....',
+    'C--------------C--------------CC...CCCC-------------CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
+    'C--------------CCCCCCCCCCCCCCCC.......C-------------C......................................CC.......',
+    'C-----------------------------C.......C----CCCCC----C.....................................CC........',
+    'C-----------------------------C.......C-------------C....................................CC.........',
+    'C-----------------------------C..CCCCCCC-----------CCCCCCC..............................CC..........',
+    'C-----------------------------C..C-----------------------C.............................CCEEEEEEEEEEE',
+    'CCCCCCCCCCCC-------A----------C..C---------CCCCC---------C............................CCvvvvvvvvvvvv',
+    'C.........CCCCCCCCCCCCCCCCCCCCC..C---------C...C---------C...........................CCvvvvvvvvvvvvv',
+    'C................................C----CCCCCC...CCCCCC----C..........................CCvvvvvvvvvvvvvv',
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
     'C..................................................................................CCvvvvvvvvvvvvvvv',
