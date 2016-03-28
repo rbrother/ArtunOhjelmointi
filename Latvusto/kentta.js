@@ -26,6 +26,11 @@ function makeStage(){
             if(merkki == 'U'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png");}
             if(merkki == 'R'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png");}
             if(merkki == 'b'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
+            if(merkki == 'Y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png");}
+            if(merkki == 'y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png");}
+            if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
+            if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
+            if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
         }
     });
 }
@@ -43,8 +48,10 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaoikea.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png";
-    var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png";
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png";
+    var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
 		through: through, inFront: inFront } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
@@ -90,24 +97,24 @@ var cruiser = [
     '....................................................................................................',
     '....................................................................................................',
     '....................................................................................................',
-    '....................................................................................................',
+    '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '.............................C...............C......................................................',
+    '............................sC...............C......................................................',
     '.............................C.V...I...I.....C......................................................',
     '.............................C...A.........KKC......................................................',
-    '.............................CCCCCC......CCCCC......................................................',
-    '..................................C.....CC..........................................................',
-    '..................................C......C..........................................................',
+    '............................mCCCCCC......CCCCC......................................................',
+    '............................O...........CC..........................................................',
+    '.........................................C..........................................................',
     //Ylhäällä ylin kerros (4)
     '........................CCCCCCCCCCC......C..........................................................',
     '........................C.........CC.....C..........................................................',
-    '........................C................C..........................................................',
+    '.......................sC................C..........................................................',
     '........................C............A...C..........................................................',
     '........................C....k......CCCCCC..........................................................',
     '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo.........',
-    '..................Y....O..................O.........oooo.......oo........................oo.........',
-    '...R..R..uUUUUi...Y.................................oooo.......oo...........MMMMMMM......oo...H.b...',
+    '..................y....O..................O.........oooo.......oo........................oo.........',
+    '...R..R..uUUUUi.....................................oooo.......oo...........MMMMMMM......oo...H.b...',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
@@ -115,9 +122,9 @@ var cruiser = [
     'C.................CCCCCCCCC................aaaaa...............................................CC...',
     'C.................C.......C................aaaaa..............................................CC....',
     'C..............................CCCCC.......LLLLL.............................................CC.....',
-    'C.............CC..............CC...CCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
-    'C.............CCCCCCCCCCCCCCCCC.......C.............C......................................CC.......',
-    'C.............CCCCCCCCCCCCCCCCC.......C....CCCCC....C.....................................CC........',
+    'C..............C..............CC...CCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
+    'C..............CCCCCCCCCCCCCCCC.......C.............C......................................CC.......',
+    'C.............................C.......C....CCCCC....C.....................................CC........',
     'C.............................C.......C.............C....................................CC.........',
     'C.............................C..CCCCCCC.....k.....CCCCCCC..............................CC..........',
     'C.............................C..C.......................C.............................CCEEEEEEEEEEE',
@@ -156,7 +163,7 @@ var cruiser = [
     H = Humanoidin spawn -piste
     h = HP:n spawn -piste
     U = uima-altaan osa (ei-reuna-osa)
-    Y = hypppytorni (3 blokkia korkea)
+    Y = hypppytorni (3 blokkia alaspäin)
     v = pinnanalainen vesi
     E = veden pinta
     a = valkoinen ruutu
@@ -165,6 +172,10 @@ var cruiser = [
     i = uima-altaan oikea reuna
     R = auringoonottotuoli
     b = boxi
+    y = hyppytorni (tausta)
+    s = vasemmalle osoittava lippu
+    m = megafoniVasemmalle
+    S = satelliittirykelmä
     */
 ];
 
