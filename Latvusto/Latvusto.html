@@ -577,7 +577,13 @@ function VastausViestinKasittely(data, status){
 			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
 		}else if(tyyppi == "liito"){
             pelaaja.liito = viestiServerilt.liito == "true";
-        }
+        }else if(tyyppi == "pelaajaPoistettu"){
+            console.log("pelaaja poistetaan!");
+            var poistettuPelaaja = viestiServerilt.pelaaja;
+            var pelaajanTiedot = pelaajaTiedot[poistettuPelaaja];
+            stage.removeChild(pelaajanTiedot.hahmoBitmap);
+            delete pelaajaTiedot[poistettuPelaaja];
+    }
     }else if(viestiServerilt.viestityyppi == "resetointi"){
 		alert("Resetoidaan...");
 		location.reload();
