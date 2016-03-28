@@ -4,6 +4,10 @@
 	
 	Käytä serverin muuttujafunktioita clientillä.
     
+    PNG-skaalaus = 32x32.
+    
+    Laivanseinät muodostuvat monen blokin alueista.
+    
     Hahmon lähteminen pelistä.
 	
 	Kentän teko, taustakuva

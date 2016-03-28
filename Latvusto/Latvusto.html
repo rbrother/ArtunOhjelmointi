@@ -13,8 +13,9 @@
 var stage;
 var pelileveys = 1024;
 var pelikorkeus = 650;
-var blokinKoko = 50;
-var skaalaus = blokinKoko/150;
+var pngKoko = 32;
+var blokinKoko = 32;
+var skaalaus = blokinKoko / pngKoko;
 var hyppypituus = 0;
 var nappiPohjassa = false;
 var blokkienTiedot = [];
@@ -32,6 +33,7 @@ var hahmovalintanappulat = [{x: 92, y: 94, tyyppi: "HP"}, {x: 92, y: 279, tyyppi
 var mouseOverRectangle;
 var valittuHahmo;
 var varatutHahmot = [];
+var ilmoituksenAika = 0;
 
 // pelaajaTiedot:
 // { 
@@ -375,7 +377,7 @@ function YVauhti(id) {
     return pelaajaTiedot[id].YVauhti;
 }
 
-function lataaminen(){
+function aseenLataaminen(){
 	latauksenKronologinenProsessi = latauksenKronologinenProsessi + paivitysvali / 1000.0;
 	if(latauksenKronologinenProsessi > 3){
 		kuteja = 6;
@@ -384,9 +386,19 @@ function lataaminen(){
 	}
 }
 
+function olemassaIlmoitus(){
+    ilmoituksenAika = ilmoituksenAika + paivitysvali / 1000.0;
+    if(ilmoituksenAika > 2){
+        var viesti = {viestityyppi: "olemassaoloilmoitus", id: omaId};
+        $.post(url,viesti);
+        ilmoituksenAika = 0;
+    }
+}
+
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
-	lataaminen();
+    olemassaIlmoitus();
+	aseenLataaminen();
 	liikuta(omaId);
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){
