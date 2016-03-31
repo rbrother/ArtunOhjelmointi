@@ -31,7 +31,12 @@ Viestien välitys clienttien ja serverin välillä
 	                        
 							     (kysely2)  == reply ======>   VastausViestinKasittely
 								                               -> .... toteuta hyppy
+
+        Tapahtumailmoitus2 -->   vastaa ilmoitukseen
+                                                               
+                                (kysely2b)	    	<-------   Tapahtumakysely 
 	
+
 	
 JÄRJESTYS       1       2     3       4
                                       ^ MEIDÄN JÄRJESTYS
