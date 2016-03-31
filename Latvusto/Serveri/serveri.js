@@ -79,9 +79,34 @@ function vastaaViestiin(viestiClientilta, response) {
 	  var valuesOfObject = objectValues(serveripelaajaTiedot);
 	  var viesti = objectsAttributeValues(valuesOfObject, "hahmotyyppi");
       lahetaVastaus(viesti, response);
+  }else if(viestityyppi == "olemassaoloilmoitus"){
+		console.log("olemassaoloilmoitus: " + viestiClientilta.id);
+		var currentdate = new Date();
+		var pelaaja = serveripelaajaTiedot[viestiClientilta.id];
+		if(pelaaja == undefined)return;
+		serveripelaajaTiedot[viestiClientilta.id].ilmoitusaika = currentdate.getTime();
+		SiivoaKuolleetPelaajatPois();
+		lahetaVastaus({}, response);
   }else{
     console.log("Tuntematon viestityyppi: ", viestityyppi);
   }
+}
+
+function SiivoaKuolleetPelaajatPois(){	
+	var pelaajanNimiarray = Object.keys(serveripelaajaTiedot);
+	pelaajanNimiarray.forEach(function(nimi){
+		var aika = serveripelaajaTiedot[nimi].ilmoitusaika;
+		if(aika != undefined){
+			var currentdate = new Date();
+			var currentdateNumeroina = currentdate.getTime();
+			var erotus = currentdateNumeroina - aika;
+			if(erotus > 3500){
+				vastaaTapahtumailmoitukseen({ilmoitustyyppi: "pelaajaPoistettu", pelaaja: nimi,
+				viestityyppi: "ilmoitus"}, undefined, {});
+				delete serveripelaajaTiedot[nimi];
+			}
+		}
+	})
 }
 
 function objectsAttributeValues(array,attribute){
@@ -136,7 +161,8 @@ function vastaaTapahtumailmoitukseen(ilmoitusViesti, response, paluuviesti) {
 }
 
 function lahetaVastaus(vastausViesti, response) {
-  var headers = {};
+	if(response == undefined)return;
+	var headers = {};
     headers["Access-Control-Allow-Origin"] = "*";
     headers["Access-Control-Allow-Credentials"] = false;
     headers["Content-Type"] = 'text/plain';
