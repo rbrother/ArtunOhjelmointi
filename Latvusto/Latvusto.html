@@ -350,6 +350,7 @@ function hyppaaSuuntaan(oikealle){
     if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi") {
         hyppypituus = hyppypituus / 10 * 15;
     }
+    hyppypituus = hyppypituus * 0.8;
     var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, 
         suunta: suunta, hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
     $.post(url, viesti);  
@@ -390,6 +391,7 @@ function olemassaIlmoitus(){
     ilmoituksenAika = ilmoituksenAika + paivitysvali / 1000.0;
     if(ilmoituksenAika > 2){
         var viesti = {viestityyppi: "olemassaoloilmoitus", id: omaId};
+        console.log("Olemassaoloilmoitus lähetetty!");
         $.post(url,viesti);
         ilmoituksenAika = 0;
     }
