@@ -47,8 +47,8 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     stage.addChild(bitmap);
 	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
