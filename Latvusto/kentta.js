@@ -21,9 +21,8 @@ function makeStage(){
             if(merkki == 'E'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VedenPinta.png");}
             if(merkki == 'L'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/lamppu.png");}
             if(merkki == 'a'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/valkoinen.png");}
-            if(merkki == 'u'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaVasen.png");}
-            if(merkki == 'i'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaoikea.png");}
-            if(merkki == 'U'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png");}
+            if(merkki == 'u'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png");}
+            if(merkki == 'U'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-allasta.png");}
             if(merkki == 'R'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png");}
             if(merkki == 'b'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
             if(merkki == 'Y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png");}
@@ -32,6 +31,9 @@ function makeStage(){
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
             if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
+            if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
+            if(merkki == 'M'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalue.png");}
+            if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
         }
     });
 }
@@ -45,14 +47,17 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     stage.addChild(bitmap);
 	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaVasen.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReunaoikea.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-altaanReuna.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png";
     var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
 		through: through, inFront: inFront } );
@@ -106,7 +111,7 @@ var cruiser = [
     '.............................CCCCCCCCCCCCCCCCC......................................................',
     '............................sC---------------C......................................................',
     '.............................C-V---I---I-----C......................................................',
-    '.............................C---A---------KKC......................................................',
+    '.............................C-------------KKC......................................................',
     '............................mCCCCCC------CCCCC......................................................',
     '............................O-----------CC..........................................................',
     '.............................------------C..........................................................',
@@ -114,36 +119,36 @@ var cruiser = [
     '........................CCCCCCCCCCC------C..........................................................',
     '........................C---------CC-----C..........................................................',
     '.......................sC----------------C..........................................................',
-    '........................C------------A---C..........................................................',
+    '........................C---------------AC..........................................................',
     '........................C----k------CCCCCC..........................................................',
-    '.....h............Y.....C---------CCCCCCCC..........oooo.................................oo.........',
+    '.....h............Y.....C---------CCCCCCCC..........oooo.................................oo....H....',
     '..................y....O------------------O.........oooo.......oo........................oo.........',
-    '...R..R..uUUUUi.........------------------..........oooo.......oo...........MMMMMMM......oo...H.b...',
+    '...R..R..UUUUuU.........------------------..........oooo.......oo...........MMMMMMM......oo....o....',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC-------------CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC---------CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
-    'C-----------------CCCCCCCCC----------------aaaaa-----------------------------------------------CC...',
-    'C-----------------C-------C----------------aaaaa----------------------------------------------CC....',
-    'C------------------------------CCCCC-------LLLLL---------------------------------------------CC.....',
+    'C-----------------CCCCCCCCC----------------aaaaa------------------------------------------------....',
+    'C-----------------C-------C----------------aaaaa-----------------------------------------------.....',
+    'C------------------------------CCCCC-------LLLLL-------------------------MMMMM----------------......',
     'C--------------C--------------CCXXXCCCC-------------CCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
     'C--------------CCCCCCCCCCCCCCCCCCCCCCCC-------------CXXXC---------------------------CXXXXXXCC.......',
     'C------------------------------------------CCCCC----CXXXC---------------------------CXXXXXCC........',
     'C---------------------------------------------------CXXCCCCCCCCCCCCCCCCCCCCCCCC-----CXXXXCC.........',
     'C-----------------------------CCCCCCCCCC-----------CCCCC----------------------------CXXXCC..........',
-    'C-----------------------------C..C--------------------------------------------------CXXCCEEEEEEEEEEE',
-    'CCCCCCCCCCCC-------A----------C..C---------CCCCC---------CCCCCCCCCCCCCCCCCCCCCCCCCCCCXCCvvvvvvvvvvvv',
-    'C.........CCCCCCCCCCCCCCCCCCCCC..C---------C...C---------CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
-    'C................................C----CCCCCC...CCCCCC----CXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
+    'C-----------------------------CXXC----------AAA-------------------------------------CXXCCEEEEEEEEEEE',
+    'CCCCCCCCCCCC-------MMMMM------CXXC---------CCCCC---------CCCCCCCCCCCCCCCCCCCCCCCCCCCCXCCvvvvvvvvvvvv',
+    'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC---------C...C---------CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCC----CCCCCC...CCCCCC----CCCCXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
-    'C.....................................C.............C....C.........................CCvvvvvvvvvvvvvvv',
-    'C.....................................C...........................................CCvvvvvvvvvvvvvvvv',
-    'C................................CCCCCC..........................................CCvvvvvvvvvvvvvvvvv',
-    'C...............................................................................CCvvvvvvvvvvvvvvvvvv',
-    'C..............................................................................CCvvvvvvvvvvvvvvvvvvv',
-    'C.............................................................................CCvvvvvvvvvvvvvvvvvvvv',
-    'C............................................................................CCvvvvvvvvvvvvvvvvvvvvv',
+    'C............................CC.......C.............C.......CC.....................CCvvvvvvvvvvvvvvv',
+    'C...........................CC........C.............C........CC...................CCvvvvvvvvvvvvvvvv',
+    'C..........................CC....CCCCCC.............CCCCCC....CC.................CCvvvvvvvvvvvvvvvvv',
+    'C..........................C....CC.......................CC.....................CCvvvvvvvvvvvvvvvvvv',
+    'C...............................C.........................C....................CCvvvvvvvvvvvvvvvvvvv',
+    'C...............................C.........................C...................CCvvvvvvvvvvvvvvvvvvvv',
+    'C..........................C....C.........................C..................CCvvvvvvvvvvvvvvvvvvvvv',
     'C...........................................................................CCvvvvvvvvvvvvvvvvvvvvvv',
     'C..........................................................................CCvvvvvvvvvvvvvvvvvvvvvvv',
     'C.........................................................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
@@ -163,23 +168,22 @@ var cruiser = [
     k = keittiöalue (laita background -koristeita tänne)
     O = Oven osa (ei blokkaa)
     o = konttiblokki
-    M = Magneetinaktivointialusta, jonka päällä seisominen nopeuttaa ajan kulumista Veteraanin tapauksessa.
     H = Humanoidin spawn -piste
     h = HP:n spawn -piste
-    U = uima-altaan osa (ei-reuna-osa)
+    U = uima-altaan osa
     Y = hypppytorni (3 blokkia alaspäin)
     v = pinnanalainen vesi
     E = veden pinta
     a = valkoinen ruutu
     L = lamppu
-    u = uima-altaan vasen reuna 
-    i = uima-altaan oikea reuna
+    u = uima-altaan tikapuunousu
     R = auringoonottotuoli
     b = boxi
     y = hyppytorni (tausta)
     s = vasemmalle osoittava lippu
     m = megafoniVasemmalle
     S = satelliittirykelmä
+    M = hiilausalue
     */
 ];
 

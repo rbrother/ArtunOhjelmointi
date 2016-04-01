@@ -175,7 +175,7 @@ function aloitaPeli(){
 	var canvas = document.getElementById('Pelialue');
     canvas.removeEventListener('mousemove', hiirisijainti);
 	var TestiTausta = new createjs.Shape();
-    TestiTausta.graphics.beginFill("blue").drawRect(0, 0, pelileveys, pelikorkeus);
+    TestiTausta.graphics.beginFill("#c4fffd").drawRect(0, 0, pelileveys, pelikorkeus);
     stage.addChild(TestiTausta);
     makeStage();
 	
@@ -350,7 +350,6 @@ function hyppaaSuuntaan(oikealle){
     if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi") {
         hyppypituus = hyppypituus / 10 * 15;
     }
-    hyppypituus = hyppypituus * 0.8;
     var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, 
         suunta: suunta, hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
     $.post(url, viesti);  
@@ -416,8 +415,8 @@ function liikutuskutsu(){
     }
   
     if ( nappiPohjassa ) {
-        if(hyppypituus < 10){
-           hyppypituus = hyppypituus + 0.4 * latauskerroin;
+        if(hyppypituus < 8){
+           hyppypituus = hyppypituus + 0.32 * latauskerroin;
         }
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
