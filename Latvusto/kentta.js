@@ -30,7 +30,9 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
-            if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
+            if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png");}
+            if(merkki == '_'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
+            if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
             if(merkki == 'M'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalue.png");}
             if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
@@ -53,11 +55,13 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png";
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
     var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
 		through: through, inFront: inFront } );
@@ -109,26 +113,26 @@ var cruiser = [
     '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC---------------C......................................................',
-    '.............................C-V---I---I-----C......................................................',
-    '.............................C-------------KKC......................................................',
-    '............................mCCCCCC------CCCCC......................................................',
-    '............................O-----------CC..........................................................',
-    '.............................------------C..........................................................',
+    '............................sC-.._.:-..:-..::C......................................................',
+    '.............................C.V...I...I..._.C......................................................',
+    '.............................C...:::...:...KKC......................................................',
+    '............................mCCCCCC-.._.:CCCCC......................................................',
+    '............................O_._._......CC..........................................................',
+    '......................................:_.C..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................CCCCCCCCCCC------C..........................................................',
-    '........................C---------CC-----C..........................................................',
-    '.......................sC----------------C..........................................................',
-    '........................C---------------AC..........................................................',
-    '........................C----k------CCCCCC..........................................................',
-    '.....h............Y.....C---------CCCCCCCC..........oooo.................................oo....H....',
-    '..................y....O------------------O.........oooo.......oo........................oo.........',
-    '...R..R..UUUUuU.........------------------..........oooo.......oo...........MMMMMMM......oo....o....',
-    'CCCCCCCCCCCCCCCCCCCCCCCCCCC-------------CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC---------CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
-    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
+    '........................CCCCCCCCCCC:-....C..........................................................',
+    '........................C-..-..-..CC..._.C..........................................................',
+    '.......................sC........._......C..........................................................',
+    '........................C...........::::AC..........................................................',
+    '........................C-..-..-..::CCCCCC..........................................................',
+    '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo....H....',
+    '..................y....O:.........-..-.._.O.........oooo.......oo........................oo.........',
+    '...R..R..UUUUuU.........:::_.-.._...................oooo.......oo...........MMMMMMM......oo....o....',
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC...-..:::CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
+    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC:...:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
-    'C-----------------CCCCCCCCC----------------aaaaa------------------------------------------------....',
+    'C-----------------CCCCCCCCC-----...--------aaaaa------------------------------------------------....',
     'C-----------------C-------C----------------aaaaa-----------------------------------------------.....',
     'C------------------------------CCCCC-------LLLLL-------------------------MMMMM----------------......',
     'C--------------C--------------CCXXXCCCC-------------CCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
@@ -184,6 +188,9 @@ var cruiser = [
     m = megafoniVasemmalle
     S = satelliittirykelmä
     M = hiilausalue
+    - = laivan seinä (3X3)
+    _ = laivan seinä (2x2)
+    : = laivan seinä (1x1)
     */
 ];
 

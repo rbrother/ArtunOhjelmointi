@@ -652,7 +652,42 @@ function resetointi(){
 }
 
 function animaatio(){
+    var animaatio = new Image();
+    animaatio.src = "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png";
+    var spritealusta = new createjs.SpriteSheet({
+        // image to use
+        images: [animaatio], 
+        // width, height & registration point of each sprite
+        frames: {width: 64, height: 64, regX: 0, regY: 0}, 
+        animations: {    
+            crossGrowing: [0, 9, "cross"]
+        }
+    });
+    // create a BitmapAnimation instance to display and play back the sprite sheet:
+    var BitmapAnimaatio = new createjs.BitmapAnimation(spritealusta);
 
+    // start playing the first sequence:
+    bmpAnimation.gotoAndPlay("cross");     //animate
+    
+    // set up a shadow. Note that shadows are ridiculously expensive. You could display hundreds
+    // of animated rats if you disabled the shadow.
+    //bmpAnimation.shadow = new createjs.Shadow("#454", 0, 5, 4);
+
+    bmpAnimation.name = "growingCross";
+    //bmpAnimation.vX = 4;
+    
+    //etsi tässä kaikki M-kohtien koordinaatit.
+    
+    bmpAnimation.x = 16;
+    bmpAnimation.y = 32;
+        
+    // have each monster start at a specific frame
+    bmpAnimation.currentFrame = 0;
+    stage.addChild(bmpAnimation);
+    
+    createjs.Ticker.useRAF = true;
+    // Best Framerate targeted (60 FPS)
+    createjs.Ticker.setFPS(60);
 }
 
     
