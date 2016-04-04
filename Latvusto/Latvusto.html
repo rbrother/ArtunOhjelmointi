@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
     <!-- Alhaalla käyttämämme JS-kirjastot (easeljs, jquery, kentta) -->
-    <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script src="http://code.createjs.com/easeljs-0.8.2.min.js"></script>
     <script src="jquery.js"></script>
   <script src="kentta.js"></script>
 
@@ -178,6 +178,9 @@ function aloitaPeli(){
     TestiTausta.graphics.beginFill("#c4fffd").drawRect(0, 0, pelileveys, pelikorkeus);
     stage.addChild(TestiTausta);
     makeStage();
+    animaatio();
+    createjs.Ticker.addEventListener("tick", liikutuskutsu);
+    createjs.Ticker.framerate = 50;    
 	
     omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus", valittuHahmo: valittuHahmo};
@@ -204,14 +207,13 @@ function aloitaPeli(){
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
-    setInterval( liikutuskutsu, paivitysvali ); // 20 ms = 50 FPS
+    //setInterval( liikutuskutsu, paivitysvali ); // 20 ms = 50 FPS
 
     window.onkeydown = NappiAlas;
     
     window.onkeyup = buttonUp;
   
     stage.update();
-    console.log("STAGE.UPDATE suoritettu!")
   
     kysyServeriltTapahtumia();
     
@@ -429,7 +431,7 @@ function liikutuskutsu(){
          blokki.bitmap.y = vis[1];
     });
         
-    stage.update();
+    stage.update(stage.Ticker);
 }
 
 function viivapoisto(pelaaja){
@@ -658,36 +660,35 @@ function animaatio(){
         // image to use
         images: [animaatio], 
         // width, height & registration point of each sprite
-        frames: {width: 64, height: 64, regX: 0, regY: 0}, 
+        frames: {width: 32, height: 32, regX: 0, regY: 0}, 
         animations: {    
-            crossGrowing: [0, 9, "cross"]
+            crossGrowing: [0, 2, "cross"]
         }
     });
     // create a BitmapAnimation instance to display and play back the sprite sheet:
-    var BitmapAnimaatio = new createjs.BitmapAnimation(spritealusta);
+    spritealusta.framerate = 6;
+    var BitmapAnimaatio = new createjs.Sprite(spritealusta);
 
     // start playing the first sequence:
-    bmpAnimation.gotoAndPlay("cross");     //animate
+    BitmapAnimaatio.gotoAndPlay("cross");     //animate
     
     // set up a shadow. Note that shadows are ridiculously expensive. You could display hundreds
     // of animated rats if you disabled the shadow.
     //bmpAnimation.shadow = new createjs.Shadow("#454", 0, 5, 4);
 
-    bmpAnimation.name = "growingCross";
+    BitmapAnimaatio.name = "growingCross";
     //bmpAnimation.vX = 4;
     
     //etsi tässä kaikki M-kohtien koordinaatit.
     
-    bmpAnimation.x = 16;
-    bmpAnimation.y = 32;
+    BitmapAnimaatio.x = 16;
+    BitmapAnimaatio.y = 32;
         
     // have each monster start at a specific frame
-    bmpAnimation.currentFrame = 0;
-    stage.addChild(bmpAnimation);
+    BitmapAnimaatio.currentFrame = 0;
+    BitmapAnimaatio.framerate = 6;
+    stage.addChild(BitmapAnimaatio);
     
-    createjs.Ticker.useRAF = true;
-    // Best Framerate targeted (60 FPS)
-    createjs.Ticker.setFPS(60);
 }
 
     
