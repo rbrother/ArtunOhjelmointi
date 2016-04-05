@@ -34,38 +34,84 @@ function makeStage(){
             if(merkki == '_'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
-            if(merkki == 'M'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalue.png");}
+            if(merkki == 'M'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png");}
             if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
         }
     });
 }
 
 function BlokkiaLisaa(x,y,blokkityyppi) {
-    var bitmap = new createjs.Bitmap(blokkityyppi);
-    bitmap.scaleX = skaalaus;
-    bitmap.scaleY = skaalaus;
-    bitmap.x = x*blokinKoko;
-    bitmap.y = y*blokinKoko;
-    stage.addChild(bitmap);
-	var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
-    var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
+    var bitmap;
+    if(blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png"){
+        bitmap = animaatio(x,y,blokkityyppi);
+    }else{
+        bitmap = new createjs.Bitmap(blokkityyppi);
+        bitmap.scaleX = skaalaus;
+        bitmap.scaleY = skaalaus;
+        bitmap.x = x*blokinKoko;
+        bitmap.y = y*blokinKoko;
+        stage.addChild(bitmap);
+        var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
+            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
+        var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
+    }
+        
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
-		through: through, inFront: inFront } );
+        through: through, inFront: inFront } );
     // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
+    
+}
+
+function animaatio(x,y,kuva){
+    console.log("animaatio-funktioon tullaan!");
+    var usedImage = new Image(kuva);
+    var spritealusta = new createjs.SpriteSheet({
+        // image to use
+        images: [usedImage], 
+        // width, height & registration point of each sprite
+        frames: {width: 32, height: 32, regX: 0, regY: 0}, 
+        animations: {    
+            crossGrowing: [0, 2, "cross"]
+        }
+    });
+    // create a BitmapAnimation instance to display and play back the sprite sheet:
+    spritealusta.framerate = 6;
+    var sprite = new createjs.Sprite(spritealusta);
+
+    // start playing the first sequence:
+    sprite.gotoAndPlay("cross");     //animate
+    
+    // set up a shadow. Note that shadows are ridiculously expensive. You could display hundreds
+    // of animated rats if you disabled the shadow.
+    //bmpAnimation.shadow = new createjs.Shadow("#454", 0, 5, 4);
+
+    sprite.name = "growingCross";
+    //bmpAnimation.vX = 4;
+    
+    //etsi tässä kaikki M-kohtien koordinaatit.
+    
+    sprite.x = x;
+    sprite.y = y;
+    
+    // have each monster start at a specific frame
+    sprite.currentFrame = 0;
+    sprite.framerate = 6;
+    stage.addChild(sprite);
+    return sprite;
+    
 }
 
 //Uudenlaisen blokin lisäys: Tee Gimpissä (Skaalaa oikein), lisää kentän struktuutiin, lisää iffittelyyn, määrittele ominaisuudet (through...)
@@ -127,7 +173,7 @@ var cruiser = [
     '........................C-..-..-..::CCCCCC..........................................................',
     '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo....H....',
     '..................y....O:.........-..-.._.O.........oooo.......oo........................oo.........',
-    '...R..R..UUUUuU.........:::_.-.._...................oooo.......oo...........MMMMMMM......oo....o....',
+    '...R..RMMUUUUuU.........:::_.-.._...................oooo.......oo...........MMMMMMM......oo....o....',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC...-..:::CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC:...:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',

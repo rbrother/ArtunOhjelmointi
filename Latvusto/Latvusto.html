@@ -178,7 +178,6 @@ function aloitaPeli(){
     TestiTausta.graphics.beginFill("#c4fffd").drawRect(0, 0, pelileveys, pelikorkeus);
     stage.addChild(TestiTausta);
     makeStage();
-    animaatio();
     createjs.Ticker.addEventListener("tick", liikutuskutsu);
     createjs.Ticker.framerate = 50;    
 	
@@ -651,44 +650,6 @@ function resetointi(){
     var viesti = {viestityyppi: "resetointi"};
     $.post(url, viesti);
 	location.reload();
-}
-
-function animaatio(){
-    var animaatio = new Image();
-    animaatio.src = "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png";
-    var spritealusta = new createjs.SpriteSheet({
-        // image to use
-        images: [animaatio], 
-        // width, height & registration point of each sprite
-        frames: {width: 32, height: 32, regX: 0, regY: 0}, 
-        animations: {    
-            crossGrowing: [0, 2, "cross"]
-        }
-    });
-    // create a BitmapAnimation instance to display and play back the sprite sheet:
-    spritealusta.framerate = 6;
-    var BitmapAnimaatio = new createjs.Sprite(spritealusta);
-
-    // start playing the first sequence:
-    BitmapAnimaatio.gotoAndPlay("cross");     //animate
-    
-    // set up a shadow. Note that shadows are ridiculously expensive. You could display hundreds
-    // of animated rats if you disabled the shadow.
-    //bmpAnimation.shadow = new createjs.Shadow("#454", 0, 5, 4);
-
-    BitmapAnimaatio.name = "growingCross";
-    //bmpAnimation.vX = 4;
-    
-    //etsi tässä kaikki M-kohtien koordinaatit.
-    
-    BitmapAnimaatio.x = 16;
-    BitmapAnimaatio.y = 32;
-        
-    // have each monster start at a specific frame
-    BitmapAnimaatio.currentFrame = 0;
-    BitmapAnimaatio.framerate = 6;
-    stage.addChild(BitmapAnimaatio);
-    
 }
 
     
