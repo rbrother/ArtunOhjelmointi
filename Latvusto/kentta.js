@@ -31,10 +31,10 @@ function makeStage(){
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
             if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png");}
-            if(merkki == '_'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
+            //if(merkki == '.'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
-            if(merkki == 'M'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png");}
+            if(merkki == 'M'){ BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png");}
             if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
         }
     });
@@ -42,16 +42,13 @@ function makeStage(){
 
 function BlokkiaLisaa(x,y,blokkityyppi) {
     var bitmap;
+    var through = false;
+    var inFront = false;
     if(blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png"){
-        bitmap = animaatio(x,y,blokkityyppi);
+        bitmap = animaatio(blokkityyppi);
     }else{
         bitmap = new createjs.Bitmap(blokkityyppi);
-        bitmap.scaleX = skaalaus;
-        bitmap.scaleY = skaalaus;
-        bitmap.x = x*blokinKoko;
-        bitmap.y = y*blokinKoko;
-        stage.addChild(bitmap);
-        var through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
+        through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
@@ -66,25 +63,28 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
             blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
-        var inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
+        inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     }
+    
+    bitmap.x = x*blokinKoko;
+    bitmap.y = y*blokinKoko;
+    stage.addChild(bitmap);
         
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
         through: through, inFront: inFront } );
-    // blokkienTiedot = [ {x: x, y : y}, {x: x, y : y}, {x: x, y : y}, ... ] 
     
 }
 
-function animaatio(x,y,kuva){
-    console.log("animaatio-funktioon tullaan!");
-    var usedImage = new Image(kuva);
+function animaatio(kuva){
+    var usedImage = new Image();
+    usedImage.src = kuva;
     var spritealusta = new createjs.SpriteSheet({
         // image to use
         images: [usedImage], 
         // width, height & registration point of each sprite
         frames: {width: 32, height: 32, regX: 0, regY: 0}, 
         animations: {    
-            crossGrowing: [0, 2, "cross"]
+            cross: [0, 2, "cross"]
         }
     });
     // create a BitmapAnimation instance to display and play back the sprite sheet:
@@ -102,9 +102,6 @@ function animaatio(x,y,kuva){
     //bmpAnimation.vX = 4;
     
     //etsi tässä kaikki M-kohtien koordinaatit.
-    
-    sprite.x = x;
-    sprite.y = y;
     
     // have each monster start at a specific frame
     sprite.currentFrame = 0;
@@ -159,37 +156,37 @@ var cruiser = [
     '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC-.._.:-..:-..::C......................................................',
-    '.............................C.V...I...I..._.C......................................................',
-    '.............................C...:::...:...KKC......................................................',
-    '............................mCCCCCC-.._.:CCCCC......................................................',
-    '............................O_._._......CC..........................................................',
-    '......................................:_.C..........................................................',
+    '.................M..........sC.....:...:...::C......................................................',
+    '.............................C.V...I...I.....C......................................................',
+    '...........M.................C...:::...:...KKC......................................................',
+    '............................mCCCCCC.....:CCCCC......................................................',
+    '............................O...........CC..........................................................',
+    '......................................:..C..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................CCCCCCCCCCC:-....C..........................................................',
-    '........................C-..-..-..CC..._.C..........................................................',
-    '.......................sC........._......C..........................................................',
+    '........................CCCCCCCCCCC:.....C..........................................................',
+    '........................C.........CC.....C..........................................................',
+    '.......................sC................C..........................................................',
     '........................C...........::::AC..........................................................',
-    '........................C-..-..-..::CCCCCC..........................................................',
+    '...........M............C.........::CCCCCC..........................................................',
     '.....h............Y.....C.........CCCCCCCC..........oooo.................................oo....H....',
-    '..................y....O:.........-..-.._.O.........oooo.......oo........................oo.........',
-    '...R..RMMUUUUuU.........:::_.-.._...................oooo.......oo...........MMMMMMM......oo....o....',
+    '..................y....O:.................O.........oooo.......oo........................oo.........',
+    '...R..R..UUUUuU.........:::.........................oooo.......oo........................oo....o....',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCC.............CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC...-..:::CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC......:::CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC:...:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
-    'C-----------------CCCCCCCCC-----...--------aaaaa------------------------------------------------....',
-    'C-----------------C-------C----------------aaaaa-----------------------------------------------.....',
-    'C------------------------------CCCCC-------LLLLL-------------------------MMMMM----------------......',
-    'C--------------C--------------CCXXXCCCC-------------CCCCC-----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
-    'C--------------CCCCCCCCCCCCCCCCCCCCCCCC-------------CXXXC---------------------------CXXXXXXCC.......',
-    'C------------------------------------------CCCCC----CXXXC---------------------------CXXXXXCC........',
-    'C---------------------------------------------------CXXCCCCCCCCCCCCCCCCCCCCCCCC-----CXXXXCC.........',
-    'C-----------------------------CCCCCCCCCC-----------CCCCC----------------------------CXXXCC..........',
-    'C-----------------------------CXXC----------AAA-------------------------------------CXXCCEEEEEEEEEEE',
-    'CCCCCCCCCCCC-------MMMMM------CXXC---------CCCCC---------CCCCCCCCCCCCCCCCCCCCCCCCCCCCXCCvvvvvvvvvvvv',
-    'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC---------C...C---------CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCC----CCCCCC...CCCCCC----CCCCXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
+    'C.................CCCCCCCCC................aaaaa....................................................',
+    'C.................C.......C................aaaaa....................................................',
+    'C..............................CCCCC.......LLLLL....................................................',
+    'C..............C..............CCXXXCCCC.............CCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
+    'C..............CCCCCCCCCCCCCCCCCCCCCCCC.............CXXXC..........................CXXXXXXXCC.......',
+    'C..........................................CCCCC....CXXXC..........................CXXXXXXCC........',
+    'C...................................................CXXCCCCCCCCCCCCCCCCCCCCCCCC....CXXXXXCC.........',
+    'C.............................CCCCCCCCCC...........CCCCC...........................CXXXXCC..........',
+    'C.............................CXXC..........AAA....................................CXXXCCEEEEEEEEEEE',
+    'CCCCCCCCCCCC..................CXXC.........CCCCC.........CCCCCCCCCCCCCCCCCCCCCCCCCCCXXCCvvvvvvvvvvvv',
+    'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC.........C...C.........CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCC....CCCCCC...CCCCCC....CCCCXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
     'C............................CC.......C.............C.......CC.....................CCvvvvvvvvvvvvvvv',
@@ -235,7 +232,7 @@ var cruiser = [
     S = satelliittirykelmä
     M = hiilausalue
     - = laivan seinä (3X3)
-    _ = laivan seinä (2x2)
+    . = laivan seinä (2x2)
     : = laivan seinä (1x1)
     */
 ];

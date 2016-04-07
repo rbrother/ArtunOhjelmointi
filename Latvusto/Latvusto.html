@@ -28,12 +28,12 @@ var pelaajaMaassa = false;
 var aloitusSuoritettu = false; 
 var kuteja = 6;
 var latauksenKronologinenProsessi = 0;
-var paivitysvali = 20;
 var hahmovalintanappulat = [{x: 92, y: 94, tyyppi: "HP"}, {x: 92, y: 279, tyyppi: "Veteraani"}, {x: 92, y: 453, tyyppi: "Humanoidi"}];
 var mouseOverRectangle;
 var valittuHahmo;
 var varatutHahmot = [];
 var ilmoituksenAika = 0;
+var fps = 30;
 
 // pelaajaTiedot:
 // { 
@@ -179,7 +179,7 @@ function aloitaPeli(){
     stage.addChild(TestiTausta);
     makeStage();
     createjs.Ticker.addEventListener("tick", liikutuskutsu);
-    createjs.Ticker.framerate = 50;    
+    createjs.Ticker.framerate = fps;    
 	
     omaId = $("#pelaajaNimi").val();
     var alkuviesti = { pelaaja: omaId, viestityyppi: "aloitus", valittuHahmo: valittuHahmo};
@@ -206,8 +206,6 @@ function aloitaPeli(){
     // state.update() needs to be called continuously.
     // First update might not show ukkoBitmaps if they are not yet loaded.
     
-    //setInterval( liikutuskutsu, paivitysvali ); // 20 ms = 50 FPS
-
     window.onkeydown = NappiAlas;
     
     window.onkeyup = buttonUp;
@@ -379,7 +377,7 @@ function YVauhti(id) {
 }
 
 function aseenLataaminen(){
-	latauksenKronologinenProsessi = latauksenKronologinenProsessi + paivitysvali / 1000.0;
+	latauksenKronologinenProsessi = latauksenKronologinenProsessi + 1 / fps;
 	if(latauksenKronologinenProsessi > 3){
 		kuteja = 6;
 		latauksenKronologinenProsessi = 0;
@@ -388,7 +386,7 @@ function aseenLataaminen(){
 }
 
 function olemassaIlmoitus(){
-    ilmoituksenAika = ilmoituksenAika + paivitysvali / 1000.0;
+    ilmoituksenAika = ilmoituksenAika + 1 / fps;
     if(ilmoituksenAika > 2){
         var viesti = {viestityyppi: "olemassaoloilmoitus", id: omaId};
         console.log("Olemassaoloilmoitus lähetetty!");
