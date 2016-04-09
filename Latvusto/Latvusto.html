@@ -445,8 +445,19 @@ function viivapoisto(pelaaja){
 }
 
 function liikuta(id) {
-    var pelaaja = pelaajaTiedot[id];
+	var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return;
+	if(id != omaId){
+		var oma = pelaajaTiedot[omaId];
+		var distanceX = oma.Vaaka - pelaaja.Vaaka;
+		var distanceY = oma.Pysty - pelaaja.Pysty;
+		var suunnantsekkaus = (oma.oikealle && distanceX > 0) || (!oma.oikealle && distanceX < 0);
+		if(Math.abs(distanceX) < Math.abs(distanceY) || suunnantsekkaus){
+			pelaaja.hahmoBitmap.alpha = 0;
+		}else{
+			pelaaja.hahmoBitmap.alpha = 1;
+		}
+	}
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
 		painovoima = painovoima * 0.25;

@@ -48,23 +48,25 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         bitmap = animaatio(blokkityyppi);
     }else{
         bitmap = new createjs.Bitmap(blokkityyppi);
-        through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
-            blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png";
-        inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     }
+	
+	inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
+    through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png" ||
+		blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png";
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
