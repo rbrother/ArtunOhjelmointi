@@ -448,10 +448,35 @@ function liikuta(id) {
 	var pelaaja = pelaajaTiedot[id];
     if (pelaaja == undefined) return;
 	if(id != omaId){
+		//console.log("Visuaaliseen tarkasteluun tullaan!")
 		var oma = pelaajaTiedot[omaId];
 		var distanceX = oma.Vaaka - pelaaja.Vaaka;
 		var distanceY = oma.Pysty - pelaaja.Pysty;
 		var suunnantsekkaus = (oma.oikealle && distanceX > 0) || (!oma.oikealle && distanceX < 0);
+		var blokitettuDistance;
+		var pienempiSteppi;
+		if(distanceX < distanceY){
+			blokitettuDistance = distanceY / blokinKoko; 
+			pienempiSteppi = distanceX / blokitettuDistance;
+		}else{
+			blokitettuDistance = distanceX / blokinKoko;
+			pienempiSteppi = distanceY / blokitettuDistance;
+		}
+		var testiprojektiili = [oma.Vaaka + 0.5 * blokinKoko, oma.Pysty + 0.5 * blokinKoko];
+		var stepAmount = 0;
+		var miinusTaiPlussaX = oma.oikealle ? +1 : -1;
+		var miinusTaiPlussaY = oma.Pysty < pelaaja.Pysty ? +1 : -1;
+		while( KoskettaakoHahmoMitaanBlokkia( testiprojektiili[0], testiprojektiili[1], 1, 1, 
+			testiprojektiili[0], testiprojektiili[1], omaId )[0] == "" && stepAmount < 50){
+			testiprojektiili[0] = testiprojektiili[0] + miinusTaiPlussaX * ( distanceX < distanceY ? pienempiSteppi : blokinKoko);
+			testiprojektiili[1] = testiprojektiili[1] + miinusTaiPlussaY * (distanceX < distanceY ? blokinKoko : pienempiSteppi);	
+			stepAmount++;
+		}
+		//console.log(stepAmount);
+		if(KoskettaakoHahmoMitaanBlokkia( testiprojektiili[0], testiprojektiili[1], 1, 1, 
+			testiprojektiili[0], testiprojektiili[1], omaId )[1] != ""){
+				console.log("Projektiili osunut pelaajaan!");
+			}
 		if(Math.abs(distanceX) < Math.abs(distanceY) || suunnantsekkaus){
 			pelaaja.hahmoBitmap.alpha = 0;
 		}else{
