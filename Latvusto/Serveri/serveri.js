@@ -56,7 +56,8 @@ function respondToIncomingMessage(request, response) {
 // Yllä olevat funktiot tällä hetkellä irrelevantteja.
 
 function vastaaViestiin(viestiClientilta, response) {
-  var viestityyppi = viestiClientilta.viestityyppi;
+  console.log("ViestiClientiltä: " + JSON.stringify(viestiClientilta));
+	var viestityyppi = viestiClientilta.viestityyppi;
   if(viestityyppi == "kysely"){
     tallennaTapahtumakysely(viestiClientilta, response);
   }else if (viestityyppi == "ilmoitus"){
@@ -145,19 +146,31 @@ function vastaaTapahtumailmoitukseen(ilmoitusViesti, response, paluuviesti) {
   // Vastaa aiempiin meiden clienttien kyselyihin
   var pelaajanimet = Object.keys(serveripelaajaTiedot);
   pelaajanimet.forEach (function (pelaajanimi){
-    if(pelaajanimi != ilmoitusViesti.pelaaja){
-      console.log('   Välitetään ilmoitus pelaajalle: "' + pelaajanimi + '"');		
-      var tallennettuResponse = serveripelaajaTiedot[pelaajanimi].tallennettuResponse;
-      if (tallennettuResponse == undefined){
-        console.log('       Ongelma: pelaajan tapahtumakyselyä ei löydy!');
-      }else{
-        lahetaVastaus(ilmoitusViesti, tallennettuResponse);
-        serveripelaajaTiedot[pelaajanimi].tallennettuResponse = undefined;  
-      }
-    }
+	  if(pelaajanimi != ilmoitusViesti.pelaaja){
+		vastaaIlmoitukseenYhdelle(ilmoitusViesti, pelaajanimi);
+	  }
   })
   // Vastaa itse ilmoitukseen hyvin lyhyesti
   lahetaVastaus(paluuviesti, response);
+}
+
+function vastaaIlmoitukseenYhdelle(ilmoitusViesti, pelaajanimi) {    
+  console.log('   Välitetään ilmoitus pelaajalle: "' + pelaajanimi + '"');	
+  var pelaajatiedot = serveripelaajaTiedot[pelaajanimi];
+  if (pelaajatiedot == undefined) {
+	  console.log("Pelaaja kadonnut");
+	  return;
+  }
+  var tallennettuResponse = pelaajatiedot.tallennettuResponse;
+  if (tallennettuResponse == undefined){
+	console.log('       Pelaajan ' + pelaajanimi + ' tapahtumakyselyä ei löydy -> wait 500 ms');
+	setTimeout(function(){ 
+		vastaaIlmoitukseenYhdelle(ilmoitusViesti, pelaajanimi);
+	}, 500);
+  }else{
+	lahetaVastaus(ilmoitusViesti, tallennettuResponse);
+	pelaajatiedot.tallennettuResponse = undefined;  
+  }
 }
 
 function lahetaVastaus(vastausViesti, response) {
