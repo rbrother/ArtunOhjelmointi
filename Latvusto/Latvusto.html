@@ -448,27 +448,19 @@ function playerVisibility(id, pelaaja){
 	var oma = pelaajaTiedot[omaId];
 	var distanceX = oma.Vaaka - pelaaja.Vaaka;
 	var distanceY = oma.Pysty - pelaaja.Pysty;
-    var blokitettuDistance;
-    var pienempiSteppi;
-    if(distanceX < distanceY){
-        blokitettuDistance = distanceY / blokinKoko; 
-        pienempiSteppi = distanceX / blokitettuDistance;
-    }else{
-        blokitettuDistance = distanceX / blokinKoko;
-        pienempiSteppi = distanceY / blokitettuDistance;
-    }
     var matalaKulma = Math.abs(distanceY) < Math.abs(distanceX);
     var oikeaSuunta = (oma.oikealle && pelaaja.Vaaka > oma.Vaaka) || (!oma.oikealle && pelaaja.Vaaka < oma.Vaaka);
     var osunutPelaajaan = false;
+    var stepAmount = 0;
     if(matalaKulma && oikeaSuunta){
+        var pienempiSteppi = Math.abs(blokinKoko * distanceY / distanceX);
         var testiprojektiili = [oma.Vaaka + 0.5 * blokinKoko, oma.Pysty + 0.5 * blokinKoko];
-        var stepAmount = 0;
         var miinusTaiPlussaX = oma.oikealle ? +1 : -1;
         var miinusTaiPlussaY = oma.Pysty < pelaaja.Pysty ? +1 : -1;
         while( KoskettaakoHahmoMitaanBlokkia( testiprojektiili[0], testiprojektiili[1], 1, 1, 
             testiprojektiili[0], testiprojektiili[1], omaId )[0] == "" && stepAmount < 50){
-            testiprojektiili[0] = testiprojektiili[0] + miinusTaiPlussaX * ( distanceX < distanceY ? pienempiSteppi : blokinKoko);
-            testiprojektiili[1] = testiprojektiili[1] + miinusTaiPlussaY * (distanceX < distanceY ? blokinKoko : pienempiSteppi);	
+            testiprojektiili[0] = testiprojektiili[0] + miinusTaiPlussaX * blokinKoko;
+            testiprojektiili[1] = testiprojektiili[1] + miinusTaiPlussaY * pienempiSteppi;	
             stepAmount++;
         }
         osunutPelaajaan = KoskettaakoHahmoMitaanBlokkia( testiprojektiili[0], testiprojektiili[1], 1, 1, 
@@ -479,6 +471,8 @@ function playerVisibility(id, pelaaja){
     }else{
         pelaaja.hahmoBitmap.alpha = 0;
     }
+    $("#debuggaus").text("matalaKulma: " + matalaKulma + ", oikeaSuunta: " + oikeaSuunta + ", osunutPelaajaan: " + osunutPelaajaan + 
+        ", stepAmount: " + stepAmount + ", pienempiSteppi: " + pienempiSteppi);
 }
 
 function liikuta(id) {
@@ -700,7 +694,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <span id = "Survivability"></span>
 <span id = "Kudit"></span>
 <br>
-<span id = "debuggaus"><span>
+<span id = "debuggaus"></span>
 <br>
 <canvas id="Pelialue" width="1024" height="650">
 </canvas>
