@@ -149,7 +149,7 @@ function mouseOverCharacter(x, y){
 }
 
 function selviytymispisteasetus(){
-    $("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
+    updateSurvivability();
     var random1to100 = Math.floor(Math.random() * 100);
     if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
         $("#Survivability").text(omaId + " neutralisoitu!");
@@ -399,23 +399,20 @@ function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
     olemassaIlmoitus();
 	aseenLataaminen();
-	liikuta(omaId);
     var pelaajanimet = Object.keys(pelaajaTiedot);
-    pelaajanimet.forEach (function (id){
-		if(id != omaId){
-			liikuta(id);
-		}
+    pelaajanimet.forEach (function (id){		
+			liikuta(id);		
     })
-    var latauskerroin = 1;
+    var hyppylatauskerroin = 1;
     if(pelaajaTiedot[omaId].hahmotyyppi == "HP"){
-        latauskerroin = 1.25;
+        hyppylatauskerroin = 1.25;
     } else if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi"){
-        latauskerroin = 0.666;
+        hyppylatauskerroin = 0.666;
     }
   
     if ( nappiPohjassa ) {
         if(hyppypituus < 8){
-           hyppypituus = hyppypituus + 0.5 * latauskerroin;
+           hyppypituus = hyppypituus + 0.5 * hyppylatauskerroin;
         }
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
@@ -471,8 +468,12 @@ function playerVisibility(id, pelaaja){
     }else{
         pelaaja.hahmoBitmap.alpha = 0;
     }
-    $("#debuggaus").text("matalaKulma: " + matalaKulma + ", oikeaSuunta: " + oikeaSuunta + ", osunutPelaajaan: " + osunutPelaajaan + 
-        ", stepAmount: " + stepAmount + ", pienempiSteppi: " + pienempiSteppi);
+    //$("#debuggaus").text("matalaKulma: " + matalaKulma + ", oikeaSuunta: " + oikeaSuunta + ", osunutPelaajaan: " + osunutPelaajaan + 
+        //", stepAmount: " + stepAmount + ", pienempiSteppi: " + pienempiSteppi);
+}
+
+function updateSurvivability(){
+    $("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
 }
 
 function liikuta(id) {
@@ -481,6 +482,11 @@ function liikuta(id) {
 	if(id != omaId){
 		playerVisibility(id, pelaaja);
 	}
+    var touchingThrough = touchingThroughBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
+    if(touchingThrough == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
+        pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
+        updateSurvivability();
+    }
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
 		painovoima = painovoima * 0.25;
@@ -552,12 +558,25 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
     });
     blokkienTiedot.forEach( function(blokki) {
         if(!blokki.through){
-        if(kosketus != "y" && kosketus != "x")
+        if(kosketus == "")
             kosketus = KoskettaakoHahmoBlokkia( ukkoX, ukkoY, leveys, korkeus, blokki.x, blokki.y, viimeX, viimeY);
     } } )
     return [kosketus, kosketettavanID];
 }
 
+function touchingThroughBlock(ux1, uy1, leveys, korkeus){
+    var blokinBlokkityyppi = "";
+    var kosketus = "";
+    blokkienTiedot.forEach(function(blokki){
+        if(blokki.through && kosketus == ""){
+            kosketus = KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, blokki.x, blokki.y, 0, 0 );
+            if(kosketus != ""){
+                blokinBlokkityyppi == blokki.blokkityyppi;
+            }
+        }
+    })
+    return blokinBlokkityyppi;
+}
 
 // KoskettaakoHahmoBlokkia: "x", "y", ""
 function KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, bx1, by1, viimeX, viimeY ) {
@@ -652,7 +671,7 @@ function luoHahmo(hahmotyyppi){
     console.log("hahmotyyppi: " + hahmotyyppi);
     var hahmo = {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
-        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
+        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 50, elossa: true,
 		liito: false};
     blokkienTiedot.forEach(function(blokki){
         if(blokki.inFront){

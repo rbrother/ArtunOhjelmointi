@@ -30,7 +30,7 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
-            if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png");}
+            //if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png");}
             //if(merkki == '.'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
@@ -164,26 +164,26 @@ var cruiser = [
     '....................................................................................................',
     '....................................................................................................',
     '....................................................................................................',
-    '..................................S......S..........................................................',
+    '..................................S...h..S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC.W.............C......................................................',
-    '.............................C.....I.:.I.....C......................................................',
+    '............................sC.W.....:.......C......................................................',
+    '.............................C.....I...I.....C......................................................',
     '.............................C.............KKC......................................................',
-    '............................mCCCCCCqqqqqwCCCCC......................................................',
-    '............................O..........w.C..........................................................',
-    '......................................w..C..........................................................',
+    '............................mCCCCCC......CCCCC......................................................',
+    '............................O......qqqqqQC..........................................................',
+    '.......................................Q.C..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................CCCCCCCCCCC..w...C..........................................................',
-    '........................C.........CCqQ...C..........................................................',
-    '.......................sC.............Q..C..........................................................',
-    '........................C..............QAC..........................................................',// Testaa pystyykö laivan katolta hyp-
-    '........................C...........CCCCCC........................................oo.......H........',// päämään 4-blokkia-korkean kontti-
-    '..................Y.....C....wqqqqCCCCCCCC..........oooo..........................oo................',// asetelman yli.
-    '................h.y....O....w.............O.........oooo.......oo.................oo......ooo.......',
-    '...R..R..UUUUuU............w........................oooo.......oo..........MMMMM..oo......ooo.......',
-    'CCCCCCCCCCCCCCCCCCCCCCCCCCCQ..V........wCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCQ.......wCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
+    '........................CCCCCCCCCCC...Q..C..........................................................',
+    '........................C.........CCqqw..C..........................................................',
+    '.......................sC..............QqC..........................................................',
+    '........................C.............Q.AC..........................................................',// Testaa pystyykö laivan katolta hyp-
+    '........................C...........CCCCCC....................................oo...........H........',// päämään 4-blokkia-korkean kontti-
+    '..................Y.....C....QqqqqCCCCCCCC..........oooo..............V.......oo....................',// asetelman yli.
+    '..................y....O....Q.............O.........oooo.......oo.............oo..........ooo.......',
+    '...R..R..UUUUuU............Q........................oooo.......oo....MMMM.....oo..........ooo.......',
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCCw...........QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCw.......QCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
     'C.................CCCCCCCCC................aaaaa....................................................',
@@ -207,7 +207,7 @@ var cruiser = [
     'C.C....................C........CXXXXXXXXXXXXXXXCCCCCCCCCC........C.......CXXXCCvvvvvvvvvvvvvvvvvvvv',
     'C.C....................C........CXXXXXXXXXXXXXXXC.............CCCCCCCCCC..CXXCCvvvvvvvvvvvvvvvvvvvvv',
     'C.C..CCCCCCCCCCCCCCCCCCCCCCC....CXXXXXXXXXXXXXXXC......MMM....CXXXXXXXXC..CXXCCvvvvvvvvvvvvvvvvvvvvv',
-    'C.C........................C...CCCCCCCCCCCCCCCCC...CCCCCCCCCCCCCCCCCCCC..CXCCvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C........................C...CCCCCCCCCCCCCCCCCC..CCCCCCCCCCCCCCCCCCCC..CXCCvvvvvvvvvvvvvvvvvvvvvvv',
     'C.C........................C..............................................CCCvvvvvvvvvvvvvvvvvvvvvvv',
     'C.C.............CCC...C....C.............M................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
     'C.C...................C....C....C...C...CCC...............CCCCCCCCCCCC..CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
