@@ -36,6 +36,11 @@ function makeStage(){
             if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
             if(merkki == 'M'){ BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png");}
             if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
+            if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/komentosiltataulu.png");}
+            if(merkki == 'q'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/taustatasanne.png");}
+            if(merkki == 'Q'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaOikealle.png");}
+            if(merkki == 'w'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png");}
+            if(merkki == 'W'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png");}
         }
     });
 }
@@ -66,7 +71,12 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png" ||
-		blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png";
+		blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/komentosiltataulu" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/taustatasanne.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaOikealle.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png";
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -157,23 +167,23 @@ var cruiser = [
     '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC...............C......................................................',
-    '.............................C.....I...I.....C......................................................',
+    '............................sC.W.............C......................................................',
+    '.............................C.....I.:.I.....C......................................................',
     '.............................C.............KKC......................................................',
-    '............................mCCCCCC.....:CCCCC......................................................',
-    '............................O...........CC..........................................................',
-    '.........................................C..........................................................',
+    '............................mCCCCCCqqqqqwCCCCC......................................................',
+    '............................O..........w.C..........................................................',
+    '......................................w..C..........................................................',
     //Ylhäällä ylin kerros (4)
-    '........................CCCCCCCCCCC......C..........................................................',
-    '........................C.........CC.....C..........................................................',
-    '.......................sC................C..........................................................',
-    '........................C...............AC..........................................................',
-    '........................C...........CCCCCC..........................................................',
-    '..................Y.....C.........CCCCCCCC..........oooo.................................oo....H....',
-    '................h.y....O..................O.........oooo.......oo........................oo.........',
-    '...R..R..UUUUuU.....................................oooo.......oo..........MMMMM.........oo....o....',
-    'CCCCCCCCCCCCCCCCCCCCCCCCCCC...V.........CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCC.........CCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
+    '........................CCCCCCCCCCC..w...C..........................................................',
+    '........................C.........CCqQ...C..........................................................',
+    '.......................sC.............Q..C..........................................................',
+    '........................C..............QAC..........................................................',// Testaa pystyykö laivan katolta hyp-
+    '........................C...........CCCCCC........................................oo.......H........',// päämään 4-blokkia-korkean kontti-
+    '..................Y.....C....wqqqqCCCCCCCC..........oooo..........................oo................',// asetelman yli.
+    '................h.y....O....w.............O.........oooo.......oo.................oo......ooo.......',
+    '...R..R..UUUUuU............w........................oooo.......oo..........MMMMM..oo......ooo.......',
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCCQ..V........wCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCQ.......wCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
     'C.................CCCCCCCCC................aaaaa....................................................',
@@ -186,24 +196,24 @@ var cruiser = [
     'C.............................CCCCCCCCCC...........CCCCC...........................CXXXXCC..........',
     'C.............................CXXC..........AAA....................................CXXXCCEEEEEEEEEEE',
     'CCCCCCCCCCCC..........MMMMM...CXXC.........CCCCC.........CCCCCCCCCCCCCCCCCCCCCCCCCCCXXCCvvvvvvvvvvvv',
-    'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC.........C...C.........CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
-    'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCC....CCCCCC...CCCCCC....CCCCXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
+    'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC.........CXXXC.........CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
+    'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCC....CCCCCCXXXCCCCCC....CCCCXXXCCCCCXXXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
-    'C....................CCCCC...CC.......C.............C.......CC.....................CCvvvvvvvvvvvvvvv',
-    'C.CCCCCCCCCCCC.......C...C..CC........C.............C........CC...................CCvvvvvvvvvvvvvvvv',
-    'C.C..........C.......C...C.CC....CCCCCC.............CCCCCC....CC.................CCvvvvvvvvvvvvvvvvv',
-    'C.C..........CCCCCCCCC.C.CCC....CC.......................CC.....................CCvvvvvvvvvvvvvvvvvv',
-    'C.C....................C........C.........................C....................CCvvvvvvvvvvvvvvvvvvv',
-    'C.C....................C........C.........................C...................CCvvvvvvvvvvvvvvvvvvvv',
-    'C.C..........CCCCCCCCCCCCCCC....C.........................C..................CCvvvvvvvvvvvvvvvvvvvvv',
-    'C.C.........................................................................CCvvvvvvvvvvvvvvvvvvvvvv',
-    'C.C........................................................................CCvvvvvvvvvvvvvvvvvvvvvvv',
-    'C.C.......................................................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
-    'C.C......................................................................CCvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'C.C.....................................................................CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'C.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..CCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'C.....................................................................CCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'C....................CCCCC...CC.......CXXXXXXXXXXXXXC.......CC..C...CXXXXXXXXXXXXXCCvvvvvvvvvvvvvvvv',
+    'C.CCCCCCCCCCCC.......C...C..CC........CXXXXXXXXXXXXXC........CC.C...CXXXXXXXXXXXXCCvvvvvvvvvvvvvvvvv',
+    'C.C..........C.......C...C.CC....CCCCCCXXXXXXXXXXXXXCCCCCC....CCC.C.CCCCCCCXXXXXCCvvvvvvvvvvvvvvvvvv',
+    'C.C..........CCCCCCCCC.C.CCC....CCXXXXXXXXXXXXXXXXXXXXXXXCC.......C.......CXXXXCCvvvvvvvvvvvvvvvvvvv',
+    'C.C....................C........CXXXXXXXXXXXXXXXCCCCCCCCCC........C.......CXXXCCvvvvvvvvvvvvvvvvvvvv',
+    'C.C....................C........CXXXXXXXXXXXXXXXC.............CCCCCCCCCC..CXXCCvvvvvvvvvvvvvvvvvvvvv',
+    'C.C..CCCCCCCCCCCCCCCCCCCCCCC....CXXXXXXXXXXXXXXXC......MMM....CXXXXXXXXC..CXXCCvvvvvvvvvvvvvvvvvvvvv',
+    'C.C........................C...CCCCCCCCCCCCCCCCC...CCCCCCCCCCCCCCCCCCCC..CXCCvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C........................C..............................................CCCvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C.............CCC...C....C.............M................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C...................C....C....C...C...CCC...............CCCCCCCCCCCC..CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C...................C...CC...................-..........C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C..........C........C...................................C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'C.C....MMM...C.....................................................CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
 
     /*
@@ -232,9 +242,10 @@ var cruiser = [
     m = megafoniVasemmalle
     S = satelliittirykelmä
     M = hiilausalue
-    - = laivan seinä (3X3)
+    - = varasto-ovi (PÄÄOBJEKTIIVI, 3x3)
     . = laivan seinä (2x2)
-    : = laivan seinä (1x1)
+    : = taulu (1x2)
+    q = beige tasanne
     */
 ];
 
