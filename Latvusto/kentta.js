@@ -54,6 +54,8 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     }else{
         bitmap = new createjs.Bitmap(blokkityyppi);
     }
+    
+    // blokkinimi = ... tee lyhyt karsittu nimi .... 
 	
 	inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
     through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
@@ -78,13 +80,16 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/komentosiltataulu.png";
+        
+    functioning = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png";
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
     stage.addChild(bitmap);
         
     blokkienTiedot.push( {x: bitmap.x, y: bitmap.y, bitmap: bitmap, blokkityyppi: blokkityyppi,
-        through: through, inFront: inFront } );
+        through: through, inFront: inFront, functioning: functioning } );
     
 }
 
@@ -177,8 +182,8 @@ var cruiser = [
     //Ylhäällä ylin kerros (4)
     '........................CCCCCCCCCCC...Q..C..........................................................',
     '........................C.........CCqqw..C..........................................................',
-    '.......................sC..............QqC..........................................................',
-    '........................C.............Q.AC..........................................................',
+    '.......................sC.............QqqC..........................................................',
+    '........................C............Q.qAC..........................................................',
     '........................C...........CCCCCC....................................oo...........H........',
     '..................Y.....C....QqqqqCCCCCCCC..........oooo......................oo....................',
     '.h................y....O....Q.............O.........oooo.......oo.............oo..........ooo.......',

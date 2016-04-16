@@ -21,6 +21,8 @@
     HP liitää muilla klienteillä aina ollessaan ilmassa.
     
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
+    
+    Yksinkertaista blokkien nimiä koodissa.
 
 PIENIÄ NOUTTEJA
 

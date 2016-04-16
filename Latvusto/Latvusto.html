@@ -489,11 +489,17 @@ function liikuta(id) {
 	if(id != omaId){
 		playerVisibility(id, pelaaja);
 	}
-    var touchingThrough = touchingThroughBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
-    if(touchingThrough == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
+    var touchingFunctioning = touchingFunctioningBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
+    
+    if(touchingFunctioning == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
         if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
         updateSurvivability();
+    }else if(touchingFunctioning == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png"){
+        if(id == omaId){
+            kuditMukana = 6;
+            kutiIlmoitus();
+        }
     }
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
@@ -572,11 +578,11 @@ function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, v
     return [kosketus, kosketettavanID];
 }
 
-function touchingThroughBlock(ux1, uy1, leveys, korkeus){
+function touchingFunctioningBlock(ux1, uy1, leveys, korkeus){
     var blokinBlokkityyppi = "";
     var kosketus = "";
     blokkienTiedot.forEach(function(blokki){
-        if(blokki.through && kosketus == ""){
+        if(kosketus == "" && blokki.functioning){
             kosketus = KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, blokki.x, blokki.y, 0, 0 );
             if(kosketus != ""){
                 blokinBlokkityyppi = blokki.blokkityyppi;
