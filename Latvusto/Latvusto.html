@@ -491,11 +491,11 @@ function liikuta(id) {
 	}
     var touchingFunctioning = touchingFunctioningBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
     
-    if(touchingFunctioning == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
+    if(touchingFunctioning == "hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
         if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
         updateSurvivability();
-    }else if(touchingFunctioning == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png"){
+    }else if(touchingFunctioning == "ammoFromSystem.png"){
         if(id == omaId){
             kuditMukana = 6;
             kutiIlmoitus();

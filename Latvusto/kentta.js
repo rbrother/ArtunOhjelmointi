@@ -7,40 +7,40 @@ function makeStage(){
         y++;
         for(x = 0;x < rivi.length;x++){
             var merkki = rivi.charAt(x);
-            if(merkki == 'X') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipEngineToMaybeBeRotated.png"); }
+            if(merkki == 'X') { BlokkiaLisaa(x,y,"ShipEngineToMaybeBeRotated.png"); }
             //Tässä kohdassa voidaan tehdä muita blokkeja / kohtatyyppejä.
-            if(merkki == 'C') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipCovering.png");}
-            if(merkki == 'K') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png");}
-            if(merkki == 'o') { BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi2.png");}
+            if(merkki == 'C') { BlokkiaLisaa(x,y,"ShipCovering.png");}
+            if(merkki == 'K') { BlokkiaLisaa(x,y,"Ohjauspaneeli.png");}
+            if(merkki == 'o') { BlokkiaLisaa(x,y,"Boxi2.png");}
             if(merkki == 'h' || merkki == 'V' || merkki == 'H') {
                 var tyyppi = merkki == 'h' ? "HP" : merkki == 'V' ? "Veteraani" : "Humanoidi";
                 spawnPointit[tyyppi] = {x: x, y: y};
             }
-            if(merkki == 'O'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Ovi.png");}
-			if(merkki == 'v'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vesiKuplilla.png");}
-            if(merkki == 'E'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VedenPinta.png");}
-            if(merkki == 'L'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/lamppu.png");}
-            if(merkki == 'a'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/valkoinen.png");}
-            if(merkki == 'u'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png");}
-            if(merkki == 'U'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/uima-allasta.png");}
-            if(merkki == 'R'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png");}
-            if(merkki == 'b'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
-            if(merkki == 'Y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png");}
-            if(merkki == 'y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/emptyBackground.png");}
-            if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
-            if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
-            if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
-            //if(merkki == '-'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png");}
-            //if(merkki == '.'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png");}
-            if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ShipWall.png");}
-            if(merkki == 'I'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png");}
-            if(merkki == 'M'){ BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png");}
-            if(merkki == 'A'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png");}
-            if(merkki == ':'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/komentosiltataulu.png");}
-            if(merkki == 'q'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/taustatasanne.png");}
-            if(merkki == 'Q'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaOikealle.png");}
-            if(merkki == 'w'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png");}
-            if(merkki == 'W'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png");}
+            if(merkki == 'O'){BlokkiaLisaa(x,y,"Ovi.png");}
+			if(merkki == 'v'){BlokkiaLisaa(x,y,"vesiKuplilla.png");}
+            if(merkki == 'E'){BlokkiaLisaa(x,y,"VedenPinta.png");}
+            if(merkki == 'L'){BlokkiaLisaa(x,y,"lamppu.png");}
+            if(merkki == 'a'){BlokkiaLisaa(x,y,"valkoinen.png");}
+            if(merkki == 'u'){BlokkiaLisaa(x,y,"uima-allastaTikapuilla.png");}
+            if(merkki == 'U'){BlokkiaLisaa(x,y,"uima-allasta.png");}
+            if(merkki == 'R'){BlokkiaLisaa(x,y,"auringonottotuoli.png");}
+            if(merkki == 'b'){BlokkiaLisaa(x,y,"Boxi.png");}
+            if(merkki == 'Y'){BlokkiaLisaa(x,y,"Vahtimistorni.png");}
+            if(merkki == 'y'){BlokkiaLisaa(x,y,"emptyBackground.png");}
+            if(merkki == 's'){BlokkiaLisaa(x,y,"vasemmalleOsoittavaLippu.png");}
+            if(merkki == 'm'){BlokkiaLisaa(x,y,"megafoniVasemmalle.png");}
+            if(merkki == 'S'){BlokkiaLisaa(x,y,"satelliteMess.png");}
+            //if(merkki == '-'){BlokkiaLisaa(x,y," ShipWall3x3.png");}
+            //if(merkki == '.'){BlokkiaLisaa(x,y," ShipWall2x2.png");}
+            if(merkki == ':'){BlokkiaLisaa(x,y,"ShipWall.png");}
+            if(merkki == 'I'){BlokkiaLisaa(x,y,"OikeastiIkkuna.png");}
+            if(merkki == 'M'){ BlokkiaLisaa(x,y,"hiilausalueanimointi.png");}
+            if(merkki == 'A'){BlokkiaLisaa(x,y,"ammoFromSystem.png");}
+            if(merkki == ':'){BlokkiaLisaa(x,y,"komentosiltataulu.png");}
+            if(merkki == 'q'){BlokkiaLisaa(x,y,"taustatasanne.png");}
+            if(merkki == 'Q'){BlokkiaLisaa(x,y,"portaatAlhaaltaOikealle.png");}
+            if(merkki == 'w'){BlokkiaLisaa(x,y,"portaatAlhaaltaVasemmalle.png");}
+            if(merkki == 'W'){BlokkiaLisaa(x,y,"veteraaninStabilisointilaite.png");}
         }
     });
 }
@@ -49,40 +49,39 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
     var bitmap;
     var through = false;
     var inFront = false;
-    if(blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png"){
-        bitmap = animaatio(blokkityyppi);
+    var tiedostonimi = "Kuva-aineisto/LopullinenKouludemo/" + blokkityyppi;
+    if(blokkityyppi == "hiilausalueanimointi.png"){
+        bitmap = animaatio(tiedostonimi);
     }else{
-        bitmap = new createjs.Bitmap(blokkityyppi);
+        bitmap = new createjs.Bitmap(tiedostonimi);
     }
-    
-    // blokkinimi = ... tee lyhyt karsittu nimi .... 
-	
-	inFront = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png";
-    through = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ovi.png" || 
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/lamppu.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allastaTikapuilla.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/uima-allasta.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Boxi.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/satelliteMess.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall3x3.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/OikeastiIkkuna.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/Ohjauspaneeli.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalue.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall2x2.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ShipWall.png" ||
-		blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/komentosiltataulu" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/taustatasanne.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaOikealle.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/komentosiltataulu.png";
+
+	inFront = blokkityyppi == "Vahtimistorni.png";
+    through = blokkityyppi == "Ovi.png" || 
+        blokkityyppi == "lamppu.png" ||
+        blokkityyppi == "uima-allastaTikapuilla.png" ||
+        blokkityyppi == "uima-allasta.png" ||
+        blokkityyppi == "auringonottotuoli.png" ||
+        blokkityyppi == "Boxi.png" ||
+        blokkityyppi == "VahtimistorniTaustalla.png" ||
+        blokkityyppi == "satelliteMess.png" ||
+        blokkityyppi == "ShipWall3x3.png" ||
+        blokkityyppi == "OikeastiIkkuna.png" ||
+        blokkityyppi == "Ohjauspaneeli.png" ||
+        blokkityyppi == "hiilausalue.png" ||
+        blokkityyppi == "ammoFromSystem.png" ||
+        blokkityyppi == "ShipWall2x2.png" ||
+        blokkityyppi == "ShipWall.png" ||
+		blokkityyppi == "hiilausalueanimointi.png" ||
+        blokkityyppi == "komentosiltataulu" ||
+        blokkityyppi == "taustatasanne.png" ||
+        blokkityyppi == "portaatAlhaaltaOikealle.png" ||
+        blokkityyppi == "portaatAlhaaltaVasemmalle.png" ||
+        blokkityyppi == "veteraaninStabilisointilaite.png" ||
+        blokkityyppi == "komentosiltataulu.png";
         
-    functioning = blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/ammoFromSystem.png";
+    functioning = blokkityyppi == "hiilausalueanimointi.png" ||
+        blokkityyppi == "ammoFromSystem.png";
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -183,7 +182,7 @@ var cruiser = [
     '........................CCCCCCCCCCC...Q..C..........................................................',
     '........................C.........CCqqw..C..........................................................',
     '.......................sC.............QqqC..........................................................',
-    '........................C............Q.qAC..........................................................',
+    '........................C............Q..AC..........................................................',
     '........................C...........CCCCCC....................................oo...........H........',
     '..................Y.....C....QqqqqCCCCCCCC..........oooo......................oo....................',
     '.h................y....O....Q.............O.........oooo.......oo.............oo..........ooo.......',
