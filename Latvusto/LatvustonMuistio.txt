@@ -19,6 +19,8 @@
     Näkökentän teko (ammutaan näkymättömiä projektiileja pelaajien välillä --> katotaan onko 90 asteen sisällä ja onko seinämiä välissä)
     
     HP liitää muilla klienteillä aina ollessaan ilmassa.
+    
+    Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
 
 PIENIÄ NOUTTEJA
 

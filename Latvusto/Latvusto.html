@@ -27,6 +27,7 @@ var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
 var aloitusSuoritettu = false; 
 var kuteja = 6;
+var kuditMukana = 9;
 var latauksenKronologinenProsessi = 0;
 var hahmovalintanappulat = [{x: 92, y: 94, tyyppi: "HP"}, {x: 92, y: 279, tyyppi: "Veteraani"}, {x: 92, y: 453, tyyppi: "Humanoidi"}];
 var mouseOverRectangle;
@@ -161,6 +162,7 @@ function selviytymispisteasetus(){
 
 function kutiIlmoitus(){
 	$("#Kudit").text("Kuteja: " + kuteja);
+    $("#kuditMukana").text("Mukana olevat kudit: " + kuditMukana);
 }
 
 function readyToStart(){
@@ -172,6 +174,7 @@ function readyToStart(){
 }
 
 function aloitaPeli(){
+    kutiIlmoitus();
 	var canvas = document.getElementById('Pelialue');
     canvas.removeEventListener('mousemove', hiirisijainti);
 	var TestiTausta = new createjs.Shape();
@@ -379,7 +382,10 @@ function YVauhti(id) {
 function aseenLataaminen(){
 	latauksenKronologinenProsessi = latauksenKronologinenProsessi + 1 / fps;
 	if(latauksenKronologinenProsessi > 3){
-		kuteja = 6;
+        var otetutKudit = 6 - kuteja;
+        var ladatutKudit = otetutKudit > kuditMukana ? kuditMukana : otetutKudit;
+        kuteja = kuteja + ladatutKudit;
+        kuditMukana = kuditMukana - ladatutKudit;
 		latauksenKronologinenProsessi = 0;
 		kutiIlmoitus();
 	}
@@ -714,6 +720,7 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <button onclick = "resetointi()">Resetointi</button>
 <span id = "Survivability"></span>
 <span id = "Kudit"></span>
+<span id = "kuditMukana"></span>
 <br>
 <span id = "debuggaus"></span>
 <br>
