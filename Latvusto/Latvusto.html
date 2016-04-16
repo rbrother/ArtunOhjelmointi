@@ -473,7 +473,8 @@ function playerVisibility(id, pelaaja){
 }
 
 function updateSurvivability(){
-    $("#Survivability").text("Selviytymisprosenttina " + pelaajaTiedot[omaId].selviytyminen + "%");
+    var selviytymisprosentti = Math.floor(pelaajaTiedot[omaId].selviytyminen);
+    $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
 }
 
 function liikuta(id) {
@@ -485,6 +486,7 @@ function liikuta(id) {
     var touchingThrough = touchingThroughBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
     if(touchingThrough == "Kuva-aineisto/LopullinenKouludemo/hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
+        if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
         updateSurvivability();
     }
 	var painovoima = -0.33;
@@ -571,7 +573,7 @@ function touchingThroughBlock(ux1, uy1, leveys, korkeus){
         if(blokki.through && kosketus == ""){
             kosketus = KoskettaakoHahmoBlokkia( ux1, uy1, leveys, korkeus, blokki.x, blokki.y, 0, 0 );
             if(kosketus != ""){
-                blokinBlokkityyppi == blokki.blokkityyppi;
+                blokinBlokkityyppi = blokki.blokkityyppi;
             }
         }
     })
