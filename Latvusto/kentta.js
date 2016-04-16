@@ -26,7 +26,7 @@ function makeStage(){
             if(merkki == 'R'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/auringonottotuoli.png");}
             if(merkki == 'b'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Boxi.png");}
             if(merkki == 'Y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/Vahtimistorni.png");}
-            if(merkki == 'y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/VahtimistorniTaustalla.png");}
+            if(merkki == 'y'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/emptyBackground.png");}
             if(merkki == 's'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"Kuva-aineisto/LopullinenKouludemo/satelliteMess.png");}
@@ -76,7 +76,8 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/taustatasanne.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaOikealle.png" ||
         blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/portaatAlhaaltaVasemmalle.png" ||
-        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png";
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/veteraaninStabilisointilaite.png" ||
+        blokkityyppi == "Kuva-aineisto/LopullinenKouludemo/komentosiltataulu.png";
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -167,9 +168,9 @@ var cruiser = [
     '..................................S......S..........................................................',
     '....................................................................................................',
     '.............................CCCCCCCCCCCCCCCCC......................................................',
-    '............................sC.W.....:.......C......................................................',
-    '.............................C.....I...I.....C......................................................',
-    '.............................C.............KKC......................................................',
+    '............................sC..W.....:......C......................................................',
+    '.............................C......I...I....C......................................................',
+    '.............................C....V........KKC......................................................',
     '............................mCCCCCC......CCCCC......................................................',
     '............................O......qqqqqQC..........................................................',
     '.......................................Q.C..........................................................',
@@ -179,9 +180,9 @@ var cruiser = [
     '.......................sC..............QqC..........................................................',
     '........................C.............Q.AC..........................................................',
     '........................C...........CCCCCC....................................oo...........H........',
-    '..................Y.....C....QqqqqCCCCCCCC..........oooo...............V......oo....................',
+    '..................Y.....C....QqqqqCCCCCCCC..........oooo......................oo....................',
     '.h................y....O....Q.............O.........oooo.......oo.............oo..........ooo.......',
-    '...R..R..UUUUuU............Q........................oooo.......oo....MMMM.....oo..........ooo.......',
+    '...R..R..UUUUuU...y........Q........................oooo.......oo....MMMM.....oo..........ooo.......',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCw...........QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCw.......QCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCCC....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
