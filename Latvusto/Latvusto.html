@@ -671,7 +671,7 @@ function luoHahmo(hahmotyyppi){
     console.log("hahmotyyppi: " + hahmotyyppi);
     var hahmo = {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
-        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 50, elossa: true,
+        Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
 		liito: false};
     blokkienTiedot.forEach(function(blokki){
         if(blokki.inFront){
