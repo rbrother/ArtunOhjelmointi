@@ -239,14 +239,16 @@ function NappiAlas(event) {
 }
 
 function buttonUp(event) {
+    var pelaaja = pelaajaTiedot[omaId];
     if(event.keyCode == 68 || event.keyCode == 65) {   
-        if(pelaajaTiedot[omaId].liito){
-            pelaajaTiedot[omaId].liito = false;
-            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, liito: pelaajaTiedot[omaId].liito};
+        if(pelaaja.liito){
+            pelaaja.liito = false;
+            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, 
+                liito: pelaaja.liito, xVauhti: pelaaja.xVauhti, x: pelaaja.Vaaka, y: pelaaja.Pysty};
             $.post(url,viesti);
         }
-        var xVauhti = pelaajaTiedot[omaId].xVauhti;
-        var yVauhti = pelaajaTiedot[omaId].yVauhti;
+        var xVauhti = pelaaja.xVauhti;
+        var yVauhti = pelaaja.yVauhti;
         if(pelaajaMaassa){
             var oikealle = ( event.keyCode == 68 );
             hyppaaSuuntaan(oikealle, omaId);
@@ -329,7 +331,8 @@ function liikutusNappiAlas(event){
 				pelaaja.xVauhti = -xVauhti;
 			}
 			pelaaja.liito = true;
-            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, liito: pelaaja.liito};
+            var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "liito", pelaaja: omaId, liito: pelaaja.liito, xVauhti: xVauhti, x: pelaaja.Vaaka,
+                y: pelaaja.Pysty};
             $.post(url,viesti);
 		}
 	}
@@ -644,6 +647,10 @@ function VastausViestinKasittely(data, status){
 			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
 		}else if(tyyppi == "liito"){
             pelaaja.liito = viestiServerilt.liito == "true";
+			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
+            pelaaja.oikealle = pelaaja.xVauhti > 0; 
+            pelaaja.Vaaka = Number(viestiServerilt.x);
+            pelaaja.Pysty = Number(viestiServerilt.y);
         }else if(tyyppi == "pelaajaPoistettu"){
             console.log("pelaaja poistetaan!");
             var poistettuPelaaja = viestiServerilt.pelaaja;
