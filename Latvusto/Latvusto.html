@@ -406,8 +406,19 @@ function olemassaIlmoitus(){
 
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
+    var pelaaja = pelaajaTiedot[omaId];
     olemassaIlmoitus();
 	aseenLataaminen();
+    if(!pelaaja.elossa && pelaaja.Pysty > 50 * blokinKoko){
+        var pointit = spawnPointit[pelaaja.hahmotyyppi];
+        console.log("Pelaaja respawnataan!");
+        pelaaja.Vaaka = pointit.x * blokinKoko;
+        pelaaja.Pysty = pointit.y * blokinKoko;
+        pelaaja.hahmoBitmap.scaleY = 1;
+        pelaaja.elossa = true;
+        pelaaja.xVauhti = 0;
+        pelaaja.yVauhti = 0;
+    }
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){		
 			liikuta(id);		
@@ -425,7 +436,6 @@ function liikutuskutsu(){
         }
         hyppyPalkki.scaleX = hyppypituus * 0.13;
         var hyppyPalkkiLeveys = 39 * hyppyPalkki.scaleX;
-        var pelaaja = pelaajaTiedot[omaId];
         hyppyPalkki.x = pelileveys * 0.5 + blokinKoko * 0.5 - hyppyPalkkiLeveys * 0.5;
     }
     blokkienTiedot.forEach(function (blokki){
@@ -483,6 +493,7 @@ function playerVisibility(id, pelaaja){
 
 function updateSurvivability(){
     var selviytymisprosentti = Math.floor(pelaajaTiedot[omaId].selviytyminen);
+    if(pelaajaTiedot[omaId].elossa)return;
     $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
 }
 

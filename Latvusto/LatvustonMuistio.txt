@@ -22,7 +22,7 @@
     
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
     
-    Yksinkertaista blokkien nimiä koodissa.
+    Tee funktio, joka palauttaa oman pelaajan tiedot.  
 
 PIENIÄ NOUTTEJA
 
