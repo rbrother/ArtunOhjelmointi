@@ -22,7 +22,9 @@
     
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
     
-    Tee funktio, joka palauttaa oman pelaajan tiedot.  
+    Tee funktio, joka palauttaa oman pelaajan tiedot. 
+
+    Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
 
 PIENIÄ NOUTTEJA
 

@@ -150,7 +150,6 @@ function mouseOverCharacter(x, y){
 }
 
 function selviytymispisteasetus(){
-    updateSurvivability();
     var random1to100 = Math.floor(Math.random() * 100);
     if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
         $("#Survivability").text(omaId + " neutralisoitu!");
@@ -404,20 +403,26 @@ function olemassaIlmoitus(){
     }
 }
 
+function respawn(pelaaja){
+    pelaaja.selviytyminen = 100;
+    var pointit = spawnPointit[pelaaja.hahmotyyppi];
+    console.log("Pelaaja respawnataan!");
+    pelaaja.Vaaka = pointit.x * blokinKoko;
+    pelaaja.Pysty = pointit.y * blokinKoko;
+    pelaaja.elossa = true;
+    pelaaja.xVauhti = 0;
+    pelaaja.yVauhti = 0;
+}
+
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
     var pelaaja = pelaajaTiedot[omaId];
+    if(pelaaja.elossa) updateSurvivability();
     olemassaIlmoitus();
 	aseenLataaminen();
     if(!pelaaja.elossa && pelaaja.Pysty > 50 * blokinKoko){
-        var pointit = spawnPointit[pelaaja.hahmotyyppi];
-        console.log("Pelaaja respawnataan!");
-        pelaaja.Vaaka = pointit.x * blokinKoko;
-        pelaaja.Pysty = pointit.y * blokinKoko;
-        pelaaja.hahmoBitmap.scaleY = 1;
-        pelaaja.elossa = true;
-        pelaaja.xVauhti = 0;
-        pelaaja.yVauhti = 0;
+        respawn(pelaaja);
+        $.post(url, {viestityyppi: "ilmoitus", ilmoitustyyppi: "respawn", pelaaja: omaId})
     }
     var pelaajanimet = Object.keys(pelaajaTiedot);
     pelaajanimet.forEach (function (id){		
@@ -493,7 +498,6 @@ function playerVisibility(id, pelaaja){
 
 function updateSurvivability(){
     var selviytymisprosentti = Math.floor(pelaajaTiedot[omaId].selviytyminen);
-    if(pelaajaTiedot[omaId].elossa)return;
     $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
 }
 
@@ -508,7 +512,6 @@ function liikuta(id) {
     if(touchingFunctioning == "hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
         if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
-        updateSurvivability();
     }else if(touchingFunctioning == "ammoFromSystem.png"){
         if(id == omaId){
             kuditMukana = 6;
@@ -564,9 +567,7 @@ function liikuta(id) {
 	if(!pelaaja.oikealle){
 		bitmap.x = bitmap.x + blokinKoko;
 	}
-    if(pelaaja.elossa == false){
-        bitmap.scaleY = -skaalaus;
-    }   
+    bitmap.scaleY = pelaaja.elossa ? skaalaus : -skaalaus;    
 }
 
 // KoskettaakoHahmoBlokkia: palauttaa [ kosketus, kohde ],
@@ -647,33 +648,40 @@ function VastausViestinKasittely(data, status){
 		var tyyppi = viestiServerilt.ilmoitustyyppi;
         var id = viestiServerilt.pelaaja;
 		var pelaaja = pelaajaTiedot[id];
-        if(tyyppi == "ampuminen" || tyyppi == "hyppy"){
-            alieeniclientinHyppyJaAmpuminen(viestiServerilt);
-        }else if(tyyppi == "neutralisoituminen"){
-            neutralisoituminen(viestiServerilt);
-        }else if(tyyppi == "sijainti"){
-			pelaaja.Vaaka = Number(viestiServerilt.Vaaka);
-			pelaaja.Pysty = Number(viestiServerilt.Pysty);
-			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
-			pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
-		}else if(tyyppi == "liito"){
-            pelaaja.liito = viestiServerilt.liito == "true";
-			pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
-            pelaaja.oikealle = pelaaja.xVauhti > 0; 
-            pelaaja.Vaaka = Number(viestiServerilt.x);
-            pelaaja.Pysty = Number(viestiServerilt.y);
-        }else if(tyyppi == "pelaajaPoistettu"){
-            console.log("pelaaja poistetaan!");
-            var poistettuPelaaja = viestiServerilt.pelaaja;
-            var pelaajanTiedot = pelaajaTiedot[poistettuPelaaja];
-            stage.removeChild(pelaajanTiedot.hahmoBitmap);
-            delete pelaajaTiedot[poistettuPelaaja];
-    }
+        ilmoitusHandlaus(viestiServerilt, tyyppi, pelaaja);
     }else if(viestiServerilt.viestityyppi == "resetointi"){
 		alert("Resetoidaan...");
 		location.reload();
 	}
     kysyServeriltTapahtumia();
+}
+
+function ilmoitusHandlaus(viestiServerilt, tyyppi, pelaaja){
+    if(tyyppi == "ampuminen" || tyyppi == "hyppy"){
+        alieeniclientinHyppyJaAmpuminen(viestiServerilt);
+    }else if(tyyppi == "neutralisoituminen"){
+        neutralisoituminen(viestiServerilt);
+    }else if(tyyppi == "sijainti"){
+        pelaaja.Vaaka = Number(viestiServerilt.Vaaka);
+        pelaaja.Pysty = Number(viestiServerilt.Pysty);
+        pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
+        pelaaja.yVauhti = Number(viestiServerilt.yVauhti);
+    }else if(tyyppi == "liito"){
+        pelaaja.liito = viestiServerilt.liito == "true";
+        pelaaja.xVauhti = Number(viestiServerilt.xVauhti);
+        pelaaja.oikealle = pelaaja.xVauhti > 0; 
+        pelaaja.Vaaka = Number(viestiServerilt.x);
+        pelaaja.Pysty = Number(viestiServerilt.y);
+    }else if(tyyppi == "pelaajaPoistettu"){
+        console.log("pelaaja poistetaan!");
+        var poistettuPelaaja = viestiServerilt.pelaaja;
+        var pelaajanTiedot = pelaajaTiedot[poistettuPelaaja];
+        stage.removeChild(pelaajanTiedot.hahmoBitmap);
+        delete pelaajaTiedot[poistettuPelaaja];
+    }else if(tyyppi == "respawn"){
+        console.log("Handlataan respawn ilmoitus!");
+        respawn(pelaaja);
+    }   
 }
 
 function neutralisoituminen(viestiServerilt){
