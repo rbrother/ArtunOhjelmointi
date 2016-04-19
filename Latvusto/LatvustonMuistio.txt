@@ -1,25 +1,17 @@
 ﻿TO-DO
 
-    Animaatiot: https://blogs.msdn.microsoft.com/davrous/2012/03/16/html5-gaming-animating-sprites-in-canvas-with-easeljs/
-
 	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
 	
 	Käytä serverin muuttujafunktioita clientillä.
 
-    Laivanseinät muodostuvat monen blokin alueista.
-    
-    Hahmon lähteminen pelistä.
-	
+    Laivan seinät muodostuvat yhdestä kuvasta.
+
 	Kentän teko, taustakuva
 
 	Hahmon valinta (Hahmoinformaation anto), 
 	
 	Erikoisblokit, objektiiviblokit, ammus- ja HP-pickupit.
-    
-    Näkökentän teko (ammutaan näkymättömiä projektiileja pelaajien välillä --> katotaan onko 90 asteen sisällä ja onko seinämiä välissä)
-    
-    HP liitää muilla klienteillä aina ollessaan ilmassa.
-    
+
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
     
     Tee funktio, joka palauttaa oman pelaajan tiedot. 

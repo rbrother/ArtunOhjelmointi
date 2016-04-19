@@ -191,15 +191,14 @@ function aloitaPeli(){
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
         console.log("ALKUVIESTI RESPONSE SAATU");
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
-        pelaajaTiedot[omaId] =  luoHahmo(valittuHahmo);  
+        pelaajaTiedot[omaId] =  luoHahmo(valittuHahmo, omaId);  
+        console.log(pelaajaTiedot[omaId].id);
         selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
-        var pelaajanimet = Object.keys(muidenPelaajienTiedot);
-        pelaajanimet.forEach(function(pelaajanimi){
-          if(pelaajanimi != omaId){
-            var tyyppi = muidenPelaajienTiedot[pelaajanimi].hahmotyyppi;
-            toisenHahmonLuonti(tyyppi, pelaajanimi);
+        objectValues(muidenPelaajienTiedot).forEach(function(pelaaja){
+          if(pelaaja.id != omaId){
+            toisenHahmonLuonti(pelaaja.hahmotyyppi, pelaaja.id);
           }
         });
         aloitusSuoritettu = true;
@@ -424,9 +423,9 @@ function liikutuskutsu(){
         respawn(pelaaja);
         $.post(url, {viestityyppi: "ilmoitus", ilmoitustyyppi: "respawn", pelaaja: omaId})
     }
-    var pelaajanimet = Object.keys(pelaajaTiedot);
-    pelaajanimet.forEach (function (id){		
-			liikuta(id);		
+    objectValues(pelaajaTiedot).forEach (function (toinenPelaaja){
+        // debuggaa mitä attribuutteja on toinenPelaaja objektilla?
+		liikuta(toinenPelaaja);		
     })
     var hyppylatauskerroin = 1;
     if(pelaajaTiedot[omaId].hahmotyyppi == "HP"){
@@ -464,7 +463,7 @@ function viivapoisto(pelaaja){
         }
     }
 }
-function playerVisibility(id, pelaaja){
+function playerVisibility(pelaaja){
     //console.log("Visuaaliseen tarkasteluun tullaan!")
 	var oma = pelaajaTiedot[omaId];
 	var distanceX = oma.Vaaka - pelaaja.Vaaka;
@@ -501,11 +500,11 @@ function updateSurvivability(){
     $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
 }
 
-function liikuta(id) {
-	var pelaaja = pelaajaTiedot[id];
+function liikuta(pelaaja) {
+    $("#debuggaus").text("pelaaja.id: " + pelaaja.id);
     if (pelaaja == undefined) return;
-	if(id != omaId){
-		playerVisibility(id, pelaaja);
+	if(pelaaja.id != omaId){
+		playerVisibility(pelaaja);
 	}
     var touchingFunctioning = touchingFunctioningBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
     
@@ -513,7 +512,7 @@ function liikuta(id) {
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
         if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
     }else if(touchingFunctioning == "ammoFromSystem.png"){
-        if(id == omaId){
+        if(pelaaja.id == omaId){
             kuditMukana = 6;
             kutiIlmoitus();
         }
@@ -526,10 +525,10 @@ function liikuta(id) {
     var newX = pelaaja.Vaaka + pelaaja.xVauhti;
     var newY = pelaaja.Pysty + pelaaja.yVauhti;
     var pattitilanne = KoskettaakoHahmoMitaanBlokkia( pelaaja.Vaaka, pelaaja.Pysty, 
-        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
+        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, pelaaja.id);
     var pattitilannePelaaja = (pattitilanne[0] ==  "x" || pattitilanne[0] == "y") && pattitilanne[1] != ""; 
     var kosketustsekkaus = KoskettaakoHahmoMitaanBlokkia( newX, newY, 
-        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, id);
+        blokinKoko, blokinKoko, pelaaja.Vaaka, pelaaja.Pysty, pelaaja.id);
     var kosketuspelaaja = kosketustsekkaus[1] != "";
     
     if(pelaaja.elossa && kosketustsekkaus[0] != "" && !( pattitilannePelaaja && kosketuspelaaja ) ) {
@@ -545,7 +544,7 @@ function liikuta(id) {
                 //lattiakosketus
                 pelaaja.xVauhti = 0;
                 pelaaja.yVauhti = 0;    
-                if ( omaId == id ) pelaajaMaassa = true;            
+                if ( omaId == pelaaja.id ) pelaajaMaassa = true;            
             }
         }
     } else {
@@ -555,7 +554,7 @@ function liikuta(id) {
     }
 
     var bitmap = pelaaja.hahmoBitmap;
-    if(id == omaId){
+    if(pelaaja.id == omaId){
         bitmap.x = pelileveys * 0.5;
         bitmap.y = pelikorkeus * 0.5;
     } else {
@@ -575,13 +574,11 @@ function liikuta(id) {
 function KoskettaakoHahmoMitaanBlokkia( ukkoX, ukkoY, leveys, korkeus, viimeX, viimeY, id ) {
     var kosketettavanID = "";
     var kosketus = "";
-    var pelaajanimet = Object.keys(pelaajaTiedot);
-    pelaajanimet.forEach (function(pelaajanimi){
-        var pelaaja = pelaajaTiedot[pelaajanimi];
-        if(pelaajanimi != id && kosketus != "y" && kosketus != "x"){
+    objectValues(pelaajaTiedot).forEach (function(pelaaja){
+        if(pelaaja.id != id && kosketus != "y" && kosketus != "x"){
             kosketus = KoskettaakoHahmoBlokkia(ukkoX, ukkoY, leveys, korkeus, pelaaja.Vaaka, pelaaja.Pysty, viimeX, viimeY);
             if(kosketus == "x" || kosketus == "y"){
-                kosketettavanID = pelaajanimi;
+                kosketettavanID = pelaaja.id;
             }    
         }
     });
@@ -704,12 +701,12 @@ function alieeniclientinHyppyJaAmpuminen(vS){
 }
 
 function toisenHahmonLuonti(valittuHahmo, toinenPelaaja){
-    pelaajaTiedot[toinenPelaaja] = luoHahmo(valittuHahmo);
+    pelaajaTiedot[toinenPelaaja] = luoHahmo(valittuHahmo, toinenPelaaja);
 }
 
-function luoHahmo(hahmotyyppi){
+function luoHahmo(hahmotyyppi, id){
     console.log("hahmotyyppi: " + hahmotyyppi);
-    var hahmo = {hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
+    var hahmo = { id: id, hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
         Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
 		liito: false};
@@ -743,7 +740,22 @@ function resetointi(){
 	location.reload();
 }
 
-    
+function objectsAttributeValues(array,attribute){
+	var newArray = array.map(function(unit){
+		return unit[attribute];
+	})
+	return newArray;
+}
+
+function objectValues(object){
+	var values = [];
+	var attributes = Object.keys(object);	
+	attributes.forEach(function(attribute){
+		values.push(object[attribute]);	
+	})
+	return values;
+}
+  
  </script>
 </head>
 <body>
