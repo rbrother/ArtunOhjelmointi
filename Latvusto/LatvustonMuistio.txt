@@ -2,7 +2,7 @@
 
 	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
 	
-	Käytä serverin muuttujafunktioita clientillä.
+	Käytä serverin muuttujafunktioita clientillä (Tehty?). 
 
     Laivan seinät muodostuvat yhdestä kuvasta.
 
@@ -17,6 +17,8 @@
     Tee funktio, joka palauttaa oman pelaajan tiedot. 
 
     Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
+    
+    Audion äänenvoimakkuus: http://www.w3schools.com/jsref/prop_audio_volume.asp
 
 PIENIÄ NOUTTEJA
 

@@ -268,10 +268,28 @@ function visuaalisestaMaailmaan(visX, visY){
 }
 
 function ampuminen(pelaajaId){
+
     // Tänne tullaan, jos W-näppäintä painetaan.
+    var audiovolume = 1;
+    var distance;
+    var pelaaja = pelaajaTiedot[pelaajaId];
+    var oma = pelaajaTiedot[omaId];
+    if(pelaajaId != omaId){
+        var distanceX = Math.abs(oma.Vaaka - pelaaja.Vaaka);
+        var distanceY = Math.abs(oma.Pysty - pelaaja.Pysty);
+        if(distanceX < distanceY){
+            distance = distanceY;
+        }else{
+            distance = distanceX;
+        }
+        while(distance >= 0 && distance >= blokinKoko * 10 && audiovolume != 0.2){
+            distance = distance - 10 * blokinKoko;
+            audiovolume = audiovolume - 0.2;
+        }
+    }
+    laukausAudio.volume = audiovolume;
     laukausAudio.play();
 
-    var pelaaja = pelaajaTiedot[pelaajaId];
 	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
@@ -302,7 +320,7 @@ function ampuminen(pelaajaId){
     var uhriId = KoskettaakoHahmoMitaanBlokkia(viivatsekkausX, viivatsekkausY, 1, 1, 0, 0, pelaajaId)[1];
     if(uhriId == "")return;
     var uhri = pelaajaTiedot[uhriId];
-    var distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
+    distance = Math.abs(uhri.Vaaka - pelaaja.Vaaka);
     var distanceDivided = Math.floor(distance / blokinKoko);
     var falloff = distanceDivided > 3 ? 3 : distanceDivided;
 	var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
@@ -516,7 +534,25 @@ function liikuta(pelaaja) {
             kuditMukana = 6;
             kutiIlmoitus();
         }
+    }else if(touchingFunctioning == "objektiiviovi"){
+        //var processChange;
+        //if(pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi"){
+            console.log("HP tai Humanoidi avaamassa!");
+            //processChange = 6.66;
+        //}else{
+            //processChange = -6.66;
+        //}
+        //openingProcess = openingProcess + processChange;
+        //$.post(Viesti oven avaamisesta);
+        //var openingProcessText = "";
+        //var toBeDecreasedProcess = openingProcess;
+        //while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
+            //toBeDecreasedProcess = toBeDecreasedProcess - 10;
+            //openingProcessText = openingProcessText + "|";
+        //}
+        //$("objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
     }
+    
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
 		painovoima = painovoima * 0.25;
@@ -767,6 +803,8 @@ Nimi <input type="text" id="pelaajaNimi"/>
 <span id = "kuditMukana"></span>
 <br>
 <span id = "debuggaus"></span>
+<br>
+<span id = "objektiiviovi"></span>
 <br>
 <canvas id="Pelialue" width="1024" height="650">
 </canvas>

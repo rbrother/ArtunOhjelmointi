@@ -30,7 +30,7 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"satelliteMess.png");}
-            //if(merkki == '-'){BlokkiaLisaa(x,y," ShipWall3x3.png");}
+            if(merkki == '-'){BlokkiaLisaa(x,y,"objektiiviovi");}
             //if(merkki == '.'){BlokkiaLisaa(x,y," ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"OikeastiIkkuna.png");}
@@ -78,10 +78,12 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "portaatAlhaaltaOikealle.png" ||
         blokkityyppi == "portaatAlhaaltaVasemmalle.png" ||
         blokkityyppi == "veteraaninStabilisointilaite.png" ||
-        blokkityyppi == "komentosiltataulu.png";
+        blokkityyppi == "komentosiltataulu.png" ||
+        blokkityyppi == "objektiiviovi";
         
     functioning = blokkityyppi == "hiilausalueanimointi.png" ||
-        blokkityyppi == "ammoFromSystem.png";
+        blokkityyppi == "ammoFromSystem.png" ||
+        blokkityyppi == "objektiiviovi"
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -195,7 +197,7 @@ var cruiser = [
     'C.................CCCCCCCCC................aaaaa....................................................',
     'C.................C.......C................aaaaa....................................................',
     'C..............................CCCCC.......LLLLL.........................MMMMM......................',
-    'C..............C..............CCXXXCCCC.............CCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC.',
+    'C..............C..............CCXXXCCCC.............CCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
     'C..............CCCCCCCCCCCCCCCCCCCCCCCC.............CXXXC..........................CXXXXXXXCC.......',
     'C..........................................CCCCC....CXXXC..........................CXXXXXXCC........',
     'C...................................................CXCCCCCCCCCCCCCCCCCCCCCCCCC....CXXXXXCC.........',
