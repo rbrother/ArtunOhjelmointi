@@ -68,7 +68,7 @@ function vastaaViestiin(viestiClientilta, response) {
 	    var pelaajaNimi = viestiClientilta.pelaaja;
 		console.log('Uusi pelaaja, nimi: ' + pelaajaNimi + '    Hahmotyyppi: ' + viestiClientilta.valittuHahmo);
         var vastausViesti = {muidenPelaajienTiedot: serveripelaajaTiedot};
-        serveripelaajaTiedot[pelaajaNimi] = { hahmotyyppi : viestiClientilta.valittuHahmo};
+        serveripelaajaTiedot[pelaajaNimi] = { id: pelaajaNimi, hahmotyyppi : viestiClientilta.valittuHahmo};
 		console.log(viestiClientilta.valittuHahmo);
         vastaaTapahtumailmoitukseen(viestiClientilta, response, vastausViesti);
 	}else if(viestityyppi == "resetointi"){
