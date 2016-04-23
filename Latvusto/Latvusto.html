@@ -189,7 +189,7 @@ function aloitaPeli(){
       contentType: "application/json; charset=utf-8"
     });
     $.post (url, alkuviesti, function (serverinVastausTeksti, status){
-        console.log("ALKUVIESTI RESPONSE SAATU");
+        console.log("ALKUVIESTI RESPONSE SAATU: " + serverinVastausTeksti);
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
         pelaajaTiedot[omaId] =  luoHahmo(valittuHahmo, omaId);  
         console.log(pelaajaTiedot[omaId].id);
@@ -519,7 +519,6 @@ function updateSurvivability(){
 }
 
 function liikuta(pelaaja) {
-    $("#debuggaus").text("pelaaja.id: " + pelaaja.id);
     if (pelaaja == undefined) return;
 	if(pelaaja.id != omaId){
 		playerVisibility(pelaaja);
