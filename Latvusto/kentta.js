@@ -30,7 +30,7 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"satelliteMess.png");}
-            if(merkki == '-'){BlokkiaLisaa(x,y,"objektiiviovi");}
+            if(merkki == '-'){BlokkiaLisaa(x,y,"objektiiviovi.png");}
             //if(merkki == '.'){BlokkiaLisaa(x,y," ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"OikeastiIkkuna.png");}
@@ -79,11 +79,11 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "portaatAlhaaltaVasemmalle.png" ||
         blokkityyppi == "veteraaninStabilisointilaite.png" ||
         blokkityyppi == "komentosiltataulu.png" ||
-        blokkityyppi == "objektiiviovi";
+        blokkityyppi == "objektiiviovi.png";
         
     functioning = blokkityyppi == "hiilausalueanimointi.png" ||
         blokkityyppi == "ammoFromSystem.png" ||
-        blokkityyppi == "objektiiviovi"
+        blokkityyppi == "objektiiviovi.png"
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -187,7 +187,7 @@ var cruiser = [
     '......................sC.............Q..AC..........................................................',
     '.......................C............CCCCCC....................................oo...........H........',
     '................Y......C...QqqqqqCCCCCCCCC..........oooo......................oo....................',
-    '.h..............y......C..Q......aa.......O..oo.....oooo.......oo.............oo..........ooo.......',
+    '................y......C..Q......aa.......O..oo.....oooo.......oo.............oo..........ooo.......',
     //keittiöön flännkäysretti lampun oikealle puolelle kattoon.
     '...R..R..UUUUuU.y......CCCw......LL..........oo.MMM.oooo.......oo....MMMM.....oo..........ooo.......',
     'CCCCCCCCCCCCCCCCCCCCCCCCXCCw...........QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
@@ -219,9 +219,9 @@ var cruiser = [
     'CXC..............A........C...............................................CCCvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC.............CCC..C....C..............M................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C....C.....C...C...CCC..CC...........CCCCCCCCCCC...CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC..................C...CCC......................-.......C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC..........C.......C....................................C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC....MMM...C.....................................................CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC..................C...CCC..............................C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC..........C.......C......................h.............C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC....MMM...C....................................-.C..............CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
 
     /*

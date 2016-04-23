@@ -35,6 +35,7 @@ var valittuHahmo;
 var varatutHahmot = [];
 var ilmoituksenAika = 0;
 var fps = 30;
+var openingProcess = 0;
 
 // pelaajaTiedot:
 // { 
@@ -533,23 +534,17 @@ function liikuta(pelaaja) {
             kuditMukana = 6;
             kutiIlmoitus();
         }
-    }else if(touchingFunctioning == "objektiiviovi"){
-        //var processChange;
-        //if(pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi"){
-            console.log("HP tai Humanoidi avaamassa!");
-            //processChange = 6.66;
-        //}else{
-            //processChange = -6.66;
-        //}
-        //openingProcess = openingProcess + processChange;
-        //$.post(Viesti oven avaamisesta);
-        //var openingProcessText = "";
-        //var toBeDecreasedProcess = openingProcess;
-        //while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
-            //toBeDecreasedProcess = toBeDecreasedProcess - 10;
-            //openingProcessText = openingProcessText + "|";
-        //}
-        //$("objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
+    }else if(touchingFunctioning == "objektiiviovi.png"){
+        var processChange = pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi" ? 6.66 / fps : -6.66 / fps;
+        openingProcess = openingProcess + processChange;
+        var openingProcessText = "";
+        var toBeDecreasedProcess = openingProcess;
+        while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
+            toBeDecreasedProcess = toBeDecreasedProcess - 10;
+            openingProcessText = openingProcessText + "|";
+            
+        }
+        $("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
     }
     
 	var painovoima = -0.33;
