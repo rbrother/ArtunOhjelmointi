@@ -271,7 +271,7 @@ function visuaalisestaMaailmaan(visX, visY){
 function ampuminen(pelaajaId){
 
     // Tänne tullaan, jos W-näppäintä painetaan.
-    var audiovolume = 1;
+    var audiovolume = 0.8;
     var distance;
     var pelaaja = pelaajaTiedot[pelaajaId];
     var oma = pelaajaTiedot[omaId];
@@ -283,14 +283,16 @@ function ampuminen(pelaajaId){
         }else{
             distance = distanceX;
         }
-        while(distance >= 0 && distance >= blokinKoko * 10 && audiovolume != 0.2){
+        while(distance >= blokinKoko * 10 && audiovolume <= 0){
             distance = distance - 10 * blokinKoko;
             audiovolume = audiovolume - 0.2;
         }
+        //if(audiovolume == 0)audiovolume = 0.05
+        //Funktion muutosten jälkeen ääni ei jostakin syystä pienene vaikka ennen muutoksia teki niin.
+        laukausAudio.volume = audiovolume;
+        laukausAudio.play();
     }
-    laukausAudio.volume = audiovolume;
-    laukausAudio.play();
-
+    
 	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;
     var viivatsekkausX = pelaaja.Vaaka + suuntanumero * blokinKoko;
@@ -525,6 +527,7 @@ function liikuta(pelaaja) {
 		playerVisibility(pelaaja);
 	}
     var touchingFunctioning = touchingFunctioningBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
+    //if(pelaaja.hahmotyyppi == "Veteraani")veteranWasOnObjective = false;
     
     if(touchingFunctioning == "hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
@@ -535,14 +538,17 @@ function liikuta(pelaaja) {
             kutiIlmoitus();
         }
     }else if(touchingFunctioning == "objektiiviovi.png"){
-        var processChange = pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi" ? 6.66 / fps : -6.66 / fps;
+        /*if(pelaaja.hahmotyyppi == "Veteraani"){
+            veteranWasOnObjective = true;
+        }*/
+        var processChange = (pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi") /*&& !veteranWasOnObjective*/ ? 6.66 / fps : -6.66 / fps;
+
         openingProcess = openingProcess + processChange;
         var openingProcessText = "";
         var toBeDecreasedProcess = openingProcess;
         while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
             toBeDecreasedProcess = toBeDecreasedProcess - 10;
-            openingProcessText = openingProcessText + "|";
-            
+            openingProcessText = openingProcessText + "|";       
         }
         $("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
     }

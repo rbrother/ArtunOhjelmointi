@@ -184,13 +184,13 @@ var cruiser = [
     '.......................CCCCCCCC.......Q..C..........................................................',
     '.......................C......CCCCCCqqw..C..........................................................',
     '.......................C..............QqqC..........................................................',
-    '......................sC.............Q..AC..........................................................',
-    '.......................C............CCCCCC....................................oo...........H........',
-    '................Y......C...QqqqqqCCCCCCCCC..........oooo......................oo....................',
-    '................y......C..Q......aa.......O..oo.....oooo.......oo.............oo..........ooo.......',
+    '......................sC.............Q..AC...................................ooo....................',
+    '.......................C..............CCCC...................................ooo...........H........',
+    '................Y......C...QqqqqqCC....CCC..........oooo.....................ooo....................',
+    '.h..............y......C..Q......aa.......O..oo.....oooo.......oo............ooo..........ooo.......',
     //keittiöön flännkäysretti lampun oikealle puolelle kattoon.
-    '...R..R..UUUUuU.y......CCCw......LL..........oo.MMM.oooo.......oo....MMMM.....oo..........ooo.......',
-    'CCCCCCCCCCCCCCCCCCCCCCCCXCCw...........QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    '...R..R..UUUUuU.y......CCCw......aa..........oo.MMM.oooo.......oo....MMMM....ooo..........ooo.......',
+    'CCCCCCCCCCCCCCCCCCCCCCCCXCCw.....LL....QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCw.......QCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
     'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCCC....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
@@ -220,7 +220,7 @@ var cruiser = [
     'CXC.............CCC..C....C..............M................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C....C.....C...C...CCC..CC...........CCCCCCCCCCC...CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C...CCC..............................C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC..........C.......C......................h.............C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC..........C.......C....................................C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC....MMM...C....................................-.C..............CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
 
