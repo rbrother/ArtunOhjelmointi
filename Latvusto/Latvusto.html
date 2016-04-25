@@ -39,10 +39,10 @@ var openingProcess = 0;
 
 // pelaajaTiedot:
 // { 
-//   id1: { pelaajaTiedot[omaId].hahmotyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
+//   id1: { oma().hahmotyyppi: "Veteraani", hahmoBitmap: <bitmap>, 
 //          Vaaka: 54, Pysty: 50, xVauhti: 3.6, yVauhti: -2.5, oikealle: true,
 //          ampumisviiva: <bitmap>, ampumisLaskuri: 0, elossa: true }, 
-//   id2: { pelaajaTiedot[omaId].hahmotyyppi: "HP", ... }, 
+//   id2: { oma().hahmotyyppi: "HP", ... }, 
 //   ...    
 // } 
 var pelaajaTiedot = {};     
@@ -63,6 +63,10 @@ var pelaajaTiedot = {};
   //var pelaajanimet = Object.keys(pelaajaTiedot);
   //pelaajanimet.forEach (function (id){
   //  liikuta(id)
+  
+function oma(){
+    return pelaajaTiedot[omaId];
+}  
 
 function getMousePos(canvas, evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -152,10 +156,10 @@ function mouseOverCharacter(x, y){
 
 function selviytymispisteasetus(){
     var random1to100 = Math.floor(Math.random() * 100);
-    if(random1to100 > pelaajaTiedot[omaId].selviytyminen){
+    if(random1to100 > oma().selviytyminen){
         $("#Survivability").text(omaId + " neutralisoitu!");
         var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "neutralisoituminen"};
-        pelaajaTiedot[omaId].elossa = false;
+        oma().elossa = false;
         $.post(url, viesti);
     }
 }
@@ -193,7 +197,6 @@ function aloitaPeli(){
         console.log("ALKUVIESTI RESPONSE SAATU: " + serverinVastausTeksti);
         var parsittuVastaus = jQuery.parseJSON (serverinVastausTeksti);
         pelaajaTiedot[omaId] =  luoHahmo(valittuHahmo, omaId);  
-        console.log(pelaajaTiedot[omaId].id);
         selviytymispisteasetus();
         
         var muidenPelaajienTiedot = parsittuVastaus.muidenPelaajienTiedot;
@@ -220,25 +223,25 @@ function aloitaPeli(){
 
 function NappiAlas(event) { 
     if(aloitusSuoritettu == false)return;
-    if(pelaajaTiedot[omaId].elossa == false) return;
+    if(oma().elossa == false) return;
     if(event.keyCode == 68 || event.keyCode == 65) {
         liikutusNappiAlas(event);
     }
 
-    if (event.keyCode == 87 && pelaajaTiedot[omaId].ampumisviiva == undefined){
+    if (event.keyCode == 87 && oma().ampumisviiva == undefined){
 		latauksenKronologinenProsessi = 0;
 		if(kuteja < 1)return;
 		kuteja = kuteja - 1;
 		kutiIlmoitus();
         ampuminen(omaId);
         var viesti = {viestityyppi: "ilmoitus", ilmoitustyyppi: "ampuminen", pelaaja: omaId, 
-            hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
+            hahmonX: oma().Vaaka, hahmonY: oma().Pysty};
         $.post(url, viesti);  
     }
 }
 
 function buttonUp(event) {
-    var pelaaja = pelaajaTiedot[omaId];
+    var pelaaja = oma();
     if(event.keyCode == 68 || event.keyCode == 65) {   
         if(pelaaja.liito){
             pelaaja.liito = false;
@@ -257,28 +260,26 @@ function buttonUp(event) {
 }
 
 function maailmastaVisuaaliseen(maailmaX, maailmaY){
-	var visX = maailmaX + (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-	var visY = maailmaY + (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	var visX = maailmaX + (pelileveys * 0.5 - oma().Vaaka);
+	var visY = maailmaY + (pelikorkeus * 0.5 - oma().Pysty);
 	return [visX, visY];
 }
 
 function visuaalisestaMaailmaan(visX, visY){
-	var maailmaX = visX - (pelileveys * 0.5 - pelaajaTiedot[omaId].Vaaka);
-	var maailmaY = visY - (pelikorkeus * 0.5 - pelaajaTiedot[omaId].Pysty);
+	var maailmaX = visX - (pelileveys * 0.5 - oma().Vaaka);
+	var maailmaY = visY - (pelikorkeus * 0.5 - oma().Pysty);
 	return [maailmaX, maailmaY];
 }
 
 function ampuminen(pelaajaId){
-
     var distance;
     var pelaaja = pelaajaTiedot[pelaajaId];
-    var oma = pelaajaTiedot[omaId];
     if(pelaajaId != omaId){
-        var distanceX = Math.abs(oma.Vaaka - pelaaja.Vaaka);
-        var distanceY = Math.abs(oma.Pysty - pelaaja.Pysty);
+        var distanceX = Math.abs(oma().Vaaka - pelaaja.Vaaka);
+        var distanceY = Math.abs(oma().Pysty - pelaaja.Pysty);
         distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
         var audiovolume = 0.8 * (1.0 - distance / (blokinKoko*20.0));
-        if(audiovolume <= 0.1)audiovolume = 0.1;
+        if(audiovolume <= 0.1) audiovolume = 0.1;
         laukausAudio.volume = audiovolume;
         laukausAudio.play();
     }
@@ -322,7 +323,7 @@ function ampuminen(pelaajaId){
 }
 
 function liikutusNappiAlas(event){
-	var pelaaja = pelaajaTiedot[omaId];
+	var pelaaja = oma();
     var xVauhti = pelaaja.xVauhti;
     var yVauhti = pelaaja.yVauhti;
     if (pelaaja.hahmotyyppi == "Veteraani"){
@@ -361,11 +362,11 @@ function liikutusNappiAlas(event){
 function hyppaaSuuntaan(oikealle){
     var suunta = -1;
     if ( oikealle ) suunta = +1;
-    if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi") {
+    if(oma().hahmotyyppi == "Humanoidi") {
         hyppypituus = hyppypituus / 10 * 15;
     }
     var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "hyppy", hyppypituus: hyppypituus, 
-        suunta: suunta, hahmonX: pelaajaTiedot[omaId].Vaaka, hahmonY: pelaajaTiedot[omaId].Pysty};
+        suunta: suunta, hahmonX: oma().Vaaka, hahmonY: oma().Pysty};
     $.post(url, viesti);  
     aloitaHyppy(hyppypituus, suunta, omaId);
     nappiPohjassa = false;
@@ -426,7 +427,7 @@ function respawn(pelaaja){
 
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
-    var pelaaja = pelaajaTiedot[omaId];
+    var pelaaja = oma();
     if(pelaaja.elossa) updateSurvivability();
     olemassaIlmoitus();
 	aseenLataaminen();
@@ -439,9 +440,9 @@ function liikutuskutsu(){
 		liikuta(toinenPelaaja);		
     })
     var hyppylatauskerroin = 1;
-    if(pelaajaTiedot[omaId].hahmotyyppi == "HP"){
+    if(oma().hahmotyyppi == "HP"){
         hyppylatauskerroin = 1.25;
-    } else if(pelaajaTiedot[omaId].hahmotyyppi == "Humanoidi"){
+    } else if(oma().hahmotyyppi == "Humanoidi"){
         hyppylatauskerroin = 0.666;
     }
   
@@ -475,19 +476,19 @@ function viivapoisto(pelaaja){
     }
 }
 function playerVisibility(pelaaja){
-    //console.log("Visuaaliseen tarkasteluun tullaan!")
-	var oma = pelaajaTiedot[omaId];
-	var distanceX = oma.Vaaka - pelaaja.Vaaka;
-	var distanceY = oma.Pysty - pelaaja.Pysty;
+
+	var omaPelaaja = oma();
+	var distanceX = omaPelaaja.Vaaka - pelaaja.Vaaka;
+	var distanceY = omaPelaaja.Pysty - pelaaja.Pysty;
     var matalaKulma = Math.abs(distanceY) < Math.abs(distanceX);
-    var oikeaSuunta = (oma.oikealle && pelaaja.Vaaka > oma.Vaaka) || (!oma.oikealle && pelaaja.Vaaka < oma.Vaaka);
+    var oikeaSuunta = (omaPelaaja.oikealle && pelaaja.Vaaka > omaPelaaja.Vaaka) || (!omaPelaaja.oikealle && pelaaja.Vaaka < omaPelaaja.Vaaka);
     var osunutPelaajaan = false;
     var stepAmount = 0;
     if(matalaKulma && oikeaSuunta){
         var pienempiSteppi = Math.abs(blokinKoko * distanceY / distanceX);
-        var testiprojektiili = [oma.Vaaka + 0.5 * blokinKoko, oma.Pysty + 0.5 * blokinKoko];
-        var miinusTaiPlussaX = oma.oikealle ? +1 : -1;
-        var miinusTaiPlussaY = oma.Pysty < pelaaja.Pysty ? +1 : -1;
+        var testiprojektiili = [omaPelaaja.Vaaka + 0.5 * blokinKoko, omaPelaaja.Pysty + 0.5 * blokinKoko];
+        var miinusTaiPlussaX = omaPelaaja.oikealle ? +1 : -1;
+        var miinusTaiPlussaY = omaPelaaja.Pysty < pelaaja.Pysty ? +1 : -1;
         while( KoskettaakoHahmoMitaanBlokkia( testiprojektiili[0], testiprojektiili[1], 1, 1, 
             testiprojektiili[0], testiprojektiili[1], omaId )[0] == "" && stepAmount < 50){
             testiprojektiili[0] = testiprojektiili[0] + miinusTaiPlussaX * blokinKoko;
@@ -507,7 +508,7 @@ function playerVisibility(pelaaja){
 }
 
 function updateSurvivability(){
-    var selviytymisprosentti = Math.floor(pelaajaTiedot[omaId].selviytyminen);
+    var selviytymisprosentti = Math.floor(oma().selviytyminen);
     $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
 }
 
@@ -663,9 +664,8 @@ function VastausViestinKasittely(data, status){
     var toinenPelaaja = viestiServerilt.pelaaja;
     if(viestiServerilt.viestityyppi == "aloitus"){
         toisenHahmonLuonti(viestiServerilt.valittuHahmo, toinenPelaaja); 
-		var oma = pelaajaTiedot[omaId];
-		var viesti = {pelaaja: omaId, Vaaka: oma.Vaaka, Pysty: oma.Pysty, 
-                xVauhti: oma.xVauhti, yVauhti: oma.yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
+		var viesti = {pelaaja: omaId, Vaaka: oma().Vaaka, Pysty: oma().Pysty, 
+                xVauhti: oma().xVauhti, yVauhti: oma().yVauhti, viestityyppi: "ilmoitus", ilmoitustyyppi: "sijainti"};
 		$.post(url, viesti);
     } else if(viestiServerilt.viestityyppi == "ilmoitus"){
 		var tyyppi = viestiServerilt.ilmoitustyyppi;
