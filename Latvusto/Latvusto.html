@@ -270,25 +270,15 @@ function visuaalisestaMaailmaan(visX, visY){
 
 function ampuminen(pelaajaId){
 
-    // Tänne tullaan, jos W-näppäintä painetaan.
-    var audiovolume = 0.8;
     var distance;
     var pelaaja = pelaajaTiedot[pelaajaId];
     var oma = pelaajaTiedot[omaId];
     if(pelaajaId != omaId){
         var distanceX = Math.abs(oma.Vaaka - pelaaja.Vaaka);
         var distanceY = Math.abs(oma.Pysty - pelaaja.Pysty);
-        if(distanceX < distanceY){
-            distance = distanceY;
-        }else{
-            distance = distanceX;
-        }
-        while(distance >= blokinKoko * 10 && audiovolume <= 0){
-            distance = distance - 10 * blokinKoko;
-            audiovolume = audiovolume - 0.2;
-        }
-        //if(audiovolume == 0)audiovolume = 0.05
-        //Funktion muutosten jälkeen ääni ei jostakin syystä pienene vaikka ennen muutoksia teki niin.
+        distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        var audiovolume = 0.8 * (1.0 - distance / (blokinKoko*20.0));
+        if(audiovolume <= 0.1)audiovolume = 0.1;
         laukausAudio.volume = audiovolume;
         laukausAudio.play();
     }
