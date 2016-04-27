@@ -318,7 +318,8 @@ function ampuminen(pelaajaId){
     var distanceDivided = Math.floor(distance / blokinKoko);
     var falloff = distanceDivided > 3 ? 3 : distanceDivided;
 	var armori = uhri.hahmotyyppi == "Humanoidi" ? 3 : 0; 
-    uhri.selviytyminen = uhri.selviytyminen - (10 - falloff - armori);
+	//Alhaalla oleva maksimivahinko buffattu Ilkan pyynnöstä. Ennen oli 10.
+    uhri.selviytyminen = uhri.selviytyminen - (20 - falloff - armori);
     selviytymispisteasetus();
 }
 
@@ -519,7 +520,9 @@ function liikuta(pelaaja) {
 	}
     var touchingFunctioning = touchingFunctioningBlock(pelaaja.Vaaka, pelaaja.Pysty, blokinKoko, blokinKoko);
     //if(pelaaja.hahmotyyppi == "Veteraani")veteranWasOnObjective = false;
-    
+	
+	var openingProcessText = " ";
+	
     if(touchingFunctioning == "hiilausalueanimointi.png" && pelaaja.selviytyminen < 100){
         pelaaja.selviytyminen = pelaaja.selviytyminen + 7 / fps;
         if(pelaaja.selviytyminen > 100)pelaaja.selviytyminen = 100;
@@ -529,20 +532,15 @@ function liikuta(pelaaja) {
             kutiIlmoitus();
         }
     }else if(touchingFunctioning == "objektiiviovi.png"){
-        /*if(pelaaja.hahmotyyppi == "Veteraani"){
-            veteranWasOnObjective = true;
-        }*/
-        var processChange = (pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi") /*&& !veteranWasOnObjective*/ ? 6.66 / fps : -6.66 / fps;
-
-        openingProcess = openingProcess + processChange;
-        var openingProcessText = "";
-        var toBeDecreasedProcess = openingProcess;
-        while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
-            toBeDecreasedProcess = toBeDecreasedProcess - 10;
-            openingProcessText = openingProcessText + "|";       
-        }
-        $("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
-    }
+        pelaaja.atDoor = true;
+    }else{
+		pelaaja.atDoor = false;
+	}
+	
+	$("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
+	if(openingProcessText == " ||||||||||"){
+		resetointi();
+	}
     
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
@@ -593,7 +591,31 @@ function liikuta(pelaaja) {
 	if(!pelaaja.oikealle){
 		bitmap.x = bitmap.x + blokinKoko;
 	}
-    bitmap.scaleY = pelaaja.elossa ? skaalaus : -skaalaus;    
+    bitmap.scaleY = pelaaja.elossa ? skaalaus : -skaalaus; 
+
+		
+	//var processChange = (pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi") /*&& !veteranWasOnObjective*/ ? 6.66 / fps : -6.66 / fps;
+	
+	var playersAtDoor = arePlayersAtDoor();
+	if(playersAtDoor != []){
+		//playersAtDoor.forEach
+		console.log("lol");
+	}
+
+	openingProcess = openingProcess + processChange;
+	var toBeDecreasedProcess = openingProcess;
+	while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
+		toBeDecreasedProcess = toBeDecreasedProcess - 10;
+		openingProcessText = openingProcessText + "|";       
+	}	
+}
+
+function arePlayersAtDoor(){
+	var playersAtDoor;
+	objectValues(pelaajaTiedot).forEach(function(pelaaja){
+		if(pelaaja.atDoor)playersAtDoor.push(pelaaja.hahmotyyppi);	
+	})
+	return playersAtDoor;
 }
 
 // KoskettaakoHahmoBlokkia: palauttaa [ kosketus, kohde ],
@@ -735,7 +757,7 @@ function luoHahmo(hahmotyyppi, id){
     var hahmo = { id: id, hahmoBitmap: ukonVisuaalinenLuonti(hahmotyyppi),
         oikealle: true, hahmotyyppi: hahmotyyppi, Vaaka: spawnPointit[hahmotyyppi].x * blokinKoko,
         Pysty: spawnPointit[hahmotyyppi].y * blokinKoko, xVauhti: 0, yVauhti: 0, selviytyminen: 100, elossa: true,
-		liito: false};
+		liito: false, atDoor: false};
     blokkienTiedot.forEach(function(blokki){
         if(blokki.inFront){
             stage.setChildIndex( blokki.bitmap, stage.getNumChildren()-1);
