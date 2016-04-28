@@ -536,11 +536,6 @@ function liikuta(pelaaja) {
     }else{
 		pelaaja.atDoor = false;
 	}
-	
-	$("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
-	if(openingProcessText == " ||||||||||"){
-		resetointi();
-	}
     
 	var painovoima = -0.33;
 	if(pelaaja.hahmotyyppi == "HP" && pelaaja.liito == true && pelaaja.yVauhti > 0){
@@ -594,24 +589,35 @@ function liikuta(pelaaja) {
     bitmap.scaleY = pelaaja.elossa ? skaalaus : -skaalaus; 
 
 		
-	//var processChange = (pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi") /*&& !veteranWasOnObjective*/ ? 6.66 / fps : -6.66 / fps;
+	
 	
 	var playersAtDoor = arePlayersAtDoor();
-	if(playersAtDoor != []){
-		//playersAtDoor.forEach
-		console.log("lol");
-	}
+	var hpOvella = playersAtDoor.indexOf("HP") != -1;
+	var veteraaniOvella = playersAtDoor.indexOf("Veteraani") != -1;
+	var humanoidiOvella = playersAtDoor.indexOf("Humanoidi") != -1;
+	
+	var processChange = hpOvella && humanoidiOvella ? 0 : 
+						(hpOvella || humanoidiOvella) && !veteraaniOvella ? 6.66 / fps : 
+						veteraaniOvella ? -6.66 / fps : 0;  
+		//(pelaaja.hahmotyyppi == "HP" || pelaaja.hahmotyyppi == "Humanoidi") /*&& !veteranWasOnObjective*/ ? 6.66 / fps : -6.66 / fps;
+
 
 	openingProcess = openingProcess + processChange;
+	if(openingProcess < 0)openingProcess = 0;
 	var toBeDecreasedProcess = openingProcess;
 	while(toBeDecreasedProcess > 0 && toBeDecreasedProcess >= 10){
 		toBeDecreasedProcess = toBeDecreasedProcess - 10;
-		openingProcessText = openingProcessText + "|";       
-	}	
+		openingProcessText = openingProcessText + " | ";       
+	}
+	
+	$("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
+	if(openingProcess >= 100){
+		resetointi();
+	}
 }
 
 function arePlayersAtDoor(){
-	var playersAtDoor;
+	var playersAtDoor = [];
 	objectValues(pelaajaTiedot).forEach(function(pelaaja){
 		if(pelaaja.atDoor)playersAtDoor.push(pelaaja.hahmotyyppi);	
 	})
