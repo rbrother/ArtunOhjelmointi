@@ -36,6 +36,7 @@ var varatutHahmot = [];
 var ilmoituksenAika = 0;
 var fps = 30;
 var openingProcess = 0;
+var hahmoinformaatio;
 
 // pelaajaTiedot:
 // { 
@@ -122,6 +123,12 @@ window.onload = function() {
 	var aloituskuva = "Kuva-aineisto/LopullinenKouludemo/Aloitusruutu.png"
 	var bitmap = new createjs.Bitmap(aloituskuva);	
 	stage.addChild(bitmap);
+    
+    hahmoinformaatio = new createjs.Text("Moekka, toemii!!", "20px Arial Black", "#000000")  
+    hahmoinformaatio.x = 0.3 * pelileveys;
+    hahmoinformaatio.y = 0.16 * pelikorkeus;   
+    stage.addChild(hahmoinformaatio);
+            
 	var canvas = document.getElementById('Pelialue');
 	canvas.addEventListener('mousemove', hiirisijainti);
 	setTimeout(function(){ stage.update(); }, 1000);
@@ -147,6 +154,9 @@ function mouseOverCharacter(x, y){
                 stage.update();
             }
             valittuHahmo = nappi.tyyppi;
+            hahmoinformaatio.text = valittuHahmo == "HP" ? "HP valittu!" : 
+                valittuHahmo == "Veteraani" ? "Veteraani valittuna!" :
+                "Humanoidi valittuna!";
 		}else if(mouseOverRectangle != undefined){
             stage.removeChild(mouseOverRectangle);
             mouseOverRectangle = undefined;

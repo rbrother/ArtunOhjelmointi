@@ -1,7 +1,5 @@
 ﻿TO-DO
 
-	Debuggaus: Hahmo ei ilmestynyt läppärilläni, serveriongelmia?
-
     Laivan seinät muodostuvat yhdestä kuvasta.
 
 	Kentän teko, taustakuva
