@@ -186,7 +186,7 @@ var cruiser = [
     '.......................C..............QqqC..........................................................',
     '......................sC.............Q..AC...................................ooo....................',
     '.......................C..............CCCC...................................ooo....................',
-    '................Y......C...QqqqqqCC....CCC..........oooo.....................ooo....................',
+    '.....V..........Y......C...QqqqqqCC....CCC..........oooo.....................ooo....................',
     '................y......C..Q......aa.......O..oo.....oooo.......oo............ooo..........ooo.......',
     //keittiöön flännkäysretti lampun oikealle puolelle kattoon.
     '...R..R..UUUUuU.y......CCCw......aa..........oo.MMM.oooo.......oo....MMMM....ooo..........ooo.......',
@@ -220,7 +220,7 @@ var cruiser = [
     'CXC.............CCC..C....C..............M................................CCvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C....C.....C...C...CCC..CC...........CCCCCCCCCCC...CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C...CCC..............................C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC..........C.......C.................V.H.h..............C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC..........C.......C...................H.h..............C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC....MMM...C....................................-.C..............CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
 
