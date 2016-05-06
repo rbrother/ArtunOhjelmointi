@@ -24,6 +24,7 @@ var blokkienTiedot = [];
 var hyppyPalkki;
 var omaId;
 var url = "http://www.brotherus.net:8086/";
+// var url = "http://192.168.43.8:8086/";  // esimerkki ip-osoitteella, ipconfig komennosta
 var extraHyppy = true;
 var laukausAudio = new Audio('http://www.brotherus.net/laukaus.wav');
 var pelaajaMaassa = false;
@@ -485,7 +486,7 @@ function liikuta(pelaaja) {
 		openingProcessText = openingProcessText + " | ";       
 	}
 	
-	$("#objektiiviovi").text("Avaamisprosessina:" + openingProcessText);
+	$("#objektiiviovi").text("Opening process:" + openingProcessText);
 	if(openingProcess >= 100){
 		resetointi();
 	}
@@ -683,9 +684,9 @@ function objectValues(object){
  </script>
 </head>
 <body>
-Nimi <input type="text" id="pelaajaNimi"/>
-<button onClick = "readyToStart()">Aloita</button>
-<button onclick = "resetointi()">Resetointi</button>
+Name <input type="text" id="pelaajaNimi"/>
+<button onClick = "readyToStart()">Deploy</button>
+<button onclick = "resetointi()">Reset</button>
 <span id = "Survivability"></span>
 <span id = "Kudit"></span>
 <span id = "kuditMukana"></span>

@@ -1,4 +1,24 @@
 function ampuminen(pelaajaId){
+    var tyyppi = pelaajaTiedot[pelaajaId].hahmotyyppi;
+    var asetyyppi = tyyppi == "HP" ? "melee" : tyyppi == "Veteraani" ? "pyssy" : "kranaatti";
+    if(asetyyppi == "pyssy"){
+        pyssyAmpuminen(pelaajaId);
+    }else if(asetyyppi == "kranaatti"){
+        kranu(pelaajaTiedot[pelaajaId]);
+    }else{
+        melee(pelaajaTiedot[pelaajaId]);
+    }   
+}
+
+function kranu(pelaaja){
+    
+}
+
+function melee(pelaaja){
+    
+}
+
+function pyssyAmpuminen(pelaajaId){
     var distance;
     var pelaaja = pelaajaTiedot[pelaajaId];
     if(pelaajaId != omaId){

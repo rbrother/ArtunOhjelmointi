@@ -598,7 +598,30 @@ Team Fortress 2 Weapon | Heavy | Secondary ("Shotgun")
  | Secondary ammo amount lowered by 81%
  | The weapon's a light machine gun
  | Stats not yet complete
+ 
+Endless Branches Weapon | Maskfolk | Grenade ("Doubled Fun")
 
+    If you kill an enemy with the grenade 75% regen energy is added to the weapon's regen meter.
+    
+    The MAX grenade capacity is one.
+    
+Endless Branches Item | Boost ("Special Armor")
+
+    Once activated your armor points (AP) are set to 10.
+    
+    Armor acts as extra health but if you receive damage while having armor and this damage doesn't overflow to your regular health there's
+    no chance for you to die.
+    
+    2 seconds after you have activated the Special Armor you'll lose two AP to encourage reactivation.
+    
+    One loadout modification changes it so that if you (for example) receive 10 damage at 2 AP you'll lose all of your AP but no regular health.
+    This bonus has a cooldown though and the modification will increase the boost cost.
+    
+    One loadout modification also increases your MAX AP capacity.
+    
+Endless Branches Weapon | Maskfolk | Boost ("Regret")
+
+    This boost...
 
 Kentän luonnostelua
 
