@@ -621,7 +621,30 @@ Endless Branches Item | Boost ("Special Armor")
     
 Endless Branches Weapon | Maskfolk | Boost ("Regret")
 
-    This boost...
+    This boost is usable while you're carrying an unpinned grenade. If you deploy the boost you won't throw the grenade but you'll lose 25% item energy 
+    regen.
+
+Endless Branches Map | "Cactusring Rock"
+
+	A big rock surrounded by cactus. 
+
+Endless Branches Multiplayer Boss | "Terrifying Totem"
+
+	All multiplayer bosses controlled by players.
+
+	This boss is a totem built of big (only horizontally, pretty small when it comes to height) heads that the controlling player can posses (only
+	one head can be used / possessed at a time).
+
+	The possessed head can attack in many ways.
+
+	Every head has a seperate health pool and once it's down the head breaks up and disappears, the heads above it will fall onto the ones below it.
+
+	Once only one head remains it can now move like a player, is very angry-looking, can attack for example with growing fire bolts, shockwaves and 
+	knockback enemies with a roar.
+
+Endless Branches Map | "Walkdown Dig Site"?
+
+	A dig-up site where there's a spiral walk-down road that leads to the center of the site while going lower.
 
 Kentän luonnostelua
 
