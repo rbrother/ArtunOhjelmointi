@@ -1,6 +1,7 @@
 function ampuminen(pelaajaId){
-    var tyyppi = pelaajaTiedot[pelaajaId].hahmotyyppi;
-    var asetyyppi = tyyppi == "HP" ? "melee" : tyyppi == "Veteraani" ? "pyssy" : "kranaatti";
+    //var tyyppi = pelaajaTiedot[pelaajaId].hahmotyyppi;
+    //var asetyyppi = tyyppi == "HP" ? "melee" : tyyppi == "Veteraani" ? "pyssy" : "kranaatti";
+	var asetyyppi = "pyssy";
     if(asetyyppi == "pyssy"){
         pyssyAmpuminen(pelaajaId);
     }else if(asetyyppi == "kranaatti"){
@@ -11,7 +12,7 @@ function ampuminen(pelaajaId){
 }
 
 function kranu(pelaaja){
-    
+    //
 }
 
 function melee(pelaaja){
@@ -21,15 +22,13 @@ function melee(pelaaja){
 function pyssyAmpuminen(pelaajaId){
     var distance;
     var pelaaja = pelaajaTiedot[pelaajaId];
-    if(pelaajaId != omaId){
-        var distanceX = Math.abs(oma().Vaaka - pelaaja.Vaaka);
-        var distanceY = Math.abs(oma().Pysty - pelaaja.Pysty);
-        distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        var audiovolume = 0.8 * (1.0 - distance / (blokinKoko*20.0));
-        if(audiovolume <= 0.1) audiovolume = 0.1;
-        laukausAudio.volume = audiovolume;
-        laukausAudio.play();
-    }
+	var distanceX = Math.abs(oma().Vaaka - pelaaja.Vaaka);
+	var distanceY = Math.abs(oma().Pysty - pelaaja.Pysty);
+	distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+	var audiovolume = 0.8 * (1.0 - distance / (blokinKoko*20.0));
+	if(audiovolume <= 0.1) audiovolume = 0.1;
+    laukausAudio.volume = audiovolume;
+    laukausAudio.play();
     
 	var viivatsekkausY = pelaaja.Pysty + 0.5 * blokinKoko;
     var suuntanumero = pelaaja.oikealle ? 0.5 : -0.5;

@@ -11,6 +11,16 @@
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
 
     Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
+	
+	Englannin kielelle tekstit pelissä.
+	
+	Kenttä demomuotoon.
+	
+	Asenna node.js serverikoneelle.
+	
+	
+	Voit ajaa peliä: http://www.brotherus.net/latvusto/Latvusto.html
+	
 
 PIENIÄ NOUTTEJA
 
