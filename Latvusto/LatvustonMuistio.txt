@@ -1,25 +1,28 @@
 ﻿TO-DO
 
-    Laivan seinät muodostuvat yhdestä kuvasta.
+Perjantain kouludemoon:
+   * Tekstit englanniksi
+   * Aloitusruudun hahmojen kuvaus-tekstit
+   * Asenna node.js serverikoneelle kouluun:
+        * https://nodejs.org/en/download/
+		* Click "windows installer" -> run
+   * Käynnistä serveri:
+        * cmd
+		* cd \
+		* cd github     (jne)
+		* serveri.cmd
 
-	Kentän teko, taustakuva
-
-	Hahmon valinta (Hahmoinformaation anto), 
-	
-	Erikoisblokit, objektiiviblokit, ammus- ja HP-pickupit.
 
     Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
 
     Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
 	
-	Englannin kielelle tekstit pelissä.
-	
-	Kenttä demomuotoon.
-	
-	Asenna node.js serverikoneelle.
 	
 	
 	Voit ajaa peliä: http://www.brotherus.net/latvusto/Latvusto.html
+	
+	* Huom! Jos olet synkannut githubiin jotain uusia muutoksia,  sinun pitää
+	mennä teamviewerillä nuc-koneelle ja syncata sinne
 	
 
 PIENIÄ NOUTTEJA
