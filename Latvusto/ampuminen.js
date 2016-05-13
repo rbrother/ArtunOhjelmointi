@@ -72,7 +72,7 @@ function pyssyAmpuminen(pelaajaId){
 function selviytymispisteasetus(){
     var random1to100 = Math.floor(Math.random() * 100);
     if(random1to100 > oma().selviytyminen){
-        $("#Survivability").text(omaId + " neutralisoitu!");
+        $("#Survivability").text(omaId + " neutralized");
         var viesti = {pelaaja: omaId, viestityyppi: "ilmoitus", ilmoitustyyppi: "neutralisoituminen"};
         oma().elossa = false;
         $.post(url, viesti);
@@ -94,7 +94,7 @@ function kutiIlmoitus(){
 
 function kutiIlmoitus(){
 	$("#Kudit").text("Kuteja: " + kuteja);
-    $("#kuditMukana").text("Mukana olevat kudit: " + kuditMukana);
+    $("#kuditMukana").text("Carried shots: " + kuditMukana);
 }
 
 function aseenLataaminen(){
@@ -124,7 +124,7 @@ function viivapoisto(pelaaja){
 
 function updateSurvivability(){
     var selviytymisprosentti = Math.floor(oma().selviytyminen);
-    $("#Survivability").text("Selviytymisprosenttina " + selviytymisprosentti + "%");
+    $("#Survivability").text("Chance of surviving " + selviytymisprosentti + "%");
 }
 
 function neutralisoituminen(viestiServerilt){
