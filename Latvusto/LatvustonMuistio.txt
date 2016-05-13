@@ -1,143 +1,135 @@
-﻿TO-DO
+﻿PIKAKOMMENTIT
 
-Perjantain kouludemoon:
-   * Tekstit englanniksi
-   * Aloitusruudun hahmojen kuvaus-tekstit
-   * Asenna node.js serverikoneelle kouluun:
-        * https://nodejs.org/en/download/
-		* Click "windows installer" -> run
-   * Käynnistä serveri:
-        * cmd
-		* cd \
-		* cd github     (jne)
-		* serveri.cmd
+	Max 3 pelaajaa yhtä aikaa kentällä moninpelissä, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
 
+    toisiaan vastaan. Serveri, jolle kaikki koneet lähettävät oman pelaajan liikkeen ja 
 
-    Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
+    saavat tiedon muiden pelaajien liikkeistä. Koska ukkojen lentorata hyppyjen aikana on
 
-    Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
-	
-	
-	
-	Voit ajaa peliä: http://www.brotherus.net/latvusto/Latvusto.html
-	
-	* Huom! Jos olet synkannut githubiin jotain uusia muutoksia,  sinun pitää
-	mennä teamviewerillä nuc-koneelle ja syncata sinne
-	
+    deterministinen (ennustettava), riittänee että serverille lähetetään tieto hypyn
 
-PIENIÄ NOUTTEJA
+    alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat
+         
+    lentoradat (samoin ammuttujen ammusten kohdalla) 
 
-Viestien välitys clienttien ja serverin välillä
+TARINA
 
-	Client 1                    Server (Node.js)               Client 2
-
-    Tapahtumakysely -------->    (kysely1)                
-
-							     (kysely2)	    	<-------   Tapahtumakysely
-
-    Hyppy
-    ->   Tapahtumailmoitus --->	 vastaa ilmoitukseen
-	                        
-							     (kysely2)  == reply ======>   VastausViestinKasittely
-								                               -> .... toteuta hyppy
-
-        Tapahtumailmoitus2 -->   vastaa ilmoitukseen
-                                                               
-                                (kysely2b)	    	<-------   Tapahtumakysely 
-	
-
-	
-JÄRJESTYS       1       2     3       4
-                                      ^ MEIDÄN JÄRJESTYS
-                *       *     *
-									  
-	
-	
-
-TARINA (KOULUDEMON ULKOPUOLELLA)
-
-    Yleistettynä
+    YKSINPELI
 
         Alussa päähenkilön veli kertoo veljelleen ja pelaajalle tarinaa kuinka kauan sitten heidän esi-isänsä Pilgut tulivat heidän saarelleen
 
-	tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren valtavan mangrovepuun mahlaa keräämiensä puunpalasten päälle. 
+        tuntemattomista syistä. Kaikki oli hyvin, kunnes eräs kauppias pudotti saaren valtavan mangrovepuun mahlaa keräämiensä puunpalasten päälle. 
 
-	Tuolloin palasista muodoistui ilkeännäköinen maski, mikä teki sovinnon kauppiaan kanssa. Kauppias pitäisi maskia koko ajan päällä ja maski voisi 
+        Tuolloin palasista muodoistui ilkeännäköinen maski, mikä teki sovinnon kauppiaan kanssa. Kauppias pitäisi maskia koko ajan päällä ja maski 
+        
+        voisi vastapalveluksena muuttaa kauppiaan miksi vain hän haluaisi. Kauppiaasta tuli kuuluisa ja hän myi näitä maagisia naamioita lisää 
+        
+        saaren asukkaille. Kuitenkin asukkaat alkoivat epäillä koko juttua, kun kului suunnattomasti aikaa eikä kauppias siltikään kuollut. Eräänä 
+        
+        päivänä kuitenkin eräs maskinpitäjistä kuoli onnettomuudessa ja ruumiinavauksessa paljastui, että koko ruumis oli juurien vallassa eikä 
+        
+        alkuperäisestä saarelaisesta ollut miltei mitään jäljellä. Tämä sai kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitkä sota 
+        
+        ja päähenkilön veli ei koskaan saanut tietää äidiltään miten sota päättyi. Tarinan jälkeen ideana on se, että päähenkilön veli lähtee heidän 
+        
+        äitinsä haudalle, mikä on ensimmäisen alueen lopussa. Päähenkilö hakee heidän talosta lahjoja haudalle samalla opettaen pelaajalle 
+        
+        perusmekaniikat. Kun hän on saanut tavarat hankittua hän ei kuitenkaan pääse ulos talon pääovesta. Hän menee katon kautta jolloin hän näkee, 
+        
+        että ovea pidättelee joukko maskeja. Näin alkaa tutoriaalitason maskitaistelu ja tästä peli jatkuukin ihan tavallisesti ottaen. 
+        
+        Pomotaisteluiden jälkeen päähenkilö ja hänen veljensä puhuvat eri aiheista sillä päähenkilön veli on maskin vallassa ja tämä maski sattuu 
+        
+        olemaan se ensimmäinen, minkä kauppias löysi. Kun päähenkilö on viimeisen pomotaistelun ja lisäpomojen jälkeen suorittanut suurpomotaistelun 
+        
+        hänelle valkeaa, että vanhassa sodassa maskit voittivat, mutta kaikki maskit eivät olleet loisia, mitkä loivat juuria kantajansa sisään. 
+        
+        Jotkut halusivat olla symbioosissa ja päähenkilö on hämmentynyt(?) tästä.
 
-        vastapalveluksena muuttaa kauppiaan miksi vain hän haluaisi. Kauppiaasta tuli kuuluisa ja hän myi näitä maagisia naamioita lisää saaren asukkaille.
- 
-	Kuitenkin asukkaat alkoivat epäillä koko juttua, kun kului suunnattomasti aikaa eikä kauppias siltikään kuollut. Eräänä päivänä kuitenkin eräs 
-	
-	maskinpitäjistä kuoli onnettomuudessa ja ruumiinavauksessa paljastui, että koko ruumis oli juurien vallassa eikä alkuperäisestä saarelaisesta ollut miltei mitään jäljellä. Tämä sai kaikki saaren maskittomat asukkaat kauhun valtaan ja alkoi pitkä sota ja päähenkilön veli ei koskaan saanut tietää äidiltään miten sota päättyi.
-        Tarinan jälkeen ideana on se, että päähenkilön veli lähtee heidän äitinsä haudalle, mikä on ensimmäisen alueen lopussa. Päähenkilö hakee heidän talosta lahjoja haudalle samalla opettaen pelaajalle perusmekaniikat.
-        Kun hän on saanut tavarat hankittua hän ei kuitenkaan pääse ulos talon pääovesta. Hän menee katon kautta jolloin hän näkee, että ovea pidättelee joukko maskeja. Näin alkaa tutoriaalitason maskitaistelu ja tästä 
-        peli jatkuukin ihan tavallisesti ottaen.
-        Pomotaisteluiden jälkeen päähenkilö ja hänen veljensä puhuvat eri aiheista sillä päähenkilön veli on maskin vallassa ja tämä maski sattuu olemaan se ensimmäinen, minkä kauppias löysi.
-        Kun päähenkilö on viimeisen pomotaistelun ja lisäpomojen jälkeen suorittanut suurpomotaistelun hänelle valkeaa, että vanhassa sodassa maskit voittivat, mutta kaikki maskit eivät olleet loisia, mitkä loivat juuria
-        kantajansa sisään. Jotkut halusivat olla symbioosissa ja päähenkilö on hämmentynyt(?) tästä.
-    _Moninpeli(Kyllä, ette lukeneet väärin)_
-        Moninpelissä parasiittimaskit kantajineen (vihreitä) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (keltaisia) toiselta puolelta planeettaa ovat näitä kahta vastaan. Iskujoukot ovat tulleet paikalle
-        sillä toisen pallonpuoliskon suurkaupungin presidentti on salaa päättänyt, että turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
-            _Kouludemo_
-                Planeetan toisen puolen veteraani on tullut perheensä kanssa risteilyllä lähelle pelin pääsaarta. Hän vaimonsa ja kahden lapsensa kanssa lähevät ökyjahdilla turistilaivalta tietämättään saarta päin ja pian he 
-                katuvat päätöstään sillä laivan keulasta hyökkää outo maskihumanoidi ja takaa-
-                päin taas hullu Pilgu. Veteraani sulkee vaimonsa lapsineen ruumavarastoon ja alkaa puolustamaan ovea kahdelta hyökkääjltä. 
-                Edellä mainittu tarina selitetään kaikille kolmelle pelaajalle, mutta maskihahmolle esitetään, että hänen täytyy tuoda perheenjäsenet saarelle, jotta nämä voitaisiin "käännyttää". Hullu-Pilgu taas ainoastaan 
-                tulee sekaisin ajatuksin hyökäten haluten miehistöä ökyjahdille päästäkseen pois
-                saarelta mahdollisimman pian.
-_Visuaalisuus_
+    MONINPELI
 
-    _Moninpeli_
+        Moninpelissä parasiittimaskit kantajineen (vihreitä) ovat maskettomia asukkaita (liiloja) vastaan ja iskujoukot (keltaisia) toiselta puolelta 
+
+        planeettaa ovat näitä kahta vastaan. Iskujoukot ovat tulleet paikalle sillä toisen pallonpuoliskon suurkaupungin presidentti on salaa 
+        
+        päättänyt, että turvatakseen planeetan rauhan mangrovesaaren asukkaiden maskeineen on tuhouduttava.
+
+VISUAALISUUS
+
+    MONINPELI
+
+    YKSINPELI
+
+    ASEET		
+                
+    	Lemonade-revolveri koostuu keltaisesta kädensijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja jälleen kerran hopeisesta 
+
+        piipunpäästä.
+
+PELIMEKANIIKALLISET AIHEET
+
+    YKSINPELI
     
-        _Kouludemo-
-            
-            
-            _Aseet_
-                Lemonade-revolveri koostuu keltaisesta kädensijasta, hopeisesta makasiiniosasta, keltaisesta piipusta ja jälleen kerran hopeisesta 
-                piipunpäästä.
-_Pelimekaniikalliset aiheet_
-    _RoopenKommentit_
-        Max 3 pelaajaa yhtä aikaa kentällä moninpelissä, kaikki ohjaa reaaliaikaisesti omaa ukkoaan ja taistelee
-        toisiaan vastaan. Serveri, jolle kaikki koneet lähettävät oman pelaajan liikkeen ja 
-        saavat tiedon muiden pelaajien liikkeistä. Koska ukkojen lentorata hyppyjen aikana on
-        deterministinen (ennustettava), riittänee että serverille lähetetään tieto hypyn
-        alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat 
-        lentoradat (samoin ammuttujen ammusten kohdalla)    
-        
-        Voi myös olla 2 selainta samalla koneella, jolloin.
-        
-        Käytetään AJAX-tekniikkaa: "Asynchronous JAvascript and XML"
-            https://en.wikipedia.org/wiki/Ajax_(programming)
-            AJAX:ssa välitetään JSON-viestejä: https://en.wikipedia.org/wiki/JSON
-            
-        Ehkä käytetään NODE-JS -tekniikkaa? Javascriptiä sekä serverillä että clientillä?
-            https://en.wikipedia.org/wiki/Node.js
-            (toinen mahdollisuus on käyttää Ruby tai C# kieliä)
-    _ArtunKommentit_
-        Firefoxissa konsoli avataan Ctrl+Shift+K.
-        _Linkkejä_
-            https://nodejs.org/api/debugger.html
-            https://nodejs.org/api/repl.html
-            http://stackoverflow.com/questions/10600496/sending-messages-client-server-client-on-socket-io-on-node-js
-    _Kentät_
         -
-    _Moninpeli_
+             
+    MONIPELI
+    
+        HAHMOT
+        
+            ERIKOISJOUKOT (SPECIAL FORCES)
+            
+                ASEET
+                
+                    LEMONADE REVOLVER (PROFIILIASE)
+                    
+                        Ampuu 4 ammusta per sekunti 6 ammuksen klipillä. Ammukset tekevät maksimissaan 7.5% vahinkoa ja menevät vihollisten ja
+                        seinien läpi 75% mahdollisuudella.
+                        
+                        Ammus tekee sitä vähemmän vahinkoa, mitä enemmän ampujan ja uhrin välillä on etäisyyttä (Vahinko tasaisesti vähenee
+                        tasaisesti 15 ruudun etäisyydellä maksimistaan vain 10% maksimistaan).
+                        
+                ERIKOISUUS
+                
+                    Kaikki boostierikoiskyvyt (väliaikaiset buffit, jotka maksavat boostia) vievät erikoisjoukoilta vain puolet siitä tilasta, mitä
+                    ne veisivät muilla. Erikoisjoukkojen jäsenet (EJ:t) myöskin ansaitsevat 0.5% boostia joka sekunti.
+                    
+                BOOSTIT
+                
+                    BIO STORM
+                    
+                        5 sekunnin kesto.
+                        
+                        Maksaa 25% boostia.
+                        
+                        Ollessaan aktiiivinen +1(SaadunVahingonJakoon[SVJ]), viholliset hoitavat objektiiveja 20% hitaammin ja...
+            
+            HULLUT PILGUT (MAD PILGUS)
+            
+            MASKIJOUKKIO (MASKFOLK)
+            
+        KAIKKIEN HAHMOJEN BOOSTIT
+
+    KENTTÄMUISTIINPANOJA
+        
+        -
+        
+    MONINPELI / YKSINPELI
+        
         Sekä Kouludemossa että lopullisessa versiossa hahmojen elämäpisteet mitataan prosenteissa ja mitä vähemmän näitä on sitä todennäköisempää
         on se, että seuraava isku kaataa pelihahmon.
-        Aseet YMS voivat tehdä desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli näyttää pelaajalle vain kokonaislukuprosentit.
+        
+        Aseet YMS voivat tehdä desimaalivahinkoa (esimerkiksi 0.5% vahinkoa), mutta peli näyttää pelaajalle vain elämäpistepalkin ykkösten
+        tarkkuudella.
+        
         Aseita ja kykyjä vaihdellaan Q- ja E-näppäimillä.
-        _Kouludemo_
-            _Kenttä_
-                _Ideat_
-                    Kenttä näyttää ökyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kenttäsuunnitte-
-                    lua höystettynä vähintään kolmella eri reitillä pääkohteisiin.
+        
+        Kannettavat esineet eivät automaattisesti hidasta hypynlatausta, mutta mitä vähemmän sinä kannat aseita, sitä enemmän omaat hypynlatausno-
+        peusboostia. Maksimiboosti (jos et kantaisi mitään) olisi 10%(?).
+        
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+        
             _Hahmot_
                 _Veteraani_
-                    _Ase (Lemonade [Revolveri])_
-                        | Ampuu 4 ammusta per sekunti 6 ammuksen klipillä. Ammukset tekevät maksimissaan 7.5% vahinkoa ja menevät vihollisten ja
-                        seinien läpi 75%
-                        | Ammus tekee sitä vähemmän vahinkoa, mitä enemmän ampujan ja uhrin välillä on etäisyyttä (Vahinko tasaisesti vähenee
-                        tasaisesti 15 ruudun etäisyydellä maksimistaan vain 10% maksimistaan).
                     _Toissijainen toiminto (Bio Storm)_
                         | Veteraani haltuunottaa 0.5% Boostia per sekunti.
                         | 25% Boostin hinnalla Veteraani voi aktivoida viiden sekunnin ajanjakson jolloin hän ottaa 50% vähemmän vahinkoa ja jolloin

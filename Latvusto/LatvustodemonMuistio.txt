@@ -1,0 +1,86 @@
+TO-DO
+
+Perjantain kouludemoon:
+   * Tekstit englanniksi
+   * Aloitusruudun hahmojen kuvaus-tekstit
+   * Asenna node.js serverikoneelle kouluun:
+        * https://nodejs.org/en/download/
+		* Click "windows installer" -> run
+   * Käynnistä serveri:
+        * cmd
+		* cd \
+		* cd github     (jne)
+		* serveri.cmd
+
+
+    Siirrä HP, ammukset YMS alas visuaalisesti näyttävämmin.
+
+    Yhtenäistä nimiä koodissa (Käytä samoja termejä samoista asioista).
+	
+	
+	
+	Voit ajaa peliä: http://www.brotherus.net/latvusto/Latvusto.html
+	
+	* Huom! Jos olet synkannut githubiin jotain uusia muutoksia,  sinun pitää
+	mennä teamviewerillä nuc-koneelle ja syncata sinne
+	
+
+PIENIÄ NOUTTEJA
+
+Viestien välitys clienttien ja serverin välillä
+
+	Client 1                    Server (Node.js)               Client 2
+
+    Tapahtumakysely -------->    (kysely1)                
+
+							     (kysely2)	    	<-------   Tapahtumakysely
+
+    Hyppy
+    ->   Tapahtumailmoitus --->	 vastaa ilmoitukseen
+	                        
+							     (kysely2)  == reply ======>   VastausViestinKasittely
+								                               -> .... toteuta hyppy
+
+        Tapahtumailmoitus2 -->   vastaa ilmoitukseen
+                                                               
+                                (kysely2b)	    	<-------   Tapahtumakysely 
+	
+
+	
+JÄRJESTYS       1       2     3       4
+                                      ^ MEIDÄN JÄRJESTYS
+                *       *     *
+									  
+KOULUDEMON TARINA
+
+                Planeetan toisen puolen veteraani on tullut perheensä kanssa risteilyllä lähelle pelin pääsaarta. Hän vaimonsa ja kahden lapsensa kanssa lähevät ökyjahdilla turistilaivalta tietämättään saarta päin ja pian he 
+                katuvat päätöstään sillä laivan keulasta hyökkää outo maskihumanoidi ja takaa-
+                päin taas hullu Pilgu. Veteraani sulkee vaimonsa lapsineen ruumavarastoon ja alkaa puolustamaan ovea kahdelta hyökkääjltä. 
+                Edellä mainittu tarina selitetään kaikille kolmelle pelaajalle, mutta maskihahmolle esitetään, että hänen täytyy tuoda perheenjäsenet saarelle, jotta nämä voitaisiin "käännyttää". Hullu-Pilgu taas ainoastaan 
+                tulee sekaisin ajatuksin hyökäten haluten miehistöä ökyjahdille päästäkseen pois
+                saarelta mahdollisimman pian.	
+	
+_RoopenKommentit_   
+        
+        Voi myös olla 2 selainta samalla koneella, jolloin.
+        
+        Käytetään AJAX-tekniikkaa: "Asynchronous JAvascript and XML"
+            https://en.wikipedia.org/wiki/Ajax_(programming)
+            AJAX:ssa välitetään JSON-viestejä: https://en.wikipedia.org/wiki/JSON
+            
+        Ehkä käytetään NODE-JS -tekniikkaa? Javascriptiä sekä serverillä että clientillä?
+            https://en.wikipedia.org/wiki/Node.js
+            (toinen mahdollisuus on käyttää Ruby tai C# kieliä)
+
+_ArtunKommentit_
+        Firefoxissa konsoli avataan Ctrl+Shift+K.
+        _Linkkejä_
+            https://nodejs.org/api/debugger.html
+            https://nodejs.org/api/repl.html
+            http://stackoverflow.com/questions/10600496/sending-messages-client-server-client-on-socket-io-on-node-js
+
+_Kouludemo_
+            _Kenttä_
+                _Ideat_
+                    Kenttä näyttää ökyjahdilta, kuten tarina toteaakin ja se noudattaa monen multiplayer fps-pelin kahdeksikkomaista kenttäsuunnitte-
+                    lua höystettynä vähintään kolmella eri reitillä pääkohteisiin.
