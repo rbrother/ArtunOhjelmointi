@@ -40,6 +40,7 @@ var ilmoituksenAika = 0;
 var fps = 30;
 var openingProcess = 0;
 var hahmoinformaatio;
+var veteransScore = 0;
 
 // pelaajaTiedot:
 // { 
@@ -321,6 +322,7 @@ function respawn(pelaaja){
 
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
+    veteransScore = veteransScore + 1 / fps;
     var pelaaja = oma();
     if(pelaaja.elossa) updateSurvivability();
     olemassaIlmoitus();
@@ -353,6 +355,8 @@ function liikutuskutsu(){
          blokki.bitmap.x = vis[0];
          blokki.bitmap.y = vis[1];
     });
+    
+    $("#veteransScore").text("Veteran's Score:" + Math.floor(veteransScore));
         
     stage.update({delta: fps});
 }
@@ -407,7 +411,7 @@ function liikuta(pelaaja) {
             kuditMukana = 6;
             kutiIlmoitus();
         }
-    }else if(touchingFunctioning == "objektiiviovi.png"){
+    }else if(touchingFunctioning == "Boxi.png"){
         pelaaja.atDoor = true;
     }else{
 		pelaaja.atDoor = false;
@@ -488,7 +492,22 @@ function liikuta(pelaaja) {
 	
 	$("#objektiiviovi").text("Opening process:" + openingProcessText);
 	if(openingProcess >= 100){
-		resetointi();
+        var mouseOverRectangle = new createjs.Shape();
+        mouseOverRectangle.graphics.beginStroke("red").drawRect(0.25 * pelileveys, 0.25 * pelikorkeus, 
+            0.5 * pelileveys, 0.5 * pelikorkeus);
+        var thePlayerAtDoor = hpOvella ? "Mad Pilgu" : "Masky";
+        var lopputeksti = new createjs.Text("The winner's " + thePlayerAtDoor + "!" + "\nVeteran's Score: " + veteransScore, 
+            "20px Arial Black", "#000000")  
+        lopputeksti.x = 0.3 * pelileveys;
+        lopputeksti.y = 0.3 * pelikorkeus; 
+        
+        stage.addChild(hahmoinformaatio);
+        
+        stage.addChild(mouseOverRectangle);
+        
+        stage.update();
+        
+        setTimeout(function(){ resetointi(); }, 1500);
 	}
 }
 
@@ -656,6 +675,7 @@ function ukonVisuaalinenLuonti(characterType){
     bitmap.x = 0*blokinKoko;
     bitmap.y = 0*blokinKoko;
     stage.addChild(bitmap);
+    //stage.update()
     return bitmap;
 }
 
@@ -691,7 +711,7 @@ Name <input type="text" id="pelaajaNimi"/>
 <span id = "Kudit"></span>
 <span id = "kuditMukana"></span>
 <br>
-<span id = "debuggaus"></span>
+<span id = "veteransScore"></span>
 <br>
 <span id = "objektiiviovi"></span>
 <br>

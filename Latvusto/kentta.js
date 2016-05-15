@@ -30,7 +30,7 @@ function makeStage(){
             if(merkki == 's'){BlokkiaLisaa(x,y,"vasemmalleOsoittavaLippu.png");}
             if(merkki == 'm'){BlokkiaLisaa(x,y,"megafoniVasemmalle.png");}
             if(merkki == 'S'){BlokkiaLisaa(x,y,"satelliteMess.png");}
-            if(merkki == '-'){BlokkiaLisaa(x,y,"objektiiviovi.png");}
+            if(merkki == '-'){BlokkiaLisaa(x,y,"Boxi.png");}
             //if(merkki == '.'){BlokkiaLisaa(x,y," ShipWall2x2.png");}
             if(merkki == ':'){BlokkiaLisaa(x,y,"ShipWall.png");}
             if(merkki == 'I'){BlokkiaLisaa(x,y,"OikeastiIkkuna.png");}
@@ -78,12 +78,11 @@ function BlokkiaLisaa(x,y,blokkityyppi) {
         blokkityyppi == "portaatAlhaaltaOikealle.png" ||
         blokkityyppi == "portaatAlhaaltaVasemmalle.png" ||
         blokkityyppi == "veteraaninStabilisointilaite.png" ||
-        blokkityyppi == "komentosiltataulu.png" ||
-        blokkityyppi == "objektiiviovi.png";
+        blokkityyppi == "komentosiltataulu.png";
         
     functioning = blokkityyppi == "hiilausalueanimointi.png" ||
         blokkityyppi == "ammoFromSystem.png" ||
-        blokkityyppi == "objektiiviovi.png"
+        blokkityyppi == "Boxi.png"
     
     bitmap.x = x*blokinKoko;
     bitmap.y = y*blokinKoko;
@@ -187,25 +186,26 @@ var cruiser = [
     '......................sC.............Q..AC...................................ooo....................',
     '.......................C..............CCCC...................................ooo....................',
     '................Y......C...QqqqqqCC....CCC..........oooo.....................ooo....................',
-    '................y......C..Q......aa.......O..oo.....oooo.......oo............ooo..........ooo.......',
+    '................y......C..Q......aa......o...oo.....oooo.......oo............ooo..........ooo.......',
     //keittiöön flännkäysretti lampun oikealle puolelle kattoon.
-    '...R..R..UUUUuU.y......CCCw......aa..........oo.MMM.oooo.......oo....MMMM....ooo..........ooo.......',
+    '...R..R..UUUUuU.y......CCCw......aa...V..o...oo.MMM.oooo.......oo....MMMM....ooo..........ooo.......',
     'CCCCCCCCCCCCCCCCCCCCCCCCXCCw.....LL....QCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXCCCw.......QCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCC.',
-    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCCCooooCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
+    'CCCCCCCCCCCCCCCCCCCXXXXXXXCCCCCC....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC..',
     //Ylhäällä kansikerros (3)
     'C.................CCCCCCCCC................aaaaa....................................................',
     'C.................C.......C................aaaaa......................................H.............',
-    'C..............................CCCCC.......LLLLL.........................MMMMM......................',
-    'C..............C..............CCXXXCCCC.............CCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
-    'C..............CCCCCCCCCCCCCCCCCCCCCCCC.............CXXXC..........................CXXXXXXXCC.......',
+    'C..........................................LLLLL.........................MMMMM......................',
+    'C..............C..............CCCCCCCCC.............CCCCC.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC......',
+    'C..............CCCCCCCCCCCCCCCCCCCCCCCC......-......CXXXC..........................CXXXXXXXCC.......',
     'C..........................................CCCCC....CXXXC..........................CXXXXXXCC........',
     'C...h...............................................CXCCCCCCCCCCCCCCCCCCCCCCCCC....CXXXXXCC.........',
     'C.............................CCCCCCCCCC...........CCCC............................CXXXXCC..........',
     'C.............................CXXC..........AAA....................................CXXXCCEEEEEEEEEEE',
-    'CCCCCCCCCCCC..........MMMMM...CXXC.........CCCCC...V.....CCCCCCCCCCCCCCCCCCCCCCCCCCCXXCCvvvvvvvvvvvv',
+    'CCCCCCCCCCCC..........MMMMM...CXXC.........CCCCC.........CCCCCCCCCCCCCCCCCCCCCCCCCCCXXCCvvvvvvvvvvvv',
     'CXXXXXXXXXCCCCCCCCCCCCCCCCCCCCCXXC.........CXXXC.........CXXXXXXXXXXXXXXXXXXXXXXXXXXXCCvvvvvvvvvvvvv',
     'CXXXXXXXXXXXXXXXXXXXXXXXXXXXXXCCCCooooCCCCCCXXXCCCCCCooooCCCCXXXCCCCCCCXXXXXXXXXXXXXCCvvvvvvvvvvvvvv',
+    /*
     //Ylhäällä vapaa-ajanviettokerros (2)
     //Alempana pohjakerros (1)
     'CXXXXXXXXXXXXXXXXXXXCCCCCCCXXCC.......CXXXXXXXXXXXXXC.......CCXXC.....CXXXXXXXXXXXCCvvvvvvvvvvvvvvvv',
@@ -221,10 +221,10 @@ var cruiser = [
     'CXC..................C....C.....C...C...CCC..CC...........CCCCCCCCCCC...CCCvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..................C...CCC..............................C.............CCvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CXC..........C.......C....................................C.........M.ACCvvvvvvvvvvvvvvvvvvvvvvvvvvv',
-    'CXC....MMM...C....................................-.C..............CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
+    'CXC....MMM...C......................................C..............CCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
     'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCvvvvvvvvvvvvvvvvvvvvvvvvvvvvv',
 
-    /*
+    
     Lista array -kartan merkeistä:
     X = perusblokki
     K = komentopöytäblokki

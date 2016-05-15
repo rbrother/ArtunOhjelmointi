@@ -36,7 +36,7 @@ function mouseOverCharacter(x, y){
             hahmoinformaatio.text = valittuHahmo == "HP" ? 
 				"Today this mad Pilgu decided to just float around. Get away from all\nthe chaos this life always wants to give us. Like every other\ncharacter he's armed with a gun. He can also glide on the air\ngiving him extra mobility." +
 				"\nHe is also fast jump-meter-charger and has moderate health." : 
-				valittuHahmo == "Veteraani" ? 
+				valittuHahmo == "Veteraani" ?  
 				"Deep-space war is what Veteran has seen for pretty much his\nentire life. Even though the yacht isn't actually his and Sananan\nhas been pretty quiet lately it could be said that he\nwas enjoying himself with his" 
 				+" wife and children before the attack. Armed with a gun\nVeteran has a double jump giving him some extra mobility\nin the battle.“" :
                 "Fools enter these parts of the waters. If you're\na fool you are gonna be punished for it. That's the rule Masky\nlives by. Masky has some power in his jump and a gun and\ndamage resistance to back him off.";
