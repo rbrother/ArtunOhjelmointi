@@ -130,6 +130,18 @@ PELIMEKANIIKALLISET AIHEET
                         
                         Jos vihu osuu lentonsa aikana toiseen vihuun, he molemmat ansaitsevat 20% vahinkoa mutta jos vihut / toinen vihuista oli
                         lennossa, he lopettavat lentonsa eivätkä kimpoa.
+                        
+                ERIKOISUUS
+                
+                    HP:t voivat pukea päälleen erilaisia pukuja. Nämä eivät useimmiten ole mitenkään muuten kuin passiivisesti vaikuttavia bonuksia
+                    antavia asuja. Profiiliasunaan HP:t pitävät yllään liitovarjopukua, joka antaa heille kyvyn liitää ilmassa jolloin he vajoavat
+                    50% hitaammin kuin tavallisesti.
+                    
+                    Asun voi aktivoida ilmassa ja sen avulla voi liitosuuntaansakin vaihdella.
+                    
+                    A- ja D-näppäimillä suuntaa voi siis muuttaa, mutta noilla näppäimillä voi myös syöksyä eteenpäin.
+                    
+                    Syösyessään johonkin viholliseen HP tönäisee tämän lennättäen tämän ilmaan. Tämä ei kuitenkaan tee vahinkoa.
             
             MASKIJOUKKIO (MASKFOLK)
             
@@ -155,20 +167,6 @@ PELIMEKANIIKALLISET AIHEET
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
         
                 _Hullu Pilgu_
-                    _Ase (Mad Gloves [Repaleiset nyrkkeilyhanskat])_
-                        | Ollessaan ilmassa Pilgu voi W-näppäintä painamalla ottaa itseään koskettavan vihollisien käsiinsä ja tämän jälkeen pitä-
-                        mällä W-näppäintä pohjassa määrätä heittosuunnan. Kun W-näppäimestä päästetään irti vihollinen heitetään heittosuuntaan
-                        täydellä hyppynopeudella. Kun vihollinen seuraavan kerran osuu seinämään hän saa 10% vahinkoa kimmoten samalla peilimäi-
-                        sesti seinästä saaden seuraavan kerran seinään osuessaan jälleen kerran 10% vahikoa. Tämän jälkeen seinistä kimpoilu
-                        päättyy. Jos vihollinen osuu toiseen viholliseen lentäessään he molemmat ansaitsevat 20% vahinkoa.
-                        | Ollessaan Pilgun käsissä vihollinen pääsee pois painamalla neljää ruudulla näkyvää ASDW-näppäintä ruudun järjestyksessä.
-                    _Toissijainen toiminto (Gliding)_
-                        | Pilgulla on päällään lentäjän puku ja päässään miniriippuliidin. Tämä puku hidastaa hänen putoamisnopeutta painovoiman
-                        vaikutuksesta 50%.
-                        | Tämä asu päällään hän voi myöskin ollessaan ilmassa syöksyä liitosuuntaassa A- ja D-näppäimillä. Toisella hän voi syök-
-                        syä eteenpäin ja toisella hän voi muuttaa liitosuuntaansa.
-                        | Tällä syöksyllä Pilgu ei voi tehdä vahinkoa, mutta hän voi tönäistä sillä vihollisia jolloin he hypähtävät 25% maksimi-
-                        voimastaan.
                     _Objektiivi_
                         Pilgu tulee ökyjahdin takaosasta ja hänen täytyy päästä laivan ruuman varasto-oven luokse. Siellä hänen täytyy seistä oven edessä yksin jolloin ovenavausprogressimittari täyttyy. Kestää kolmekymmentä
                         sekuntia avata ovi ja objektiivi suoritetaan, jos ovenavaus on suoritettu ja olet ainoa henkilö oven edessä.
