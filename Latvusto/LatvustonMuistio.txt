@@ -70,7 +70,27 @@ PELIMEKANIIKALLISET AIHEET
 
     YKSINPELI
     
-        -
+        PELIN 100% LÄPÄISY
+        
+            WILFIRE:N LUOKSEPÄÄSY
+            
+                Jotta pelin "post-final boss" -pomon luokse pääsee, täytyy pelaajan olla kerännyt kaikki Masan perheen muistokirjan palaset,
+                kerännyt kaikki krediitit, avannut kaikki ase- / itemipäivitykset ja voittanut kaikki lisäpomot (LISÄPOMOT-kohdassa lisää aiheesta).
+                
+            WILDFIRE:N VOITTAMISEN TUOTTAMAT PALKINNOT
+            
+                Pelaaja saa Wilfire:n voittamisen ansiosta tietää siitä, että on ollut symbioosissa maskin kanssa kaiken aikaa ja pelaajalla
+                on nyt mahdollisuus taistella kaikkia pelin bosseja vastaan uudestaan "Areenalla".
+                
+    POMOT
+    
+        LISÄPOMOT
+        
+            Kun pelaaja on voittanut viimeisen pomon, hän saa tästä palkinnoksi spesiaaliavaimen ensimmäiseen lisäpomoon. Jotta ensimmäisen
+            lisäpomon oven voi avata (ovi on piilotettu jossakin pelin kentässä), täytyy pelaajalla olla kymmenen #1-spesiaaliavainta.
+            Nämä muuta yhdeksän avainta ovat ripoteltuna pelin kenttiin. Ekasta lisäpomosta saa yhden #2-spesiaaliavaimen. Toisen lisäpomon oveen
+            tarvitaan 20 avainta jne. Lisäpomoja on viisi ja ne kaikki läpäistyään on yhden kriteerin täyttämisen lähempänä päästäkseen Wilfire:n
+            luokse.
              
     MONIPELI
     
@@ -142,6 +162,15 @@ PELIMEKANIIKALLISET AIHEET
                     A- ja D-näppäimillä suuntaa voi siis muuttaa, mutta noilla näppäimillä voi myös syöksyä eteenpäin.
                     
                     Syösyessään johonkin viholliseen HP tönäisee tämän lennättäen tämän ilmaan. Tämä ei kuitenkaan tee vahinkoa.
+                    
+                LIIKKUVUUSSPESIAALI
+                
+                    HP käyttää 50% vähemmän aikaa hyppynsä lataukseen.
+                    
+                STATIT
+                
+                    Liikkuvusspesiaalia lukuunottamtta HP:t ovat normihahmoja; ottavat perusmäärän vahinkoa ja eivät omista mitään hirvittävän erikoista
+                    kuten ilmahyppyä.
             
             MASKIJOUKKIO (MASKFOLK)
             
@@ -168,8 +197,6 @@ PELIMEKANIIKALLISET AIHEET
         
                 _Hullu Pilgu_
                     _Objektiivi_
-                        Pilgu tulee ökyjahdin takaosasta ja hänen täytyy päästä laivan ruuman varasto-oven luokse. Siellä hänen täytyy seistä oven edessä yksin jolloin ovenavausprogressimittari täyttyy. Kestää kolmekymmentä
-                        sekuntia avata ovi ja objektiivi suoritetaan, jos ovenavaus on suoritettu ja olet ainoa henkilö oven edessä.
                     _Statit_
                         | Pilgun hyppy latautuu 25% nopeammin, kuin muiden pelihahmojen.  
                         | Likkuvuusbonuksena edellä mainittu hyppymittarinopeusboosti. 
@@ -224,9 +251,6 @@ PELIMEKANIIKALLISET AIHEET
 Alkuperäinen dokumentti
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     Peimekaniikat
-    Pelin sataprosenttinen läpäisy
-        Kun pelaaja on tehnyt kaikki päivitykset, saanut kaikki bonusaseet ja voittanut viidennen lisäpomon hän voi taistella suurpomoa vastaan. Näin hän saa tietää 
-        vielä jotain mielenkiintoista tarinaa. Hän voi myös taistella kaikkia mnipomoja, pomoja, lisäpomoja ja viimeistä pomoa vastaan uudestaan.
     Pelin kahdeksan maailmaa
         Mangrovepuun latvusto (Lazy Lions)>Mangrovepuun lehvistö (Ancient Acorns)>Mangrovepuun lehvistöä kannatteleva oksisto (Seriosly Sacred)>Mangovepuun rungonsi-
         säinen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sisällä oleva mehiläispesä (Emperor's Economy)>Linnoitus mangrovepuun sisällä (Ammo Army)>Mangrovepuun maanpäälliset juuret (Massive Mangrove)>
