@@ -497,9 +497,9 @@ function liikuta(pelaaja) {
             0.5 * pelileveys, 0.5 * pelikorkeus);
         var thePlayerAtDoor = hpOvella ? "Mad Pilgu" : "Masky";
         var lopputeksti = new createjs.Text("The winner's " + thePlayerAtDoor + "!" + "\nVeteran's Score: " + veteransScore, 
-            "20px Arial Black", "#000000")  
-        lopputeksti.x = 0.3 * pelileveys;
-        lopputeksti.y = 0.3 * pelikorkeus; 
+            "10px Arial Black", "#000000")  
+        lopputeksti.x = 0.255 * pelileveys;
+        lopputeksti.y = 0.255 * pelikorkeus; 
         
         stage.addChild(hahmoinformaatio);
         
@@ -507,7 +507,7 @@ function liikuta(pelaaja) {
         
         stage.update();
         
-        setTimeout(function(){ resetointi(); }, 1500);
+        setTimeout(function(){ resetointi(); }, 2500);
 	}
 }
 
