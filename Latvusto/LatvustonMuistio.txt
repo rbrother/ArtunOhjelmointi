@@ -11,6 +11,8 @@
     alkupaikasta ja suunnasta ja vauhdista ja kaikki koneet toisistaan riippumatta laskevat
          
     lentoradat (samoin ammuttujen ammusten kohdalla) 
+    
+    Isän mökillä on eräänlanen piirretty hahmo, jonka nimi on Pilkku. Päähahmo ja Pilgut (Get it?) näyttävät tältä hahmolta.
 
 TARINA
 
@@ -82,15 +84,62 @@ PELIMEKANIIKALLISET AIHEET
                 Pelaaja saa Wilfire:n voittamisen ansiosta tietää siitä, että on ollut symbioosissa maskin kanssa kaiken aikaa ja pelaajalla
                 on nyt mahdollisuus taistella kaikkia pelin bosseja vastaan uudestaan "Areenalla".
                 
-    POMOT
+        POMOT
     
-        LISÄPOMOT
+            LISÄPOMOT
         
-            Kun pelaaja on voittanut viimeisen pomon, hän saa tästä palkinnoksi spesiaaliavaimen ensimmäiseen lisäpomoon. Jotta ensimmäisen
-            lisäpomon oven voi avata (ovi on piilotettu jossakin pelin kentässä), täytyy pelaajalla olla kymmenen #1-spesiaaliavainta.
-            Nämä muuta yhdeksän avainta ovat ripoteltuna pelin kenttiin. Ekasta lisäpomosta saa yhden #2-spesiaaliavaimen. Toisen lisäpomon oveen
-            tarvitaan 20 avainta jne. Lisäpomoja on viisi ja ne kaikki läpäistyään on yhden kriteerin täyttämisen lähempänä päästäkseen Wilfire:n
-            luokse.
+                Kun pelaaja on voittanut viimeisen pomon, hän saa tästä palkinnoksi spesiaaliavaimen ensimmäiseen lisäpomoon. Jotta ensimmäisen
+                lisäpomon oven voi avata (ovi on piilotettu jossakin pelin kentässä), täytyy pelaajalla olla kymmenen #1-spesiaaliavainta.
+                Nämä muuta yhdeksän avainta ovat ripoteltuna pelin kenttiin. Ekasta lisäpomosta saa yhden #2-spesiaaliavaimen. Toisen lisäpomon oveen
+                tarvitaan 20 avainta jne. Lisäpomoja on viisi ja ne kaikki läpäistyään on yhden kriteerin täyttämisen lähempänä päästäkseen Wilfire:n
+                luokse.
+            
+        ALUEET
+        
+            LAZY LIONS
+            
+                Lehvistön päällä oleva alue (1. kaikista), tällä alueella voisi esiintyä laiskannäköisiä leijonia.
+            
+            ANCIENT ACORNS
+            
+                Lehvistön sisällä oleva alue, jossa voisi esiintyä vanhannäköisiä tammenterhovihollisia.
+            
+            SERIOUSLY SACRED
+            
+                Lehvistön alapuolella oleva oksa-alue, joka toimi kauan sitten maskijoukkion kirkkona, jossa heidät "armahdettiin"
+                synneistään.
+            
+            TIRED TRUNK
+            
+                Puun sisällä oleva alue, jossa puun ikä näkyy kääpinä ja muina sieninä.
+            
+            EMPEROR'S ECONOMY
+            
+                Puun sisällä oleva mehiläispesä, jota kuningattaren sijasta johtaa keisarimehiläinen.
+            
+            AMMO ARMY
+            
+                Puun sisällä oleva puulinnoitus, jossa voisi olla ammuksiin liittyviä vihollisia.
+            
+            MASSIVE MANGROVE
+            
+                Alue joka on puiden juurissa.
+            
+            SICK SANDS
+            
+                Pelin viimeinen alue; sijoittuu puuta ympäröivälle aavikkomaiselle rannalle.
+                
+        KREDIITEILLÄ OSTETTAVAT ASIAT
+        
+            ASEET
+            
+                Jos hahmolla ei ole mitään asetta aktiivisena, hän käyttää Pilgujen perinteistä heittotekniikkaa hyökkäystapanaan.
+                
+                Myös aseita voi päivittää krediiteillä.
+            
+            STATISTIIKKAPÄIVITYKSET
+            
+                Krediiteillä voi päivittää omaa saadun vahingon jakoa (SVJ), hypynlatausnopeutta, maksimiammuksenkantomäärää jms.
              
     MONIPELI
     
@@ -248,31 +297,8 @@ PELIMEKANIIKALLISET AIHEET
                 | Räjähtäessään pysäyttää räjähdysalueella olevat viholliset, vihollisprojectiilit, yms ja kranaatin 
                 heittäjän.
                 | Huonona puolena sekunnin pidempi sokka-räjähdysaika verrattuna normikranaattiin.
-Alkuperäinen dokumentti
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    Peimekaniikat
-    Pelin kahdeksan maailmaa
-        Mangrovepuun latvusto (Lazy Lions)>Mangrovepuun lehvistö (Ancient Acorns)>Mangrovepuun lehvistöä kannatteleva oksisto (Seriosly Sacred)>Mangovepuun rungonsi-
-        säinen mahlaa tuottava sienikammio (Tired Tree)>Mangrovepuun sisällä oleva mehiläispesä (Emperor's Economy)>Linnoitus mangrovepuun sisällä (Ammo Army)>Mangrovepuun maanpäälliset juuret (Massive Mangrove)>
-        Mangrovepuuta ympäröivä hiekkaranta (Sick Sands)
-    Peliobjektit
-    Krediitit
-        Jokaisessa kahdeksassa maailmassa sata.
-        Viisikymmentä terveyspäivitykseen ja loput voi käyttää kyky- ja asepäivityksiin. 
-    Bonusaseet
-        Jokaisessa kahdeksassa maailmassa yksi.
-        Kyseisiä aseita voi käyttää moninpelissä.
-    Kristalliavaimet
-        Käytetään lisäpomojen taisteluihin pääsyyn.
-        Ensimmäiseen lisäpomoon tarvitaan kymmenen avainta, joista yhdeksän on pelimaailmassa ja kymmenes saadaan viimeiseltä pomolta.
-        Toiseen lisäpomoon tarvitaan kaksikymmentä avainta, joista 19 on pelimaailmassa ja kahdeskymmenes saadaan ensmmäiseltä lisäpomolta.
-        Kolmanteen lisäpomoon tarvitaan kolmekymmentä avainta, joista 29 on pelimaailmassa ja kolmaskymmenes saadaan toiselta lisäpomolta.
-        Neljänteen lisäpomoon tarvitaan neljäkymmentä avainta, joista 39 on pelimaailmassa ja neljäskymmenes saadaan kolmannelta lisäpomolta.
-        Viidenteen lisäpomoon tarvitaan viisikymmentä avainta, joista 49 on pelimaailmassa ja viideskymmenes saadaan neljänneltä lisäpomolta.
-    Välimuistiot
-    Isän mökillä on eräänlanen piirretty hahmo, jonka nimi on Pilkku. Päähahmo ja Pilgut (Get it?) näyttävät tältä hahmolta.
     
-    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     
 TF2-ideat
 Suunnitelmat
