@@ -93,7 +93,7 @@ function kutiIlmoitus(){
 }
 
 function kutiIlmoitus(){
-	$("#Kudit").text("Kuteja: " + kuteja);
+	$("#Kudit").text("In-gun shots: " + kuteja + " | ");
     $("#kuditMukana").text("Carried shots: " + kuditMukana);
 }
 
@@ -124,7 +124,7 @@ function viivapoisto(pelaaja){
 
 function updateSurvivability(){
     var selviytymisprosentti = Math.floor(oma().selviytyminen);
-    $("#Survivability").text("Chance of surviving " + selviytymisprosentti + "%");
+    $("#Survivability").text("Chance of surviving " + selviytymisprosentti + "%" + " | ");
 }
 
 function neutralisoituminen(viestiServerilt){

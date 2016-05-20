@@ -41,6 +41,7 @@ var fps = 30;
 var openingProcess = 0;
 var hahmoinformaatio;
 var veteransScore = 0;
+var lopussa = false;
 
 // pelaajaTiedot:
 // { 
@@ -322,7 +323,9 @@ function respawn(pelaaja){
 
 function liikutuskutsu(){
     if(aloitusSuoritettu == false)return;
-    veteransScore = veteransScore + 1 / fps;
+    if(lopussa == false){
+        veteransScore = veteransScore + 1 / fps;
+    }
     var pelaaja = oma();
     if(pelaaja.elossa) updateSurvivability();
     olemassaIlmoitus();
@@ -492,22 +495,26 @@ function liikuta(pelaaja) {
 	
 	$("#objektiiviovi").text("Opening process:" + openingProcessText);
 	if(openingProcess >= 100){
-        var mouseOverRectangle = new createjs.Shape();
-        mouseOverRectangle.graphics.beginStroke("red").drawRect(0.25 * pelileveys, 0.25 * pelikorkeus, 
+        lopussa = true;
+        var finalRectangle = new createjs.Shape();
+        finalRectangle.graphics.beginStroke("red").drawRect(0.25 * pelileveys, 0.25 * pelikorkeus, 
             0.5 * pelileveys, 0.5 * pelikorkeus);
         var thePlayerAtDoor = hpOvella ? "Mad Pilgu" : "Masky";
-        var lopputeksti = new createjs.Text("The winner's " + thePlayerAtDoor + "!" + "\nVeteran's Score: " + veteransScore, 
-            "10px Arial Black", "#000000")  
-        lopputeksti.x = 0.255 * pelileveys;
-        lopputeksti.y = 0.255 * pelikorkeus; 
+        var finalScore = Math.floor(veteransScore);
+        setTimeout(function(){
+            var lopputeksti = new createjs.Text("The winner's " + thePlayerAtDoor + "!" + "\nVeteran's Score: " + finalScore, 
+            "20px Arial Black", "#000000")  
+            lopputeksti.x = 0.255 * pelileveys;
+            lopputeksti.y = 0.255 * pelikorkeus;
         
-        stage.addChild(hahmoinformaatio);
+            stage.addChild(lopputeksti);
         
-        stage.addChild(mouseOverRectangle);
+            stage.addChild(finalRectangle);
         
-        stage.update();
+            stage.update();
         
-        setTimeout(function(){ resetointi(); }, 2500);
+            setTimeout(function(){ resetointi(); }, 2500);}, 250);
+        
 	}
 }
 
