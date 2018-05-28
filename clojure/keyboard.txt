@@ -1,0 +1,10 @@
+Barf back:    Meta + Ctrl + K
+Bard forward: Ctrl + Shift + J
+
+Slurp back:    Meta + Ctrl + J
+Slurp forward: Ctrl + Shift + K
+
+Splice SExp:   Alt + S
+
+Split:   Alt + Shift + S
+
